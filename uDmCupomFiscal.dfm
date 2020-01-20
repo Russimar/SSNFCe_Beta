@@ -1,10 +1,10 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 99
-  Top = 3
-  Height = 709
-  Width = 1140
+  Left = 65528
+  Top = 65528
+  Height = 744
+  Width = 1382
   object sdsCupomFiscal: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
@@ -575,6 +575,9 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomFiscalID_CANAL_VENDA: TIntegerField
       FieldName = 'ID_CANAL_VENDA'
+    end
+    object cdsCupomFiscalsdsCupomFiscal_FormaPgto: TDataSetField
+      FieldName = 'sdsCupomFiscal_FormaPgto'
     end
   end
   object dsCupomFiscal: TDataSource
@@ -1203,19 +1206,19 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 256
+    Top = 296
   end
   object dspCupom_Cons: TDataSetProvider
     DataSet = sdsCupom_Cons
     Left = 64
-    Top = 256
+    Top = 296
   end
   object cdsCupom_Cons: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspCupom_Cons'
     Left = 96
-    Top = 256
+    Top = 296
     object cdsCupom_ConsID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -1383,7 +1386,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsCupom_Cons: TDataSource
     DataSet = cdsCupom_Cons
     Left = 128
-    Top = 256
+    Top = 296
   end
   object sdsPessoa: TSQLDataSet
     NoMetadata = True
@@ -2507,7 +2510,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 368
+    Top = 392
     object sdsCupomParametrosID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -2815,7 +2818,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = sdsCupomParametros
     UpdateMode = upWhereKeyOnly
     Left = 64
-    Top = 368
+    Top = 392
   end
   object cdsCupomParametros: TClientDataSet
     Aggregates = <>
@@ -2823,7 +2826,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspCupomParametros'
     Left = 96
-    Top = 368
+    Top = 392
     object cdsCupomParametrosID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -3134,7 +3137,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 416
+    Top = 440
     object sdsSitTribCFID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -3152,7 +3155,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = sdsSitTribCF
     UpdateMode = upWhereKeyOnly
     Left = 64
-    Top = 416
+    Top = 440
   end
   object cdsSitTribCF: TClientDataSet
     Aggregates = <>
@@ -3160,7 +3163,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspSitTribCf'
     Left = 96
-    Top = 416
+    Top = 440
     object cdsSitTribCFID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -3177,7 +3180,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsSitTribCF: TDataSource
     DataSet = cdsSitTribCF
     Left = 128
-    Top = 416
+    Top = 440
   end
   object sdsDuplicata: TSQLDataSet
     NoMetadata = True
@@ -3674,7 +3677,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsCupomParametros: TDataSource
     DataSet = cdsCupomParametros
     Left = 128
-    Top = 368
+    Top = 392
   end
   object sdsVendedor: TSQLDataSet
     NoMetadata = True
@@ -3785,7 +3788,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 464
+    Top = 488
     object sdsCupomTerminalID: TSmallintField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -3799,7 +3802,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = sdsCupomTerminal
     UpdateMode = upWhereKeyOnly
     Left = 64
-    Top = 464
+    Top = 488
   end
   object cdsCupomTerminal: TClientDataSet
     Aggregates = <>
@@ -3807,7 +3810,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspCupomTerminal'
     Left = 96
-    Top = 464
+    Top = 488
     object cdsCupomTerminalID: TSmallintField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -3820,7 +3823,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsCupomTerminal: TDataSource
     DataSet = cdsCupomTerminal
     Left = 128
-    Top = 464
+    Top = 488
   end
   object sdsComandaRel: TSQLDataSet
     NoMetadata = True
@@ -5190,7 +5193,7 @@ object dmCupomFiscal: TdmCupomFiscal
       end>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 520
+    Top = 536
     object sdsCupomFiscal_ProdPrincipalID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -5218,7 +5221,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = sdsCupomFiscal_ProdPrincipal
     UpdateMode = upWhereKeyOnly
     Left = 64
-    Top = 520
+    Top = 536
   end
   object cdsCupomFiscal_ProdPrincipal: TClientDataSet
     Aggregates = <>
@@ -5226,7 +5229,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspCupomFiscal_ProdPrincipal'
     Left = 96
-    Top = 520
+    Top = 536
     object cdsCupomFiscal_ProdPrincipalID: TIntegerField
       FieldName = 'ID'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -5253,7 +5256,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsCupomFiscal_ProdPrincipal: TDataSource
     DataSet = cdsCupomFiscal_ProdPrincipal
     Left = 128
-    Top = 520
+    Top = 536
   end
   object sdsPedido: TSQLDataSet
     NoMetadata = True
@@ -6240,7 +6243,6 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object cdsCupomFiscal_Cli: TClientDataSet
     Aggregates = <>
-    DataSetField = cdsCupomFiscalsdsCupomFiscal_Cli
     IndexFieldNames = 'ID'
     Params = <>
     Left = 96
@@ -6667,12 +6669,12 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 312
+    Top = 344
   end
   object dspTerminal: TDataSetProvider
     DataSet = sdsTerminal
     Left = 64
-    Top = 312
+    Top = 344
   end
   object cdsTerminal: TClientDataSet
     Aggregates = <>
@@ -6680,7 +6682,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspTerminal'
     Left = 96
-    Top = 312
+    Top = 344
     object cdsTerminalID: TSmallintField
       FieldName = 'ID'
       Required = True
@@ -6692,7 +6694,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsTerminal: TDataSource
     DataSet = cdsTerminal
     Left = 128
-    Top = 312
+    Top = 344
   end
   object qUnidade: TSQLQuery
     MaxBlobSize = -1
@@ -6752,19 +6754,19 @@ object dmCupomFiscal: TdmCupomFiscal
       end>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 568
+    Top = 584
   end
   object dspCombinacao: TDataSetProvider
     DataSet = sdsCombinacao
     Left = 64
-    Top = 568
+    Top = 584
   end
   object cdsCombinacao: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspCombinacao'
     Left = 96
-    Top = 568
+    Top = 584
     object cdsCombinacaoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6784,19 +6786,19 @@ object dmCupomFiscal: TdmCupomFiscal
   object dsCombinacao: TDataSource
     DataSet = cdsCombinacao
     Left = 128
-    Top = 568
+    Top = 584
   end
   object dsTamanho: TDataSource
     DataSet = cdsTamanho
     Left = 128
-    Top = 600
+    Top = 616
   end
   object cdsTamanho: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspTamanho'
     Left = 96
-    Top = 600
+    Top = 616
     object cdsTamanhoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6810,7 +6812,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dspTamanho: TDataSetProvider
     DataSet = sdsTamanho
     Left = 64
-    Top = 600
+    Top = 616
   end
   object sdsTamanho: TSQLDataSet
     CommandText = 'SELECT ID, TAMANHO'#13#10'FROM PRODUTO_TAM'#13#10'WHERE ID = :P1'
@@ -6823,7 +6825,7 @@ object dmCupomFiscal: TdmCupomFiscal
       end>
     SQLConnection = dmDatabase.scoDados
     Left = 32
-    Top = 600
+    Top = 616
   end
   object sdsParametrosGeral: TSQLDataSet
     NoMetadata = True
@@ -7825,5 +7827,61 @@ object dmCupomFiscal: TdmCupomFiscal
     IgnorarChar = './-'
     Left = 1024
     Top = 32
+  end
+  object sdsCupomFiscal_FormaPgto: TSQLDataSet
+    CommandText = 'SELECT *'#13#10'FROM CUPOMFISCAL_FORMAPGTO'#13#10'WHERE ID = :ID'
+    DataSource = dsmCupomFiscal
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID'
+        ParamType = ptInput
+        Size = 4
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 32
+    Top = 248
+    object sdsCupomFiscal_FormaPgtoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsCupomFiscal_FormaPgtoITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object sdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA: TIntegerField
+      FieldName = 'ID_TIPOCOBRANCA'
+    end
+    object sdsCupomFiscal_FormaPgtoVALOR: TFloatField
+      FieldName = 'VALOR'
+    end
+  end
+  object cdsCupomFiscal_FormaPgto: TClientDataSet
+    Aggregates = <>
+    DataSetField = cdsCupomFiscalsdsCupomFiscal_FormaPgto
+    IndexFieldNames = 'ID'
+    Params = <>
+    Left = 96
+    Top = 248
+    object cdsCupomFiscal_FormaPgtoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsCupomFiscal_FormaPgtoITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA: TIntegerField
+      FieldName = 'ID_TIPOCOBRANCA'
+    end
+    object cdsCupomFiscal_FormaPgtoVALOR: TFloatField
+      FieldName = 'VALOR'
+    end
+  end
+  object dsCupomFiscal_FormaPgto: TDataSource
+    DataSet = cdsCupomFiscal_FormaPgto
+    Left = 128
+    Top = 248
   end
 end

@@ -199,8 +199,7 @@ begin
   end;
   fDmCupomFiscal.vSomaParcelas := StrToFloat(FormatFloat('0.00', vVlrRestante));
 
-  if (fDmCupomFiscal.cdsCondPgto.Locate('ID', comboCondicaoPgto.KeyValue,
-    [loCaseInsensitive])) then
+  if (fDmCupomFiscal.cdsCondPgto.Locate('ID', mPagamentosSelecionadosId.AsInteger,[loCaseInsensitive])) then
   begin
     if fDmCupomFiscal.cdsCondPgtoTIPO_CONDICAO.AsString = 'V' then
     begin
@@ -367,21 +366,6 @@ begin
     EstadoFechVenda := InformandoValorRecebido;
   end;
 
-  if (not fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.IsNull) and
-    (fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger > 0) then
-  begin
-    ceFormaPgto.Text := fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsString;
-    ComboFormaPagtoChange(Sender);
-  end;
-//  ceFormaPgto.SetFocus;
-
-  Label3.Visible := (fDmCupomFiscal.cdsCupomParametrosMOSTRAR_CONDPGTO.AsString =
-    'S');
-  comboCondicaoPgto.Visible :=
-    (fDmCupomFiscal.cdsCupomParametrosMOSTRAR_CONDPGTO.AsString = 'S');
-  btnParcelas.Visible :=
-    (fDmCupomFiscal.cdsCupomParametrosMOSTRAR_CONDPGTO.AsString = 'S');
-
   //04/02/2017
   if fDmCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger <= 0 then
     fDmCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger :=
@@ -450,46 +434,54 @@ begin
 end;
 
 procedure TfCupomFiscalPgto.btConfirmarClick(Sender: TObject);
+const
+  vCliente : array[1..2] of String =('','99999');
 var
   vGravar_Aux: Boolean;
   vGeraNFCe, vGravar_OK: Boolean;
   vAux: Integer;
   vIdCupom: Integer;
   vMSGAux: string;
+  vExigeCliente : Boolean;
+
 begin
-  if ComboFormaPagto.Value = '' then
+//
+//
+//  fDmCupomFiscal.vCondicaoPgto := comboCondicaoPgto.KeyValue;
+//  prc_Calcular_CondPagto(Sender);
+
+  vExigeCliente := False;
+  mPagamentosSelecionados.First;
+  while not mPagamentosSelecionados.Eof do
   begin
-    MessageDlg('*** Forma de pagamento obrigatória!', mtInformation, [mbOk], 0);
-    ComboFormaPagto.SetFocus;
-    exit;
+    if SQLLocate('TIPOCOBRANCA','ID','CREDITO_LOJA',mPagamentosSelecionadosId.AsString) = 'S' then
+    begin
+      ffrmCupomFiscalPgtoDet := TfrmCupomFiscalPgtoDet.Create(nil);
+      ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
+      ffrmCupomFiscalPgtoDet.vVlr_Recebido := mPagamentosSelecionadosValor.AsFloat;
+      ffrmCupomFiscalPgtoDet.ShowModal;
+      FreeAndNil(ffrmCupomFiscalPgtoDet);
+      if SQLLocate('TIPOCOBRANCA','ID','EXIGE_CLIENTE',mPagamentosSelecionadosId.AsString) = 'S' then
+        vExigeCliente := True;
+    end;
+    fDmCupomFiscal.prc_Inserir_FormaPagto;
+    fDmCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger := mPagamentosSelecionadosId.AsInteger;
+    fDmCupomFiscal.cdsCupomFiscal_FormaPgtoVALOR.AsFloat := mPagamentosSelecionadosValor.AsFloat;
+    fDmCupomFiscal.cdsCupomFiscal_FormaPgto.Post;
+    mPagamentosSelecionados.Next;
   end;
 
-  if (fDmCupomFiscal.cdsTipoCobrancaEXIGE_CLIENTE.AsString = 'S') and
-    ((fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsString = '') or
-      (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger = 99999)) then
+  if (vExigeCliente) and ansiMatchStr(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsString,vCliente) then
   begin
     MessageDlg('*** Esta forma de pagamento exige identificar o cliente!',
       mtInformation, [mbOk], 0);
     repeat
       prc_InformaCliente;
-    until  fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger > 0;
-
-    Exit;
+    until fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger > 0;
   end;
 
-  if ((fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P') or
-    (StrToFloat(FormatFloat('0.00',
-      fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat)) <= 0)) and
-    (comboCondicaoPgto.Text = '') then
-    raise Exception.Create('Condição de pagamento obrigatória!');
-
-  if (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V') and
-    (fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S') then
-    raise
-      Exception.Create('Condição de pagamento não pode ser à vista para crédito!');
-
   if (fDmCupomFiscal.cdsCupomParametrosEXIGE_VENDEDOR.AsString = 'S') and
-    (lblVendedor.Caption = '-') then
+    (fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger = 0) then
   begin
     repeat
       prc_InformaVendedor;
@@ -498,17 +490,17 @@ begin
   else if fDmCupomFiscal.vID_Fechamento > 0 then
     fDmCupomFiscal.cdsCupomFiscalID_FECHAMENTO.AsInteger := fDmCupomFiscal.vID_Fechamento;
 
-  //******************
-  if fDmCupomFiscal.cdsCupom_Parc.IsEmpty then
-    btnParcelasClick(Sender);
+  //ver
+//  if fDmCupomFiscal.cdsCupom_Parc.IsEmpty then
+//    btnParcelasClick(Sender);
   //***********************
 
-  if (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P') then
-  begin
-    if not fncVerificaParc(fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency)
-      then
-      raise Exception.Create('Soma das parcelas diferente do total da venda!');
-  end;
+//  if (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P') then
+//  begin
+//    if not fncVerificaParc(fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency)
+//      then
+//      raise Exception.Create('Soma das parcelas diferente do total da venda!');
+//  end;
 
   if fDmCupomFiscal.cdsPessoaCODIGO.AsInteger <>
     fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger then
@@ -669,23 +661,12 @@ end;
 
 procedure TfCupomFiscalPgto.btnParcelasClick(Sender: TObject);
 begin
-  if ComboFormaPagto.Value = '' then
-    raise Exception.Create('Forma de pagamento obrigatória!');
+//  fDmCupomFiscal.vCondicaoPgto := comboCondicaoPgto.KeyValue;
+//  prc_Calcular_CondPagto(Sender);
 
-  fDmCupomFiscal.cdsCondPgto.Locate('ID', comboCondicaoPgto.KeyValue,
-    [loCaseInsensitive]);
-  if ((fDmCupomFiscal.cdsCondPgtoTIPO.AsString = 'P') or
-    (StrToFloat(FormatFloat('0.00',
-      fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat)) <= 0)) and
-    (comboCondicaoPgto.Text = '') then
-    raise Exception.Create('Condição de pagamento obrigatória!');
-
-  fDmCupomFiscal.vCondicaoPgto := comboCondicaoPgto.KeyValue;
-  prc_Calcular_CondPagto(Sender);
-
-  ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
-  ffrmCupomFiscalPgtoDet.ShowModal;
-  FreeAndNil(ffrmCupomFiscalPgtoDet);
+//  ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
+//  ffrmCupomFiscalPgtoDet.ShowModal;
+//  FreeAndNil(ffrmCupomFiscalPgtoDet);
 end;
 
 procedure TfCupomFiscalPgto.SMDBGrid1DblClick(Sender: TObject);
@@ -1166,9 +1147,9 @@ begin
     fdmCupomFiscal.prc_Localizar_Pessoa(vCodPessoa_Pos, '');
     if not fDmCupomFiscal.cdsPessoa.IsEmpty then
     begin
-      comboCondicaoPgto.Visible := True;
-      Label3.Visible := True;
-      btnParcelas.Visible := True;
+//      comboCondicaoPgto.Visible := True;
+//      Label3.Visible := True;
+//      btnParcelas.Visible := True;
       fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger := vCodPessoa_Pos;
       if (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger =
         fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
@@ -1210,18 +1191,16 @@ begin
           fDmCupomFiscal.cdsPessoaBAIRRO.AsString + ' - ' +
           fDmCupomFiscal.cdsPessoaCIDADE.AsString;
       end;
-      if (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <>
-        fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
-        (fDmCupomFiscal.cdsPessoaID_CONDPGTO.AsInteger > 0) then
-      begin
-        fDmCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger :=
-          fDmCupomFiscal.cdsPessoaID_CONDPGTO.AsInteger;
-        fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString :=
-          fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
-        if not fDmCupomFiscal.vPgtoEditado then
-          btnParcelas.Click;
-        comboCondicaoPgto.SetFocus;
-      end;
+//      if (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <>
+//        fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
+//        (fDmCupomFiscal.cdsPessoaID_CONDPGTO.AsInteger > 0) then
+//      begin
+//        fDmCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger := fDmCupomFiscal.cdsPessoaID_CONDPGTO.AsInteger;
+//        fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString    := fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
+//        if not fDmCupomFiscal.vPgtoEditado then
+//          btnParcelas.Click;
+//        comboCondicaoPgto.SetFocus;
+//      end;
       fDmCupomFiscal.vClienteID := vCodPessoa_Pos;
     end
     else

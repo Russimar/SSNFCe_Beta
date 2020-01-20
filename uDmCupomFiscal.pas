@@ -1675,6 +1675,18 @@ type
     cdsCupomParametrosESTOQUE_CUPOM: TStringField;
     sdsCupomParametrosID_TIPOCOBRANCA_PADRAO: TIntegerField;
     cdsCupomParametrosID_TIPOCOBRANCA_PADRAO: TIntegerField;
+    sdsCupomFiscal_FormaPgto: TSQLDataSet;
+    cdsCupomFiscal_FormaPgto: TClientDataSet;
+    dsCupomFiscal_FormaPgto: TDataSource;
+    sdsCupomFiscal_FormaPgtoID: TIntegerField;
+    sdsCupomFiscal_FormaPgtoITEM: TIntegerField;
+    sdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA: TIntegerField;
+    sdsCupomFiscal_FormaPgtoVALOR: TFloatField;
+    cdsCupomFiscalsdsCupomFiscal_FormaPgto: TDataSetField;
+    cdsCupomFiscal_FormaPgtoID: TIntegerField;
+    cdsCupomFiscal_FormaPgtoITEM: TIntegerField;
+    cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA: TIntegerField;
+    cdsCupomFiscal_FormaPgtoVALOR: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1793,7 +1805,10 @@ type
     procedure prc_Localizar_Pessoa(vId: Integer ; vCNPJ_CPF : String);
 
     procedure prc_Calcular_Valor_Juros(Perc_Juros : Currency);
-    procedure prc_Calcular_CondPagto(sender : TObject; vPercJuros : Currency = 0);
+    procedure prc_Calcular_CondPagto(sender : TObject; vVlr_Pagto : Currency; vPercJuros : Currency = 0);
+    procedure prc_Inserir_FormaPagto;
+    procedure prc_Gravar_FormaPagto;
+
   end;
 
   //Funções Balança Urano
@@ -3694,7 +3709,7 @@ begin
 
 end;
 
-procedure TdmCupomFiscal.prc_Calcular_CondPagto(sender: TObject; vPercJuros : Currency = 0);
+procedure TdmCupomFiscal.prc_Calcular_CondPagto(sender: TObject; vVlr_Pagto : Currency; vPercJuros : Currency = 0);
 var
   vVlrParcelado, vVlrTotal, vVlrProdutos: Real;
 begin
@@ -3769,7 +3784,10 @@ begin
   cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat := 0;
 //////////////////////////////////////////////
 
-  vVlrParcelado := cdsCupomFiscalVLR_PRODUTOS.AsCurrency - cdsCupomFiscalVLR_DESCONTO.AsCurrency -
+//  vVlrParcelado := cdsCupomFiscalVLR_PRODUTOS.AsCurrency - cdsCupomFiscalVLR_DESCONTO.AsCurrency -
+//                   vVlrEntrada + cdsCupomFiscalVLR_OUTROS.AsCurrency;
+
+  vVlrParcelado := vVlr_Pagto - cdsCupomFiscalVLR_DESCONTO.AsCurrency -
                    vVlrEntrada + cdsCupomFiscalVLR_OUTROS.AsCurrency;
 
   prc_ControleParcelas(vVlrParcelado,0,vQtdParcelas);
@@ -3918,6 +3936,22 @@ begin
   end;
   cdsCupom_ParcEDITADA.AsString := 'N';
   cdsCupom_Parc.Post;
+end;
+
+procedure TdmCupomFiscal.prc_Inserir_FormaPagto;
+var
+  vItem : Integer;
+begin
+  cdsCupomFiscal_FormaPgto.Last;
+  vItem := cdsCupomFiscal_FormaPgtoITEM.AsInteger + 1;
+  cdsCupomFiscal_FormaPgto.Insert;
+  cdsCupomFiscal_FormaPgtoID.AsInteger := cdsCupomFiscalID.AsInteger;
+  cdsCupomFiscal_FormaPgtoITEM.AsInteger := vItem;
+end;
+
+procedure TdmCupomFiscal.prc_Gravar_FormaPagto;
+begin
+ //
 end;
 
 end.

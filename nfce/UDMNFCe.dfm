@@ -1,8 +1,8 @@
 object DMNFCe: TDMNFCe
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 191
-  Top = 106
+  Left = 458
+  Top = 70
   Height = 603
   Width = 853
   object sdsNFe_Email: TSQLDataSet
@@ -3541,7 +3541,7 @@ object DMNFCe: TDMNFCe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFeRL
+    DANFE = ACBrNFeDANFeESCPOS
     Left = 632
     Top = 16
   end
@@ -3575,6 +3575,7 @@ object DMNFCe: TDMNFCe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe
     ImprimeTributos = trbSeparadamente
     ExibeInforAdicProduto = infNenhum
     LarguraBobina = 290
@@ -3834,7 +3835,6 @@ object DMNFCe: TDMNFCe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrNFe = ACBrNFe
     Left = 648
     Top = 120
   end

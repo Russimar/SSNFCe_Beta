@@ -30,6 +30,7 @@ type
     { Private declarations }
   public
     fdmCupomFiscal : TdmCupomFiscal;
+    vVlr_Recebido : Currency;
     { Public declarations }
   end;
 
@@ -39,7 +40,7 @@ var
 implementation
 
 uses
-  uCupomFiscalPgto;
+  uCupomFiscalPgto, uCalculo_CupomFiscal;
 
 
 {$R *.dfm}
@@ -54,16 +55,15 @@ begin
      (comboCondicaoPagto.Text = '')  then
     Raise Exception.Create('Condição de pagamento obrigatória!');
 
+  fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString :=  fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
   fDmCupomFiscal.vCondicaoPgto := comboCondicaoPagto.KeyValue;
-  fDmCupomFiscal.prc_Calcular_CondPagto(Sender);
-
-//  fCupomFiscalPgto.prc_Calcular_CondPagto(fdm);
+  fDmCupomFiscal.prc_Calcular_CondPagto(Sender,vVlr_Recebido);
+  prc_Calcular_Geral(fdmCupomFiscal);
 end;
 
 procedure TfrmCupomFiscalPgtoDet.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
-
 end;
 
 end.
