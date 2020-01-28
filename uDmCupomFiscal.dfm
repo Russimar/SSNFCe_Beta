@@ -14,7 +14,7 @@ object dmCupomFiscal: TdmCupomFiscal
       'R'#13#10'FROM CUPOMFISCAL CF'#13#10'INNER JOIN PESSOA P ON (CF.ID_CLIENTE = ' +
       'P.CODIGO)'#13#10'LEFT JOIN CONDPGTO CP ON (CP.ID = CF.ID_CONDPGTO)'#13#10'LE' +
       'FT JOIN TIPOCOBRANCA TC ON (TC.ID = CF.ID_TIPOCOBRANCA)'#13#10'LEFT JO' +
-      'IN PESSOA V ON (CF.ID_VENDEDOR = V.CODIGO)'#13#10
+      'IN PESSOA V ON (CF.ID_VENDEDOR = V.CODIGO)'#13#10#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
@@ -339,7 +339,7 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomFiscalVLR_PRODUTOS: TFloatField
       FieldName = 'VLR_PRODUTOS'
-      DisplayFormat = '0.00'
+      DisplayFormat = 'R$ ,,,0.00'
     end
     object cdsCupomFiscalVLR_DESCONTO: TFloatField
       FieldName = 'VLR_DESCONTO'
@@ -2493,6 +2493,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsTipoCobrancaJUROS_TIPO: TStringField
       FieldName = 'JUROS_TIPO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsTipoCobrancaFORMA_PGTO: TStringField
+      FieldName = 'FORMA_PGTO'
       FixedChar = True
       Size = 1
     end
@@ -7856,6 +7861,11 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupomFiscal_FormaPgtoVALOR: TFloatField
       FieldName = 'VALOR'
     end
+    object sdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField
+      FieldName = 'TIPO_PGTO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object cdsCupomFiscal_FormaPgto: TClientDataSet
     Aggregates = <>
@@ -7877,6 +7887,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomFiscal_FormaPgtoVALOR: TFloatField
       FieldName = 'VALOR'
+    end
+    object cdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField
+      FieldName = 'TIPO_PGTO'
+      FixedChar = True
+      Size = 1
     end
   end
   object dsCupomFiscal_FormaPgto: TDataSource

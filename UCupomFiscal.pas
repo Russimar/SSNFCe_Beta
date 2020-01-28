@@ -402,7 +402,7 @@ begin
       prcPesa;
     end;
 
-    if (fDmCupomFiscal.cdsCupomParametrosSOLICITA_CPF.AsString = 'S') and (not vCpfOK) then
+    if (fDmCupomFiscal.cdsCupomParametrosSOLICITA_CPF.AsString = 'I') and (not vCpfOK) then
       fDmCupomFiscal.prc_Digita_Documento;
 
     vSubTotal := StrToFloat(FormatFloat('0.00', vVlrItem * CurrencyEdit1.Value));

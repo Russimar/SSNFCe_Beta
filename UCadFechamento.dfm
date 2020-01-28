@@ -1,6 +1,6 @@
 object frmCadFechamento: TfrmCadFechamento
-  Left = 210
-  Top = 11
+  Left = 174
+  Top = 31
   Width = 1004
   Height = 692
   Caption = 'frmCadFechamento'
@@ -1596,6 +1596,7 @@ object frmCadFechamento: TfrmCadFechamento
             Title.Alignment = taCenter
             Title.Caption = 'Diferen'#231'a Conferido'
             Title.Color = 16761220
+            Width = 64
             Visible = True
           end>
       end
@@ -1677,6 +1678,7 @@ object frmCadFechamento: TfrmCadFechamento
           Font.Name = 'Verdana'
           Font.Style = []
           ParentFont = False
+          Visible = False
         end
         object Label15: TLabel
           Left = 560
@@ -1966,6 +1968,7 @@ object frmCadFechamento: TfrmCadFechamento
           ParentFont = False
           ReadOnly = True
           TabOrder = 5
+          Visible = False
         end
         object DBEdit8: TDBEdit
           Left = 234

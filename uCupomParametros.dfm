@@ -1450,7 +1450,7 @@ object fCupomParametros: TfCupomParametros
         object comboSolicitaCPF: TRxDBComboBox
           Left = 670
           Top = 166
-          Width = 91
+          Width = 90
           Height = 21
           Style = csDropDownList
           DataField = 'SOLICITA_CPF'
@@ -1458,11 +1458,13 @@ object fCupomParametros: TfCupomParametros
           EnableValues = True
           ItemHeight = 13
           Items.Strings = (
-            'Sim'
-            'N'#227'o')
+            'In'#237'cio'
+            'Final'
+            'N'#227'o Solicita')
           TabOrder = 18
           Values.Strings = (
-            'S'
+            'I'
+            'F'
             'N')
         end
         object comboFormaPagtoPadrao: TRxDBLookupCombo
@@ -2282,7 +2284,6 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
-              Width = 64
               Visible = True
             end>
         end

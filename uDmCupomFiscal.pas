@@ -1687,6 +1687,9 @@ type
     cdsCupomFiscal_FormaPgtoITEM: TIntegerField;
     cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA: TIntegerField;
     cdsCupomFiscal_FormaPgtoVALOR: TFloatField;
+    sdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
+    cdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
+    cdsTipoCobrancaFORMA_PGTO: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -3625,6 +3628,7 @@ begin
           begin
             vCpfOK := True;
             vDocumentoClienteVenda := ACBrValidador.Formatar;
+            cdsCupomFiscalCPF.AsString := vDocumentoClienteVenda;
           end
           else
             ShowMessage('ERRO: O CPF DIGITADO É INVÁLIDO!');
@@ -3638,6 +3642,7 @@ begin
           begin
             vCpfOK := True;
             vDocumentoClienteVenda := ACBrValidador.Formatar;
+            cdsCupomFiscalCPF.AsString := vDocumentoClienteVenda;
           end
           else
             ShowMessage('ERRO: O CNPJ DIGITADO É INVÁLIDO!');

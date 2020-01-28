@@ -148,7 +148,7 @@ object frmConsCupom: TfrmConsCupom
       ParentFont = False
       TabOrder = 1
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       AutoHideChildren = False
       BorderColor = clGray
       BorderShadow = True
@@ -159,7 +159,6 @@ object frmConsCupom: TfrmConsCupom
       Caption.Font.Height = -11
       Caption.Font.Name = 'Tahoma'
       Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
       Caption.Indent = 4
       Caption.ShadeLight = 255
       Caption.ShadeType = stRMetal
@@ -174,7 +173,7 @@ object frmConsCupom: TfrmConsCupom
       StatusBar.BorderColor = clWhite
       StatusBar.BorderStyle = bsSingle
       StatusBar.Font.Charset = DEFAULT_CHARSET
-      StatusBar.Font.Color = clWindowText
+      StatusBar.Font.Color = clBlack
       StatusBar.Font.Height = -11
       StatusBar.Font.Name = 'Tahoma'
       StatusBar.Font.Style = []
@@ -510,6 +509,22 @@ object frmConsCupom: TfrmConsCupom
         Height = 21
         TabOrder = 7
       end
+      object chkNFCE: TCheckBox
+        Left = 440
+        Top = 20
+        Width = 113
+        Height = 17
+        Caption = 'Somente NFCe'
+        Checked = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        State = cbChecked
+        TabOrder = 8
+      end
     end
   end
   object cxGridViewRepository1: TcxGridViewRepository
@@ -564,6 +579,8 @@ object frmConsCupom: TfrmConsCupom
     Settings.CollapsSteps = 0
     Settings.Color = clWhite
     Settings.ColorTo = 15000804
+    Settings.ColorMirror = clNone
+    Settings.ColorMirrorTo = clNone
     Settings.Cursor = crDefault
     Settings.Font.Charset = DEFAULT_CHARSET
     Settings.Font.Color = clWindowText
@@ -586,7 +603,7 @@ object frmConsCupom: TfrmConsCupom
     Settings.StatusBar.BorderColor = clWhite
     Settings.StatusBar.BorderStyle = bsSingle
     Settings.StatusBar.Font.Charset = DEFAULT_CHARSET
-    Settings.StatusBar.Font.Color = clWindowText
+    Settings.StatusBar.Font.Color = clBlack
     Settings.StatusBar.Font.Height = -11
     Settings.StatusBar.Font.Name = 'Tahoma'
     Settings.StatusBar.Font.Style = []

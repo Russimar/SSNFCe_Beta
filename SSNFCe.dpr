@@ -103,7 +103,8 @@ uses
   UDMCadFilial_Certificado in 'UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule},
   UCadFilial_Certificado in 'UCadFilial_Certificado.pas' {frmCadFilial_Certificado},
   uCupomFiscalPgtoDet in 'uCupomFiscalPgtoDet.pas' {frmCupomFiscalPgtoDet},
-  uClasseCalculaPagto in 'Classes\uClasseCalculaPagto.pas';
+  uClasseCalculaPagto in 'Classes\uClasseCalculaPagto.pas',
+  uTipoFormaPagto in 'uTipoFormaPagto.pas' {frmTelaTipoFormaPagto};
 
 {$R *.res}
 

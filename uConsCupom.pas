@@ -49,6 +49,7 @@ type
     edtSerie: TEdit;
     AdvPanelStyler1: TAdvPanelStyler;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
+    chkNFCE: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -242,6 +243,8 @@ begin
   vComando := vComando + 'WHERE 0=0';
   vComando := vComando + ' AND CF.DTEMISSAO >= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtInicial.date));
   vComando := vComando + ' AND CF.DTEMISSAO <= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtFinal.date));
+  if chkNFCE.Checked then
+    vComando := vComando + ' AND TIPO = ' + QuotedStr('NFC');
   if ComboTerminal.KeyValue > 0 then
     vComando := vComando + ' AND TERMINAL_ID = ' + ComboTerminal.Value;
   if vCancelar then

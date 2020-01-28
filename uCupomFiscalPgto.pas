@@ -9,13 +9,16 @@ uses
     uDmMovimento, uDmParametros, ACBrBase, DBGrids,
   Grids, SMDBGrid, RzTabs, NxCollection, dbXPress, SqlExpr, ToolEdit, CurrEdit,
     StrUtils, Math, uCupomFiscalPgtoDet, uTipoDescontoItem,
-  JvLabel, JvGroupBox, AdvPanel, DBClient, AdvEdit;
+  JvLabel, JvGroupBox, AdvPanel, DBClient, AdvEdit, uTipoFormaPagto;
 
 const
   InformandoVendedor = 'InformandoVendedor';
   InformandoFormaPagamento = 'InformandoFormaPagamento';
   InformandoValorRecebido = 'InformandoValorRecebido';
   FinalizandoVenda = 'FinalizandoVenda';
+
+type
+  TEnumTipoPrazo = (tpVista, tpPrazo);
 
 type
   TfCupomFiscalPgto = class(TForm)
@@ -29,22 +32,16 @@ type
     edtVlrRecebido: TDBEdit;
     edtTroco: TDBEdit;
     edtDesconto: TDBEdit;
-    edtValorProdutos: TDBEdit;
     grCliente: TJvGroupBox;
-    JvLabel1: TJvLabel;
-    JvLabel2: TJvLabel;
-    lblDocumento: TJvLabel;
-    lblCliente: TJvLabel;
     grVendedor: TJvGroupBox;
     lblVendedor: TJvLabel;
     JvLabel3: TJvLabel;
     pnlBotton: TAdvPanel;
     btConfirmar: TNxButton;
-    brCancelar: TNxButton;
+    btCancelar: TNxButton;
     btGaveta: TNxButton;
     AdvPanelStyler1: TAdvPanelStyler;
     pnlPagamentos: TAdvPanel;
-    gridPagamento: TDBGrid;
     edtPagamento: TAdvEdit;
     Label6: TLabel;
     Label7: TLabel;
@@ -62,6 +59,12 @@ type
     Label10: TLabel;
     cbNFCe: TComboBox;
     Edit1: TEdit;
+    DBText1: TDBText;
+    DBEdit1: TDBEdit;
+    SpeedButton1: TSpeedButton;
+    Edit2: TEdit;
+    gridPagamento: TSMDBGrid;
+    mPagamentosSelecionadosTipo: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtVlrRecebidoExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -69,7 +72,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btConfirmarClick(Sender: TObject);
-    procedure brCancelarClick(Sender: TObject);
+    procedure btCancelarClick(Sender: TObject);
     procedure btnGerarParcelasClick(Sender: TObject);
     procedure btnParcelasClick(Sender: TObject);
     procedure SMDBGrid1DblClick(Sender: TObject);
@@ -113,13 +116,15 @@ type
     procedure prc_InformaCliente;
     procedure prc_InformaVendedor;
     procedure DrawControl(Control: TWinControl);
+
     procedure prc_Grava_Pagto_Selecionado(ID: Integer; Valor: Real);
     function fnc_valor_recebido: Real;
   public
     { Public declarations }
     vSenhaVendedor: string;
     fDmCupomFiscal: TDmCupomFiscal;
-    ffrmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet;
+    ffrmCupomFiscalPgtoDet : TfrmCupomFiscalPgtoDet;
+    ffrmTelaTipoFormaPagto : TfrmTelaTipoFormaPagto;
     fDmMovimento: TDmMovimento;
     fDmParametros: TDmParametros;
     vTeste: Boolean;
@@ -300,13 +305,13 @@ end;
 
 procedure TfCupomFiscalPgto.edtVlrRecebidoExit(Sender: TObject);
 begin
-  if not Calcula_Troco then
-  begin
-    ShowMessage('Valor pago deve ser informado!');
-    Exit;
-  end;
-  if fDmCupomFiscal.cdsTipoCobrancaABRE_GAVETA.AsString = 'S' then
-    prc_AbreGaveta(1);
+//  if not Calcula_Troco then
+//  begin
+//    ShowMessage('Valor pago deve ser informado!');
+//    Exit;
+//  end;
+//  if fDmCupomFiscal.cdsTipoCobrancaABRE_GAVETA.AsString = 'S' then
+//    prc_AbreGaveta(1);
 end;
 
 function TfCupomFiscalPgto.Calcula_Troco: Boolean;
@@ -336,7 +341,7 @@ begin
       fDmParametros.ACBrECF1.CarregaFormasPagamento;
   end;
 
-  vCpfOk := True;
+//  vCpfOk := True;
 
   if fDmCupomFiscal.vClienteID > 0 then
   begin
@@ -350,7 +355,7 @@ begin
         fDmCupomFiscal.cdsCupomFiscalCPF.AsString :=
           fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
         vDocumentoClienteVenda := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
-        lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+//        lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
       end;
     end;
   end;
@@ -358,10 +363,9 @@ begin
 //  if (fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger = 0) and
 //    (fDmCupomFiscal.cdsCupomParametrosID_TIPOCOBRANCA_PADRAO.AsInteger > 0) then
   begin
-    fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger :=
-      fDmCupomFiscal.cdsCupomParametrosID_TIPOCOBRANCA_PADRAO.AsInteger;
+    fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger := fDmCupomFiscal.cdsCupomParametrosID_TIPOCOBRANCA_PADRAO.AsInteger;
     edtPagamento.Text := IntToStr(fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger);
-    edtValorPagamento.Value := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat;
+    edtValorPagamento.Value := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat;
     edtPagamentoKeyDown(Sender, Enter, [ssAlt]);
     EstadoFechVenda := InformandoValorRecebido;
   end;
@@ -381,18 +385,17 @@ begin
 
   //  PnlCanalVenda.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_CANAL_VENDA.AsString = 'S';
 
-  if vDocumentoClienteVenda <> EmptyStr then
-    lblDocumento.Caption := vDocumentoClienteVenda;
+//  if vDocumentoClienteVenda <> EmptyStr then
+//    lblDocumento.Caption := vDocumentoClienteVenda;
 
   if EstadoFechVenda = InformandoValorRecebido then
     edtValorPagamento.SetFocus;
 
-  //  DBEdit3.BorderStyle := bsNone;
+  //Arredonda os cantos das edit´s
   DrawControl(edtTotal);
   DrawControl(edtDesconto);
   DrawControl(edtPagamento);
   DrawControl(edtTroco);
-  DrawControl(edtValorProdutos);
   DrawControl(edtVlrRecebido);
   DrawControl(edtValorPagamento);
   //Desabilita a barra de rolagem da grid
@@ -402,8 +405,7 @@ end;
 
 procedure TfCupomFiscalPgto.comboCondicaoPgtoChange(Sender: TObject);
 begin
-  fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString :=
-    fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
+  fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString := fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
   vQtdParcelas := fDmCupomFiscal.cdsCondPgtoQTD_PARCELA.AsInteger;
 end;
 
@@ -421,7 +423,12 @@ begin
   end
   else if (Key = Vk_F3) then
   begin
-    fnc_Aplicar_Desconto;
+    if fnc_Aplicar_Desconto then
+    begin
+      edtValorPagamento.Value := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat;
+      edtValorPagamento.SelectAll;
+      edtValorPagamento.SetFocus;
+    end;
   end
   else if (Key = Vk_F4) then
     SpeedButton2Click(Sender)
@@ -443,10 +450,8 @@ var
   vIdCupom: Integer;
   vMSGAux: string;
   vExigeCliente : Boolean;
-
+  vTipoFormaPagto : String;
 begin
-//
-//
 //  fDmCupomFiscal.vCondicaoPgto := comboCondicaoPgto.KeyValue;
 //  prc_Calcular_CondPagto(Sender);
 
@@ -454,7 +459,27 @@ begin
   mPagamentosSelecionados.First;
   while not mPagamentosSelecionados.Eof do
   begin
-    if SQLLocate('TIPOCOBRANCA','ID','CREDITO_LOJA',mPagamentosSelecionadosId.AsString) = 'S' then
+    if mPagamentosSelecionadosTipo.AsString = 'A' then
+    begin
+      try
+        repeat
+          begin
+            ffrmTelaTipoFormaPagto := TfrmTelaTipoFormaPagto.Create(nil);
+            ffrmTelaTipoFormaPagto.ShowModal;
+            case TEnumTipoPrazo(ffrmTelaTipoFormaPagto.rdgTipoFormaPagto.ItemIndex) of
+              tpVista : vTipoFormaPagto := 'V';
+              tpPrazo : vTipoFormaPagto := 'P';
+            end;
+          end;
+        until vTipoFormaPagto <> EmptyStr;
+      finally
+        FreeAndNil(ffrmTelaTipoFormaPagto);
+      end;
+    end
+    else
+      vTipoFormaPagto := mPagamentosSelecionadosTipo.AsString;
+
+    if (SQLLocate('TIPOCOBRANCA','ID','CREDITO_LOJA',mPagamentosSelecionadosId.AsString) = 'S') or (vTipoFormaPagto = 'P') then
     begin
       ffrmCupomFiscalPgtoDet := TfrmCupomFiscalPgtoDet.Create(nil);
       ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
@@ -467,6 +492,8 @@ begin
     fDmCupomFiscal.prc_Inserir_FormaPagto;
     fDmCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger := mPagamentosSelecionadosId.AsInteger;
     fDmCupomFiscal.cdsCupomFiscal_FormaPgtoVALOR.AsFloat := mPagamentosSelecionadosValor.AsFloat;
+    if fDmCupomFiscal.cdsCupomFiscal_FormaPgtoTIPO_PGTO.AsString = EmptyStr  then
+      fDmCupomFiscal.cdsCupomFiscal_FormaPgtoTIPO_PGTO.AsString := vTipoFormaPagto;
     fDmCupomFiscal.cdsCupomFiscal_FormaPgto.Post;
     mPagamentosSelecionados.Next;
   end;
@@ -489,6 +516,9 @@ begin
   end
   else if fDmCupomFiscal.vID_Fechamento > 0 then
     fDmCupomFiscal.cdsCupomFiscalID_FECHAMENTO.AsInteger := fDmCupomFiscal.vID_Fechamento;
+
+  if (fDmCupomFiscal.cdsCupomParametrosSOLICITA_CPF.AsString = 'F') and (not vCpfOK) then
+    fDmCupomFiscal.prc_Digita_Documento;
 
   //ver
 //  if fDmCupomFiscal.cdsCupom_Parc.IsEmpty then
@@ -614,9 +644,7 @@ begin
     begin
       if fDmCupomFiscal.cdsCupom_ItensID_PEDIDO.AsInteger > 0 then
       begin
-        if not fDmCupomFiscal.mPedidoAux.Locate('ID_Pedido',
-          fDmCupomFiscal.cdsCupom_ItensID_PEDIDO.AsInteger, [loCaseInsensitive])
-          then
+        if not fDmCupomFiscal.mPedidoAux.Locate('ID_Pedido', fDmCupomFiscal.cdsCupom_ItensID_PEDIDO.AsInteger, [loCaseInsensitive]) then
         begin
           fDmCupomFiscal.mPedidoAux.Insert;
           fDmCupomFiscal.mPedidoAuxID_Pedido.AsInteger :=
@@ -636,13 +664,11 @@ begin
       fDmCupomFiscal.mPedidoAux.Delete;
     end;
   end;
-  //**********************************
 
   Close;
-  //***********
 end;
 
-procedure TfCupomFiscalPgto.brCancelarClick(Sender: TObject);
+procedure TfCupomFiscalPgto.btCancelarClick(Sender: TObject);
 begin
   fdmCupomFiscal.cdsCupom_Parc.EmptyDataSet;
   Close;
@@ -987,7 +1013,7 @@ begin
   begin
     Handled := True;
     fDmCupomFiscal.prc_Digita_Documento;
-    lblDocumento.Caption := vDocumentoClienteVenda;
+//    lblDocumento.Caption := vDocumentoClienteVenda;
   end;
 end;
 
@@ -1095,8 +1121,7 @@ begin
         tpValorPago:
           begin
             vDescPerc := 0;
-            vDescValor := fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat -
-              EditDesconto.Value;
+            vDescValor := fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat - EditDesconto.Value;
           end;
       end;
     end;
@@ -1106,19 +1131,15 @@ begin
     vDescValor := fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat * (vDescPerc
       / 100);
 
-  if (vDescValor > 0) and (vDescValor >
-    fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat) then
+  if (vDescValor > 0) and (vDescValor > fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat) then
   begin
     MessageDlg('O valor do desconto informado é maior que o valor total dos produtos!', mtInformation, [mbOK], 0);
     Result := False;
     Exit;
   end;
-
   fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency := vDescValor;
-
-  fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency :=
-    fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency -
-    fdmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency;
+  fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency :=  fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency - fdmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency;
+  prc_Calcular_Geral(fDmCupomFiscal);
   Result := True;
 end;
 
@@ -1130,16 +1151,17 @@ begin
   frmSel_Pessoa.vTipo_Pessoa := 'C';
   frmSel_Pessoa.ShowModal;
 
-  fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString :=
-    Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
-  lblCliente.Caption := fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString;
+  fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString := Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
+
+//  lblCliente.Caption := fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString;
+
   if (not fDmCupomFiscal.cdsPessoaCNPJ_CPF.IsNull) and
     (fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '000.000.000-00') then
   begin
     fDmCupomFiscal.cdsCupomFiscalCPF.AsString :=
       fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
     vDocumentoClienteVenda := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
-    lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+//    lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
   end;
 
   if vCodPessoa_Pos > 0 then
@@ -1155,19 +1177,18 @@ begin
         fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
         (trim(fDmCupomFiscal.vNome_Consumidor) <> '') then
       begin
-        fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString :=
-          Trim(fDmCupomFiscal.vNome_Consumidor);
-        lblCliente.Caption := Trim(fDmCupomFiscal.vNome_Consumidor);
+        fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString := Trim(fDmCupomFiscal.vNome_Consumidor);
+//        lblCliente.Caption := Trim(fDmCupomFiscal.vNome_Consumidor);
       end
       else
       begin
         fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString :=
           Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
-        lblCliente.Caption := Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
+//        lblCliente.Caption := Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
         fDmCupomFiscal.cdsCupomFiscalCPF.AsString :=
           fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
-        lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
-        vDocumentoClienteVenda := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+//        lblDocumento.Caption := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+//        vDocumentoClienteVenda := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
         //20/01/2017
         fDmCupomFiscal.cdsCupomFiscalCLIENTE_FONE.AsString := '';
         if trim(fDmCupomFiscal.cdsPessoaTELEFONE1.AsString) <> '' then
@@ -1270,7 +1291,7 @@ begin
     R := ClientRect;
     rgn := CreateRoundRectRgn(R.Left, R.Top, R.Right, R.Bottom, 10, 10);
     Perform(EM_GETRECT, 0, lParam(@r));
-    InflateRect(r, -4, -4);
+    InflateRect(r, -5, -5);
     Perform(EM_SETRECTNP, 0, lParam(@r));
     SetWindowRgn(Handle, rgn, True);
     Invalidate;
@@ -1299,6 +1320,21 @@ begin
           edtPagamento.SetFocus;
         end;
       end;
+    end
+    else
+    if EstadoFechVenda = InformandoValorRecebido then
+    begin
+      if fDmCupomFiscal.cdsTipoCobranca.Locate('ID',StrToInt(edtPagamento.Text), [loCaseInsensitive]) then
+      begin
+        edtValorPagamento.SelectAll;
+        edtValorPagamento.SetFocus;
+      end
+      else
+      begin
+        MessageDlg('Pagamento Informado não existe', mtError, [mbOK], 0);
+        edtPagamento.SelectAll;
+        edtPagamento.SetFocus;
+      end;
     end;
   end;
 end;
@@ -1313,6 +1349,7 @@ begin
   mPagamentosSelecionadosId.AsInteger := ID;
   mPagamentosSelecionadosValor.AsFloat := mPagamentosSelecionadosValor.AsFloat + Valor;
   mPagamentosSelecionadosNome.AsString := Trim(SQLLocate('TIPOCOBRANCA', 'ID','NOME', IntToStr(ID)));
+  mPagamentosSelecionadosTipo.AsString := Trim(SQLLocate('TIPOCOBRANCA', 'ID','FORMA_PGTO', IntToStr(ID)));
   mPagamentosSelecionados.Post;
   //Desabilita a barra de rolagem da grid
   ShowScrollBar(gridPagamento.Handle, SB_VERT, False);
@@ -1328,6 +1365,8 @@ var
 begin
   if key = Enter then
   begin
+    if EstadoFechVenda = FinalizandoVenda then
+      btConfirmar.SetFocus;
     if EstadoFechVenda = InformandoValorRecebido then
     begin
       if not (edtValorPagamento.Value > 0) then
@@ -1357,7 +1396,6 @@ begin
         vValorRecebido := vValorRecebido + edtValorPagamento.Value;
         edtPagamento.Clear;
         edtValorPagamento.Clear;
-        btConfirmar.SetFocus;
       end
       else
       if vValorTotal < (vValorRecebido + edtValorPagamento.Value) then
@@ -1369,7 +1407,6 @@ begin
         vValorRecebido := vValorRecebido + edtValorPagamento.Value;
         edtPagamento.Clear;
         edtValorPagamento.Clear;
-        btConfirmar.SetFocus;
       end
       else
       begin
@@ -1381,40 +1418,6 @@ begin
         vValorRecebido := vValorRecebido + edtValorPagamento.Value;
         edtValorPagamento.Value := vValorRestante;
       end;
-//
-//      if edtValorPagamento.Value > (vValorTotal - vValorRecebido) then
-//      begin
-//        vValorTroco := edtValorPagamento.Value - (vValorTotal - vValorRecebido);
-//        EstadoFechVenda := InformandoFormaPagamento;
-//        prc_Grava_Pagto_Selecionado(StrToInt(edtPagamento.Text),edtValorPagamento.Value);
-//        edtValorPagamento.Value := vValorRestante;
-//        edtPagamento.Clear;
-//        edtPagamento.SetFocus;
-//
-//      end
-//      else
-//      if (vValorRestante > 0)  then
-//      begin
-//        EstadoFechVenda := InformandoFormaPagamento;
-//        prc_Grava_Pagto_Selecionado(StrToInt(edtPagamento.Text),edtValorPagamento.Value);
-//        edtValorPagamento.Value := vValorRestante;
-//        edtPagamento.Clear;
-//        edtPagamento.SetFocus;
-//      end
-//      else
-//      begin
-//        if (vValorRestante < edtValorPagamento.Value) then
-//        begin
-//          fDmCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat := edtValorPagamento.Value - (vValorRestante * -1);
-//          prc_Grava_Pagto_Selecionado(StrToInt(edtPagamento.Text), vValorRestante);
-//        end
-//        else
-//          prc_Grava_Pagto_Selecionado(StrToInt(edtPagamento.Text), edtValorPagamento.Value);
-//        fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat := vValorRecebido;
-//        edtPagamento.Clear;
-//        edtVlrRecebido.Clear;
-//        EstadoFechVenda := FinalizandoVenda;
-//      end;
       fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat := vValorRecebido;
     end;
   end;

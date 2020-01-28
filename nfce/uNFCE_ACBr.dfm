@@ -1,6 +1,6 @@
 object fNFCE_ACBR: TfNFCE_ACBR
-  Left = 277
-  Top = 148
+  Left = 221
+  Top = 86
   Width = 979
   Height = 563
   Caption = 'Envia NFCe'

@@ -118,7 +118,7 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 1
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       AutoHideChildren = False
       BorderColor = clGray
       BorderShadow = True
@@ -129,7 +129,6 @@ object fCupomFiscal: TfCupomFiscal
       Caption.Font.Height = -11
       Caption.Font.Name = 'Verdana'
       Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
       Caption.Indent = 2
       CollapsColor = clBtnFace
       CollapsDelay = 0
@@ -389,11 +388,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel2: TGradientLabel
         Left = 8
@@ -411,11 +412,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel3: TGradientLabel
         Left = 8
@@ -433,11 +436,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel4: TGradientLabel
         Left = 8
@@ -455,11 +460,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel5: TGradientLabel
         Left = 8
@@ -477,11 +484,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel6: TGradientLabel
         Left = 8
@@ -499,11 +508,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel7: TGradientLabel
         Left = 8
@@ -521,11 +532,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
       object GradientLabel8: TGradientLabel
         Left = 8
@@ -543,11 +556,13 @@ object fCupomFiscal: TfCupomFiscal
         ColorTo = clWhite
         EllipsType = etNone
         GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
         Indent = 0
         LineWidth = 2
         Orientation = goHorizontal
         TransparentText = False
         VAlignment = vaTop
+        Version = '1.1.1.0'
       end
     end
   end
@@ -590,7 +605,7 @@ object fCupomFiscal: TfCupomFiscal
         ParentFont = False
         TabOrder = 0
         UseDockManager = True
-        Version = '1.6.0.3'
+        Version = '2.0.1.0'
         AutoHideChildren = False
         BorderColor = clGray
         BorderShadow = True
@@ -601,7 +616,6 @@ object fCupomFiscal: TfCupomFiscal
         Caption.Font.Height = -11
         Caption.Font.Name = 'Verdana'
         Caption.Font.Style = []
-        Caption.GradientDirection = gdVertical
         Caption.Indent = 2
         CollapsColor = clBtnFace
         CollapsDelay = 0
@@ -847,7 +861,7 @@ object fCupomFiscal: TfCupomFiscal
     object Panel7: TPanel
       Left = 0
       Top = 604
-      Width = 400
+      Width = 401
       Height = 54
       Align = alBottom
       Color = 3683329
@@ -988,7 +1002,7 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 4
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       AutoHideChildren = False
       BorderColor = clGray
       BorderShadow = True
@@ -999,7 +1013,6 @@ object fCupomFiscal: TfCupomFiscal
       Caption.Font.Height = -11
       Caption.Font.Name = 'Verdana'
       Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
       Caption.Indent = 2
       CollapsColor = clBtnFace
       CollapsDelay = 0
@@ -4373,6 +4386,8 @@ object fCupomFiscal: TfCupomFiscal
     Settings.CollapsSteps = 0
     Settings.Color = clWhite
     Settings.ColorTo = clTeal
+    Settings.ColorMirror = clNone
+    Settings.ColorMirrorTo = clNone
     Settings.Cursor = crDefault
     Settings.Font.Charset = DEFAULT_CHARSET
     Settings.Font.Color = clBlue

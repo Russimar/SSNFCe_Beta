@@ -247,9 +247,7 @@ begin
         Prod.vSeg := 0;
         Prod.vDesc := 0;
 
-        Prod.vDesc := StrToFloat(FormatFloat('0.00',
-          fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat +
-          fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat));
+        Prod.vDesc := StrToFloat(FormatFloat('0.00', fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat));
         vVlr_Desconto_NFCe := Prod.vdesc + vVlr_Desconto_NFCe;
 
         if ((trim(fDMNFCe.qProdutoCOD_CEST.AsString)) <> EmptyStr) then
@@ -516,9 +514,7 @@ begin
 
           if (fDMCupomFiscal.cdsCupom_ItensPERC_COFINS.AsFloat > 0) and
             (fDMCupomFiscal.cdsCupom_ItensVLR_COFINS.AsFloat > 0) then
-            vValorTotal := fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat +
-              fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat +
-              fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat;
+            vValorTotal := fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat + fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat;
           COFINS.vBC := vValorTotal;
           COFINS.pCOFINS := fDMCupomFiscal.cdsCupom_ItensPERC_COFINS.AsFloat;
           COFINS.vCOFINS := fDMCupomFiscal.cdsCupom_ItensVLR_COFINS.AsFloat;
@@ -550,9 +546,7 @@ begin
           vValorTotal := 0;
           if (fDMCupomFiscal.cdsCupom_ItensPERC_PIS.AsFloat > 0) and
             (fDMCupomFiscal.cdsCupom_ItensVLR_PIS.AsFloat > 0) then
-            vValorTotal := fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat +
-              fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat +
-              fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat;
+            vValorTotal := fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat + fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat;
           PIS.vBC := vValorTotal;
           PIS.pPIS := fDMCupomFiscal.cdsCupom_ItensPERC_PIS.AsFloat;
           PIS.vPIS := fDMCupomFiscal.cdsCupom_ItensVLR_PIS.AsFloat;
@@ -590,93 +584,97 @@ begin
     Total.ISSQNTot.vCOFINS := 0;
     Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
 
-    if fDMCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V' then
+
+    //Forma de Pagamento
+    fDMCupomFiscal.cdsCupomFiscal_FormaPgto.First;
+    while not fDMCupomFiscal.cdsCupomFiscal_FormaPgto.Eof do
     begin
-      with pag.Add do
-      begin
-        Ide.indPag := ipVista;
-        if fDMCupomFiscal.cdsTipoCobranca.Locate('ID',
-          fDMCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger,
-          ([Locaseinsensitive])) then
-        begin
-          if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '01' then
-            tPag := fpDinheiro
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '02'
-            then
-            tPag := fpCheque
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '03'
-            then
-            tPag := fpCartaoCredito
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '04'
-            then
-            tPag := fpCartaoDebito
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '05'
-            then
-            tPag := fpCreditoLoja
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '06'
-            then
-            tPag := fpValeAlimentacao
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '07'
-            then
-            tPag := fpValeRefeicao
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '08'
-            then
-            tPag := fpValePresente
-          else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '99'
-            then
-            tPag := fpOutro;
-        end;
-        vPag := fDMCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat;
-      end;
-    end
-    else
-    begin
-      fDMNFCe.cdsTPag.Close;
-      fDMNFCe.sdsTPag.ParamByName('ID').AsInteger :=
-        fDMCupomFiscal.cdsCupomFiscalID.AsInteger;
-      fDMNFCe.cdsTPag.Open;
-      fDMNFCe.cdsTPag.First;
-      while not fDMNFCe.cdsTPag.Eof do
+      if fDMCupomFiscal.cdsCupomFiscal_FormaPgtoTIPO_PGTO.AsString = 'V' then
       begin
         with pag.Add do
         begin
-          Ide.indPag := ipPrazo;
-
+          Ide.indPag := ipVista;
           if fDMCupomFiscal.cdsTipoCobranca.Locate('ID',
-            fDMCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger,
+            fDMCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger,
             ([Locaseinsensitive])) then
           begin
             if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '01' then
               tPag := fpDinheiro
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '02'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '02' then
               tPag := fpCheque
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '03'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '03' then
               tPag := fpCartaoCredito
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '04'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '04' then
               tPag := fpCartaoDebito
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '05'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '05' then
               tPag := fpCreditoLoja
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '06'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '06' then
               tPag := fpValeAlimentacao
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '07'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '07' then
               tPag := fpValeRefeicao
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '08'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '08' then
               tPag := fpValePresente
-            else if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '99'
-              then
+            else
+            if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '99' then
               tPag := fpOutro;
           end;
-          vPag := fDMNFCe.cdsTPagVLR_VENCIMENTO.AsFloat;
+          vPag := fDMCupomFiscal.cdsCupomFiscal_FormaPgtoVALOR.AsFloat;
         end;
-        fDMNFCe.cdsTPag.Next;
+      end
+      else
+      begin
+        fDMNFCe.cdsTPag.Close;
+        fDMNFCe.sdsTPag.ParamByName('ID').AsInteger := fDMCupomFiscal.cdsCupomFiscalID.AsInteger;
+        fDMNFCe.cdsTPag.Open;
+        fDMNFCe.cdsTPag.First;
+        while not fDMNFCe.cdsTPag.Eof do
+        begin
+          with pag.Add do
+          begin
+            Ide.indPag := ipPrazo;
+
+            if fDMCupomFiscal.cdsTipoCobranca.Locate('ID', fDMCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger,([Locaseinsensitive])) then
+            begin
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '01' then
+                tPag := fpDinheiro
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '02' then
+                tPag := fpCheque
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '03' then
+                tPag := fpCartaoCredito
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '04' then
+                tPag := fpCartaoDebito
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '05' then
+                tPag := fpCreditoLoja
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '06' then
+                tPag := fpValeAlimentacao
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '07' then
+                tPag := fpValeRefeicao
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '08' then
+                tPag := fpValePresente
+              else
+              if fDMCupomFiscal.cdsTipoCobrancaCOD_IMP_FISCAL.AsString = '99' then
+                tPag := fpOutro;
+            end;
+            vPag := fDMNFCe.cdsTPagVLR_VENCIMENTO.AsFloat;
+          end;
+          fDMNFCe.cdsTPag.Next;
+        end;
       end;
+      fDMCupomFiscal.cdsCupomFiscal_FormaPgto.Next;
     end;
     pag.vTroco := fDMCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat;
 
@@ -684,13 +682,9 @@ begin
 
     InfAdic.infCpl := '';
     InfAdic.infAdFisco := '';
-    fDMNFCe.ACBrNFe.DANFE.vTribMun :=
-      fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat;
-    fDMNFCe.ACBrNFe.DANFE.vTribEst :=
-      fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat;
-    fDMNFCe.ACBrNFe.DANFE.vTribFed :=
-      fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat;
-
+    fDMNFCe.ACBrNFe.DANFE.vTribMun := fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat;
+    fDMNFCe.ACBrNFe.DANFE.vTribEst := fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat;
+    fDMNFCe.ACBrNFe.DANFE.vTribFed := fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat;
   end;
 
   try
@@ -698,11 +692,8 @@ begin
   except
 
   end;
-  if DirectoryExists('c:\a') then
-    if (fDMNFCe.ACBrNFe.NotasFiscais.Count > 0) then
-      //and (chkGravarXml.Checked) then
-      fDMNFCe.ACBrNFe.NotasFiscais[0].GravarXML('nfe.xml', 'c:\a');
-
+  if DirectoryExists('c:\a') and (fDMNFCe.ACBrNFe.NotasFiscais.Count > 0) then
+    fDMNFCe.ACBrNFe.NotasFiscais[0].GravarXML('nfe.xml', 'c:\a');
 end;
 
 procedure TfNFCE_ACBR.btEnviarNovoClick(Sender: TObject);
