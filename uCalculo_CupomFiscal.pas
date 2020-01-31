@@ -227,7 +227,7 @@ begin
     fDMCupomFiscal.cdsCupomFiscal.Edit;
   vVlrDesconto     := fDMCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat;
   vVlrDesconto_Ori := fDMCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat;
-  vVlrTotal        := fDMCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat;
+  vVlrTotal        := fDMCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat + fDMCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat;
   vVlrJuros        := fDMCupomFiscal.cdsCupomFiscalVLR_OUTROS.AsFloat;
 
   fDMCupomFiscal.cdsCupomFiscalVLR_COFINS.AsFloat   := 0;

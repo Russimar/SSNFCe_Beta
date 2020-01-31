@@ -1,8 +1,8 @@
 object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
   Left = 365
   Top = 47
-  Width = 660
-  Height = 579
+  Width = 691
+  Height = 602
   Caption = 'frmCupomFiscalPgtoDet'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,7 +10,9 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -18,7 +20,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     Left = 0
     Top = 0
     Width = 57
-    Height = 541
+    Height = 564
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -28,10 +30,10 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     TabOrder = 0
   end
   object scrollDiretia: TScrollBox
-    Left = 582
+    Left = 613
     Top = 0
     Width = 62
-    Height = 541
+    Height = 564
     Align = alRight
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -43,8 +45,8 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
   object scrollPrincipal: TScrollBox
     Left = 57
     Top = 0
-    Width = 525
-    Height = 541
+    Width = 556
+    Height = 564
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -55,7 +57,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     object lblProduto: TRxLabel
       Left = 0
       Top = 0
-      Width = 525
+      Width = 556
       Height = 45
       Align = alTop
       Alignment = taCenter
@@ -74,7 +76,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     object pnlCabecalho: TAdvPanel
       Left = 0
       Top = 45
-      Width = 525
+      Width = 556
       Height = 57
       Align = alTop
       Font.Charset = DEFAULT_CHARSET
@@ -85,7 +87,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
       ParentFont = False
       TabOrder = 0
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
@@ -121,6 +123,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
         Width = 298
         Height = 31
         DropDownCount = 8
+        EscapeClear = False
         DataField = 'ID_CONDPGTO'
         DataSource = dmCupomFiscal.dsCupomFiscal
         Font.Charset = DEFAULT_CHARSET
@@ -139,7 +142,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     object pnlPrincipal: TAdvPanel
       Left = 0
       Top = 119
-      Width = 525
+      Width = 556
       Height = 386
       Align = alTop
       BevelWidth = 10
@@ -151,7 +154,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
       ParentFont = False
       TabOrder = 1
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
@@ -169,7 +172,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
       object gridParcelas: TSMDBGrid
         Left = 10
         Top = 10
-        Width = 505
+        Width = 536
         Height = 366
         Align = alClient
         BorderStyle = bsNone
@@ -244,7 +247,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
     object pnlDivisao: TAdvPanel
       Left = 0
       Top = 102
-      Width = 525
+      Width = 556
       Height = 17
       Align = alTop
       BevelOuter = bvNone
@@ -257,7 +260,7 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
       ParentFont = False
       TabOrder = 2
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
@@ -272,6 +275,45 @@ object frmCupomFiscalPgtoDet: TfrmCupomFiscalPgtoDet
       StatusBar.Font.Name = 'Tahoma'
       StatusBar.Font.Style = []
       FullHeight = 0
+    end
+    object btCancelar: TNxButton
+      Left = 285
+      Top = 512
+      Width = 187
+      Height = 39
+      Caption = 'Ca&ncelar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -19
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      GlyphSpacing = 5
+      ParentFont = False
+      TabOrder = 3
+      TabStop = False
+      Transparent = True
+      OnClick = btCancelarClick
+    end
+    object btConfirmar: TNxButton
+      Left = 94
+      Top = 512
+      Width = 187
+      Height = 39
+      Hint = 'Grava e finaliza a venda'
+      Cancel = True
+      Caption = '&Confirmar (F10)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -19
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      GlyphSpacing = 5
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 4
+      Transparent = True
+      OnClick = btConfirmarClick
     end
   end
 end

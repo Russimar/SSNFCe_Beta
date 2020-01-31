@@ -1,6 +1,6 @@
 object frmCadFechamento: TfrmCadFechamento
-  Left = 174
-  Top = 31
+  Left = 339
+  Top = 26
   Width = 1004
   Height = 692
   Caption = 'frmCadFechamento'

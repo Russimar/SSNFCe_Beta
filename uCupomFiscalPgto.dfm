@@ -1,8 +1,8 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 211
-  Top = 146
-  Width = 959
-  Height = 478
+  Left = 276
+  Top = 94
+  Width = 1009
+  Height = 506
   BorderIcons = [biSystemMenu]
   Caption = 'fCupomFiscalPgto - Pagamento'
   Color = clBtnFace
@@ -23,8 +23,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
   object pnlPrincipal: TAdvPanel
     Left = 0
     Top = 0
-    Width = 943
-    Height = 390
+    Width = 993
+    Height = 418
     Align = alClient
     BevelOuter = bvNone
     Color = 16645114
@@ -133,8 +133,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
     end
     object Label1: TLabel
-      Left = 275
-      Top = 333
+      Left = 264
+      Top = 371
       Width = 150
       Height = 38
       Alignment = taRightJustify
@@ -166,8 +166,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Visible = False
     end
     object Label10: TLabel
-      Left = 16
-      Top = 321
+      Left = 640
+      Top = 385
       Width = 58
       Height = 23
       Alignment = taRightJustify
@@ -183,9 +183,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Visible = False
     end
     object DBText1: TDBText
-      Left = 440
-      Top = 332
-      Width = 136
+      Left = 416
+      Top = 370
+      Width = 177
       Height = 36
       Alignment = taRightJustify
       DataField = 'VLR_PRODUTOS'
@@ -222,6 +222,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Top = 193
       Width = 203
       Height = 56
+      TabStop = False
       Color = 12633514
       DataField = 'VLR_RECEBIDO'
       DataSource = dmCupomFiscal.dsCupomFiscal
@@ -233,7 +234,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
       ReadOnly = True
       TabOrder = 1
-      OnExit = edtVlrRecebidoExit
     end
     object edtTroco: TDBEdit
       Left = 646
@@ -260,6 +260,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Top = 118
       Width = 203
       Height = 56
+      TabStop = False
       Color = 12633514
       DataField = 'VLR_DESCONTO'
       DataSource = dmCupomFiscal.dsCupomFiscal
@@ -274,7 +275,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     end
     object grCliente: TJvGroupBox
       Left = 13
-      Top = 240
+      Top = 232
       Width = 564
       Height = 63
       Caption = 'Cliente'
@@ -287,7 +288,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentColor = False
       ParentFont = False
       TabOrder = 4
-      object SpeedButton1: TSpeedButton
+      object btnCliente: TSpeedButton
         Left = 99
         Top = 24
         Width = 38
@@ -317,14 +318,16 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           0101010604040303030303030303030100000103030303030404040403030303
           0303030303030301000001010101010101010101010101010101010101010101
           0000}
+        OnClick = btnClienteClick
       end
-      object DBEdit1: TDBEdit
+      object edtCodigoCliente: TDBEdit
         Left = 8
         Top = 24
         Width = 89
         Height = 32
+        TabStop = False
         DataField = 'ID_CLIENTE'
-        DataSource = dmCupomFiscal.dsmCupomFiscal
+        DataSource = dmCupomFiscal.dsCupomFiscal
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -20
@@ -332,12 +335,14 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        OnExit = edtCodigoClienteExit
       end
-      object Edit2: TEdit
+      object edtNomeCliente: TEdit
         Left = 144
         Top = 24
         Width = 409
         Height = 32
+        TabStop = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -20
@@ -347,59 +352,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         TabOrder = 1
       end
     end
-    object grVendedor: TJvGroupBox
-      Left = 856
-      Top = 200
-      Width = 65
-      Height = 41
-      Caption = 'Dados Vendedor'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGreen
-      Font.Height = -20
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 5
-      Visible = False
-      object lblVendedor: TJvLabel
-        Left = 16
-        Top = 44
-        Width = 7
-        Height = 20
-        Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-        HotTrackFont.Charset = DEFAULT_CHARSET
-        HotTrackFont.Color = clWindowText
-        HotTrackFont.Height = -11
-        HotTrackFont.Name = 'MS Sans Serif'
-        HotTrackFont.Style = []
-      end
-      object JvLabel3: TJvLabel
-        Left = 8
-        Top = 30
-        Width = 46
-        Height = 13
-        Caption = 'Vendedor'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
-        HotTrackFont.Charset = DEFAULT_CHARSET
-        HotTrackFont.Color = clWindowText
-        HotTrackFont.Height = -11
-        HotTrackFont.Name = 'MS Sans Serif'
-        HotTrackFont.Style = []
-      end
-    end
     object pnlPagamentos: TAdvPanel
       Left = 8
       Top = 1
@@ -407,7 +359,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Height = 229
       BevelOuter = bvNone
       Color = 16645114
-      TabOrder = 6
+      TabOrder = 5
       UseDockManager = True
       Version = '2.0.1.0'
       AutoHideChildren = False
@@ -497,12 +449,12 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Left = 8
         Top = 23
         Width = 122
-        Height = 39
+        Height = 40
         EditAlign = eaCenter
         LabelPosition = lpLeftCenter
         LabelFont.Charset = DEFAULT_CHARSET
         LabelFont.Color = clWindowText
-        LabelFont.Height = -11
+        LabelFont.Height = -19
         LabelFont.Name = 'MS Sans Serif'
         LabelFont.Style = []
         Lookup.Separator = ';'
@@ -510,7 +462,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Enabled = True
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -21
+        Font.Height = -27
         Font.Name = 'Verdana'
         Font.Style = [fsBold, fsItalic]
         ParentFont = False
@@ -519,27 +471,12 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         OnKeyDown = edtPagamentoKeyDown
         Version = '2.8.6.1'
       end
-      object edtValorPagamento: TCurrencyEdit
-        Left = 137
-        Top = 23
-        Width = 150
-        Height = 39
-        AutoSize = False
-        DisplayFormat = ',,0.00;-,,0.00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -21
-        Font.Name = 'Verdana'
-        Font.Style = [fsBold, fsItalic]
-        ParentFont = False
-        TabOrder = 1
-        OnKeyDown = edtValorPagamentoKeyDown
-      end
       object gridPagamentosDisponiveis: TDBGrid
         Left = 289
         Top = 23
         Width = 278
         Height = 201
+        TabStop = False
         DataSource = dmCupomFiscal.dsTipoCobranca
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -578,6 +515,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Top = 80
         Width = 279
         Height = 142
+        TabStop = False
         Ctl3D = False
         DataSource = dsPagamentosSelecionados
         Font.Charset = DEFAULT_CHARSET
@@ -630,6 +568,35 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Visible = True
           end>
       end
+      object edtValorPagamento: TAdvEdit
+        Left = 135
+        Top = 23
+        Width = 150
+        Height = 40
+        EditAlign = eaRight
+        EditType = etFloat
+        Precision = 2
+        LabelPosition = lpLeftCenter
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -19
+        LabelFont.Name = 'MS Sans Serif'
+        LabelFont.Style = []
+        Lookup.Separator = ';'
+        Color = clWindow
+        Enabled = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -27
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold, fsItalic]
+        ParentFont = False
+        TabOrder = 1
+        Text = '0,00'
+        Visible = True
+        OnKeyDown = edtValorPagamentoKeyDown
+        Version = '2.8.6.1'
+      end
     end
     object ceJuros: TCurrencyEdit
       Left = 752
@@ -645,13 +612,13 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = []
       ParentFont = False
       ReadOnly = True
-      TabOrder = 7
+      TabOrder = 6
       Visible = False
       OnExit = ceJurosExit
     end
     object cbNFCe: TComboBox
-      Left = 82
-      Top = 311
+      Left = 703
+      Top = 375
       Width = 145
       Height = 32
       Style = csDropDownList
@@ -664,7 +631,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ItemHeight = 24
       ItemIndex = 0
       ParentFont = False
-      TabOrder = 8
+      TabOrder = 7
       Text = 'SIM'
       Visible = False
       OnKeyDown = cbNFCeKeyDown
@@ -674,18 +641,96 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     end
     object Edit1: TEdit
       Left = 18
-      Top = 354
+      Top = 362
       Width = 57
       Height = 46
       TabStop = False
-      TabOrder = 9
+      TabOrder = 8
       Visible = False
+    end
+    object grVendedor: TJvGroupBox
+      Left = 13
+      Top = 300
+      Width = 564
+      Height = 63
+      Caption = 'Vendedor'
+      Color = 16643051
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -20
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 9
+      object btnVendedor: TSpeedButton
+        Left = 99
+        Top = 24
+        Width = 38
+        Height = 31
+        Glyph.Data = {
+          DE020000424DDE02000000000000B60000002800000016000000170000000100
+          08000000000028020000C30E0000C30E0000200000000000000000FF0000FFFF
+          FF0080808000C0C0C00000000000FF000000FFFF00000000FF0000FFFF0045CA
+          BF004B737F00D0B4B400CC625700FF31310000CEFF000079FF000029FF005E5E
+          FF00BDBDFF00502B2D0000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000010101010101
+          0101010101010101010101010101010100000103030303030303030303030303
+          0303030404040301000001030303030303030303030303030303040701070401
+          0000010303030303030303030303030303040701010704010000010303030303
+          0303030303030303040701010707040100000103030303030303030303030304
+          0701010707040301000001030303030303030303030304070101070704030301
+          0000010303030303030303030304070101070704030303010000010303030303
+          0303030304070101070704030303030100000103030303030303030404040307
+          0704030303030301000001030303030304040404040404070403030303030301
+          0000010303030404060106010104040403030303030303010000010303040106
+          0106010101010403030303030303030100000103030406010601060106010403
+          0303030303030301000001030406010601010106010601040303030303030301
+          0000010304010601060106010601010403030303030303010000010304060106
+          0106010601060104030303030303030100000103040106010601060106010104
+          0303030303030301000001030304010601010106010604030303030303030301
+          0000010303040601060106010601040303030303030303010000010303030404
+          0101010604040303030303030303030100000103030303030404040403030303
+          0303030303030301000001010101010101010101010101010101010101010101
+          0000}
+        OnClick = btnVendedorClick
+      end
+      object edtCodigoVendedor: TDBEdit
+        Left = 8
+        Top = 24
+        Width = 89
+        Height = 32
+        TabStop = False
+        DataField = 'ID_VENDEDOR'
+        DataSource = dmCupomFiscal.dsCupomFiscal
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -20
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+      object edtNomeVendedor: TEdit
+        Left = 144
+        Top = 24
+        Width = 409
+        Height = 32
+        TabStop = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -20
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+      end
     end
   end
   object pnlBotton: TAdvPanel
     Left = 0
-    Top = 390
-    Width = 943
+    Top = 418
+    Width = 993
     Height = 50
     Align = alBottom
     BevelOuter = bvNone
@@ -748,6 +793,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      TabStop = False
       Transparent = True
       OnClick = btConfirmarClick
     end

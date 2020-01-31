@@ -10,7 +10,7 @@ uses
   cxGridLevel, cxClasses, cxControls, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   AdvPanel, ExtCtrls, Buttons, uDmCupomFiscal, Grids, DBGrids, SMDBGrid,
-  StdCtrls, RXCtrls, RxLookup, rsDBUtils;
+  StdCtrls, RXCtrls, RxLookup, rsDBUtils, NxCollection;
 
 type
   TfrmCupomFiscalPgtoDet = class(TForm)
@@ -24,8 +24,14 @@ type
     gridParcelas: TSMDBGrid;
     pnlDivisao: TAdvPanel;
     comboCondicaoPagto: TRxDBLookupCombo;
+    btCancelar: TNxButton;
+    btConfirmar: TNxButton;
     procedure comboCondicaoPagtoChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btConfirmarClick(Sender: TObject);
+    procedure btCancelarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,6 +70,26 @@ end;
 procedure TfrmCupomFiscalPgtoDet.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+end;
+
+procedure TfrmCupomFiscalPgtoDet.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_F10 then
+    btConfirmarClick(Sender);
+  if Key = VK_ESCAPE then
+    btCancelarClick(Sender);
+end;
+
+procedure TfrmCupomFiscalPgtoDet.btConfirmarClick(Sender: TObject);
+begin
+  ModalResult := mrOk;
+end;
+
+procedure TfrmCupomFiscalPgtoDet.btCancelarClick(Sender: TObject);
+begin
+  Close;
+  ModalResult := mrCancel;
 end;
 
 end.

@@ -980,9 +980,6 @@ begin
   if vDocumentoClienteVenda <> EmptyStr then
     vTextoFechamento := 'Consumidor CPF: ' + vDocumentoClienteVenda + #13;
 
-//  if (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '') and (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '000.000.000-00') then
-//    vTextoFechamento := 'Consumidor CPF: ' + fDmCupomFiscal.cdsCupomFiscalCPF.AsString + #13;
-
   if not fDmCupomFiscal.vEncerrado then
     exit;
 
