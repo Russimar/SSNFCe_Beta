@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 189
-  Top = 50
+  Left = 184
+  Top = 49
   Width = 1000
   Height = 617
   Caption = 'Menu Principal'

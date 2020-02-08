@@ -15,7 +15,14 @@ uses
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, ACBrValidador, JvScrollBox, dxSkinsCore,
   dxSkinBlue, dxSkinMoneyTwins, dxSkinOffice2007Blue, dxSkinSeven,
-  dxSkinscxPCPainter, cxLookAndFeels, dxGDIPlusClasses, GradientLabel;
+  dxSkinscxPCPainter, cxLookAndFeels, dxGDIPlusClasses, GradientLabel,
+  dxSkinBlack, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin,
+  dxSkinOffice2007Black, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
@@ -1728,27 +1735,35 @@ begin
     ID.IsolationLevel := xilREADCOMMITTED;
     dmDatabase.scoDados.StartTransaction(ID);
     try
-      //07/11/2019
-      if (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P') or
-       ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
-       or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
+      fDmCupomFiscal.cdsCupom_Parc.First;
+      while not fDmCupomFiscal.cdsCupom_Parc.Eof do
       begin
-        Le_CupomFiscalParc;
-        if (fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger > 0) and (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat)) > 0) then
+        fDmCupomFiscal.cdsTipoCobranca.Locate('ID',fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger,[loCaseInsensitive]);
+        if (fDmCupomFiscal.cdsTipoCobrancaFORMA_PGTO.AsString = 'P') or
+         ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+         or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
         begin
-          fDmCupomFiscal.cdsVendedor.Locate('CODIGO', fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger, [loCaseInsensitive]);
-          if fDmCupomFiscal.cdsVendedorTIPO_COMISSAO.AsString = 'N' then
-            fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a prazo
+          Le_CupomFiscalParc;
+          if (fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger > 0) and (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat)) > 0) then
+          begin
+            fDmCupomFiscal.cdsVendedor.Locate('CODIGO', fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger, [loCaseInsensitive]);
+            if fDmCupomFiscal.cdsVendedorTIPO_COMISSAO.AsString = 'N' then
+              fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a prazo
+          end;
+        end
+        else
+        begin
+          fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
+          fDmCupomFiscal.cdsTipoCobranca.Open;
+          fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger]);
+          fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(0, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
+          fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a vista
         end;
-      end
-      else
-      begin
-        fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
-        fDmCupomFiscal.cdsTipoCobranca.Open;
-        fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
-        fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(0, fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency);
-        fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a vista
+        fDmCupomFiscal.cdsCupom_Parc.Next;
       end;
+
+
+
       fDmCupomFiscal.cdsCupom_Parc.ApplyUpdates(0);
 
       dmDatabase.scoDados.Commit(ID);
@@ -1775,21 +1790,32 @@ begin
   //    or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T')) and (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V') then
   //  Gravar_CReceber
   //else
-  begin
-    fDmCupomFiscal.cdsCupom_Parc.First;
-    while not fDmCupomFiscal.cdsCupom_Parc.Eof do
-    begin
-      prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger);
-      //07/11/2019 foi incluido o (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'S')
-      if (fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S') or
-         ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
-         or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
-        Gravar_CReceber
-      else
-        fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
-      fDmCupomFiscal.cdsCupom_Parc.Next;
-    end;
-  end;
+
+
+//  begin
+//    fDmCupomFiscal.cdsCupom_Parc.First;
+//    while not fDmCupomFiscal.cdsCupom_Parc.Eof do
+//    begin
+//      prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger);
+//      if (fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S') or
+//         ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+//         or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
+//        Gravar_CReceber
+//      else
+//        fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
+//      fDmCupomFiscal.cdsCupom_Parc.Next;
+//    end;
+//  end;
+
+  prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger);
+  //07/11/2019 foi incluido o (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'S')
+  if (fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S') or
+     ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+     or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
+    Gravar_CReceber
+  else
+    fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupomFiscal_FormaPgtoVALOR.AsCurrency);
+
 end;
 
 procedure TfCupomFiscal.Gravar_Estoque(vFinanceiro: Boolean);

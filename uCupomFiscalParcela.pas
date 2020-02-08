@@ -51,7 +51,10 @@ begin
 //    DBEdit3.ReadOnly := (Tag = 1) or (fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger > 1); //Somente pode atualizar a primeira parcela
 //    DBEdit3.TabStop := not DBEdit3.ReadOnly;
 //  end;
-  dateDataEntrada.SetFocus;
+
+  dateDataEntrada.Date := Date;
+  edtValor.SelectAll;
+  edtValor.SetFocus;
 end;
 
 procedure TfCupomFiscalParcela.ComboFormaPgtoEnter(Sender: TObject);

@@ -1,5 +1,5 @@
 object fCupomParametros: TfCupomParametros
-  Left = -1366
+  Left = 164
   Top = 0
   Width = 1036
   Height = 768

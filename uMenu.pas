@@ -109,7 +109,7 @@ implementation
 
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado;
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uCadFechamento2;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -333,7 +333,7 @@ procedure TfMenu.Caixa1Click(Sender: TObject);
 begin
   FreeAndNil(fDmParametros);
 
-  OpenForm(TfrmCadFechamento,wsMaximized);
+  OpenForm(TfrmCadFechamento2,wsMaximized);
 
   if not Assigned(fDmParametros) then
     fDmParametros := TDmParametros.Create(Self);

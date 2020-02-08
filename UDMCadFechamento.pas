@@ -713,6 +713,7 @@ var
   vTipoDinheiro: Integer;
   vVlrSangria, vVlrSupri: Real;
 begin
+  vTotalVendas := 0;
   cdsFinanceiro.First;
   while not cdsFinanceiro.Eof do
   begin
@@ -874,7 +875,7 @@ begin
     cdsFechamento_Itens.Edit;
     cdsFechamento_ItensVLR_DIF_INFORMADO.AsFloat := StrToFloat(FormatFloat('0.00',cdsFechamento_ItensVLR_INFORMADO.AsFloat - cdsFechamento_ItensVLR_ENTRADA.AsFloat));
     cdsFechamento_ItensVLR_DIF_CONFERIDO.AsFloat := StrToFloat(FormatFloat('0.00',cdsFechamento_ItensVLR_CONFERENCIA.AsFloat - cdsFechamento_ItensVLR_ENTRADA.AsFloat));
-    vVlrDiferenca := vVlrDiferenca + cdsFechamento_ItensVLR_DIF_CONFERIDO.AsFloat;
+    vVlrDiferenca := vVlrDiferenca + cdsFechamento_ItensVLR_DIF_INFORMADO.AsFloat;
     cdsFechamento_Itens.Post;
     cdsFechamento_Itens.Next;
   end;

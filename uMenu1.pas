@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, jpeg, ExtCtrls, StdCtrls, IniFiles, Mask,
   DB, DateUtils, SqlExpr, UCBase, FMTBcd, DBClient, Provider, Grids, DBGrids, SMDBGrid, ToolEdit, strUtils,
-  JvLabel, JvBlinkingLabel;
+  JvLabel, JvBlinkingLabel, UCadFechamento_Contagem2, UCadFechamento2;
 
 type
   TfMenu1 = class(TForm)
@@ -45,8 +45,12 @@ type
     procedure DateEdit2KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure LabelBkpClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
+    ffrmCadFechamento2 : TfrmCadFechamento2;
+    ffrmCadFechamento_Contagem2 : TfrmCadFechamento_Contagem2;
     procedure prc_Verifica_Certificado;
     procedure prc_Verifica_Backup;
     procedure Le_Ini;
@@ -301,6 +305,26 @@ procedure TfMenu1.LabelBkpClick(Sender: TObject);
 begin
  prc_Verifica_Backup;
   prc_ShellExecute('ssBackUp_Solo.exe');
+end;
+
+procedure TfMenu1.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Vk_F7) then
+  begin
+    vConfirma_Fechamento := False;
+    ffrmCadFechamento_Contagem2 := TfrmCadFechamento_Contagem2.Create(self);
+    ffrmCadFechamento_Contagem2.vTipo_Valor      := 'I';
+    ffrmCadFechamento_Contagem2.ShowModal;
+    FreeAndNil(ffrmCadFechamento_Contagem2);
+    if (vConfirma_Fechamento) and  (SQLLocate('CUPOMFISCAL_PARAMETROS','ID','MOSTRAR_TELA_FECHAMENTO','1') = 'S') then
+    begin
+      ffrmCadFechamento2 := TfrmCadFechamento2.Create(self);
+      ffrmCadFechamento2.vID_Fechamento_Loc := vID_Fechamento_Pos;
+      ffrmCadFechamento2.ShowModal;
+      FreeAndNil(frmCadFechamento2);
+    end;
+  end;
 end;
 
 end.

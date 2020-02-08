@@ -1,6 +1,6 @@
 object fMenu1: TfMenu1
-  Left = 261
-  Top = 81
+  Left = 208
+  Top = 25
   Width = 928
   Height = 630
   BorderIcons = []
@@ -17,12 +17,13 @@ object fMenu1: TfMenu1
   Visible = True
   OnActivate = FormActivate
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lbDatabase: TLabel
     Left = 0
-    Top = 513
+    Top = 514
     Width = 912
     Height = 14
     Align = alBottom
@@ -42,7 +43,7 @@ object fMenu1: TfMenu1
     Left = 0
     Top = 0
     Width = 912
-    Height = 513
+    Height = 514
     Align = alClient
     TabOrder = 0
     object Label2: TLabel
@@ -101,7 +102,7 @@ object fMenu1: TfMenu1
     end
     object PanelBkp: TPanel
       Left = 1
-      Top = 472
+      Top = 473
       Width = 910
       Height = 40
       Align = alBottom
@@ -122,7 +123,6 @@ object fMenu1: TfMenu1
         Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
-        Visible = False
         OnClick = LabelBkpClick
         OnDblClick = LabelBkpClick
         HotTrackFont.Charset = DEFAULT_CHARSET
@@ -136,7 +136,7 @@ object fMenu1: TfMenu1
     end
     object Panel5: TPanel
       Left = 1
-      Top = 432
+      Top = 433
       Width = 910
       Height = 40
       Align = alBottom
@@ -165,7 +165,7 @@ object fMenu1: TfMenu1
     end
     object Panel6: TPanel
       Left = 1
-      Top = 392
+      Top = 393
       Width = 910
       Height = 40
       Align = alBottom
@@ -194,7 +194,7 @@ object fMenu1: TfMenu1
     end
     object Panel1: TPanel
       Left = 1
-      Top = 209
+      Top = 210
       Width = 910
       Height = 183
       Align = alBottom
@@ -299,7 +299,7 @@ object fMenu1: TfMenu1
   end
   object Panel7: TPanel
     Left = 0
-    Top = 527
+    Top = 528
     Width = 912
     Height = 64
     Align = alBottom

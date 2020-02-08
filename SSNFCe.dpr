@@ -5,7 +5,6 @@ program SSNFCe;
 uses
   Forms,
   Windows,
-  uMenu in 'uMenu.pas' {fMenu},
   uCupomFiscalC in 'uCupomFiscalC.pas' {fCupomFiscalC},
   uDmCupomFiscal in 'uDmCupomFiscal.pas' {dmCupomFiscal: TDataModule},
   UCupomFiscal in 'UCupomFiscal.pas' {fCupomFiscal},
@@ -104,7 +103,10 @@ uses
   UCadFilial_Certificado in 'UCadFilial_Certificado.pas' {frmCadFilial_Certificado},
   uCupomFiscalPgtoDet in 'uCupomFiscalPgtoDet.pas' {frmCupomFiscalPgtoDet},
   uClasseCalculaPagto in 'Classes\uClasseCalculaPagto.pas',
-  uTipoFormaPagto in 'uTipoFormaPagto.pas' {frmTelaTipoFormaPagto};
+  uTipoFormaPagto in 'uTipoFormaPagto.pas' {frmTelaTipoFormaPagto},
+  UCadFechamento_Contagem2 in 'UCadFechamento_Contagem2.pas' {frmCadFechamento_Contagem2},
+  UCadFechamento2 in 'UCadFechamento2.pas' {frmCadFechamento2},
+  uMenu in 'uMenu.pas' {fMenu};
 
 {$R *.res}
 

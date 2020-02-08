@@ -1,8 +1,8 @@
 object DMCadFechamento: TDMCadFechamento
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 178
-  Top = 74
+  Left = 184
+  Top = 86
   Height = 592
   Width = 1098
   object sdsFechamento: TSQLDataSet
@@ -1366,7 +1366,7 @@ object DMCadFechamento: TDMCadFechamento
     SQL.Strings = (
       
         'SELECT CP.ID_CONTAPERDAS, CP.ALTURA_SALTO_LINHA, P.IMPRESSORA_FI' +
-        'SCAL, IMP_VENDAS_FECHAMENTO'
+        'SCAL, IMP_VENDAS_FECHAMENTO, CP.MOSTRAR_TELA_FECHAMENTO'
       'FROM CUPOMFISCAL_PARAMETROS CP'
       'INNER JOIN PARAMETROS P ON (CP.ID = P.ID)')
     SQLConnection = dmDatabase.scoDados

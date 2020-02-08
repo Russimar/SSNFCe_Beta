@@ -244,8 +244,7 @@ begin
   end;
 end;
 
-procedure TfCupomFiscalPgto.Gravar_CupomFiscalParc(Data: TDateTime; Valor:
-  Real);
+procedure TfCupomFiscalPgto.Gravar_CupomFiscalParc(Data: TDateTime; Valor: Real);
 var
   vParcelaAux: Integer;
 begin
@@ -324,10 +323,18 @@ begin
     edtNomeCliente.Text := fDmCupomFiscal.cdsPessoaNOME.AsString;
 
   fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger := fDmCupomFiscal.cdsCupomParametrosID_TIPOCOBRANCA_PADRAO.AsInteger;
-  edtPagamento.Text := IntToStr(fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger);
-  edtValorPagamento.FloatValue := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat;
-  edtPagamentoKeyDown(Sender, Enter, [ssAlt]);
-  EstadoFechVenda := InformandoValorRecebido;
+  if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger > 0 then
+  begin
+    edtPagamento.Text := IntToStr(fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger);
+    edtValorPagamento.FloatValue := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat;
+    edtPagamentoKeyDown(Sender, Enter, [ssAlt]);
+    EstadoFechVenda := InformandoValorRecebido;
+  end
+  else
+  begin
+    edtPagamento.SetFocus;
+    EstadoFechVenda := InformandoValorRecebido;
+  end;
 
   //04/02/2017
   if fDmCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger <= 0 then
@@ -462,6 +469,7 @@ begin
       ffrmCupomFiscalPgtoDet := TfrmCupomFiscalPgtoDet.Create(nil);
       ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
       ffrmCupomFiscalPgtoDet.vVlr_Recebido := mPagamentosSelecionadosValor.AsFloat;
+      fDmCupomFiscal.vID_TipoCobranca := mPagamentosSelecionadosId.AsInteger;
       ffrmCupomFiscalPgtoDet.ShowModal;
       if ffrmCupomFiscalPgtoDet.ModalResult = mrCancel then
       begin
@@ -472,6 +480,11 @@ begin
       FreeAndNil(ffrmCupomFiscalPgtoDet);
       if SQLLocate('TIPOCOBRANCA','ID','EXIGE_CLIENTE',mPagamentosSelecionadosId.AsString) = 'S' then
         vExigeCliente := True;
+    end
+    else
+    begin
+      fDmCupomFiscal.vID_TipoCobranca := mPagamentosSelecionadosId.AsInteger;
+      fDmCupomFiscal.Gerar_Parcelas(mPagamentosSelecionadosValor.AsFloat,0,1);
     end;
     fDmCupomFiscal.prc_Inserir_FormaPagto;
     fDmCupomFiscal.cdsCupomFiscal_FormaPgtoID_TIPOCOBRANCA.AsInteger := mPagamentosSelecionadosId.AsInteger;
@@ -484,8 +497,6 @@ begin
 
   if (vExigeCliente) and ansiMatchStr(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsString,vCliente) then
   begin
-    MessageDlg('*** Esta forma de pagamento exige identificar o cliente!',
-      mtInformation, [mbOk], 0);
     repeat
       prc_InformaCliente;
     until fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger > 0;

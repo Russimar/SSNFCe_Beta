@@ -1,6 +1,6 @@
 object fCupomFiscalParcela: TfCupomFiscalParcela
-  Left = 353
-  Top = 140
+  Left = 352
+  Top = 278
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'fCupomFiscalParcela'

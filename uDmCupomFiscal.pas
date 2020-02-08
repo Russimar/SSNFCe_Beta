@@ -1709,8 +1709,7 @@ type
     procedure DoLogAdditionalValues(ATableName: string; var AValues: TArrayLogData; var UserName: string);
     procedure prc_Gravar_Financeiro(Tipo: String);//ENT=Entrada   AVI= Avista
     procedure prc_ControleParcelas(vVlrParcelado, vVlrTxJuros: Real; vQtdParc: Word);
-    procedure Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;vQtdParc: Word);
-    procedure Gravar_CupomFiscalParc(Data: TDateTime; Valor: Real);
+    procedure Gravar_CupomFiscalParc(Data: TDateTime; Valor: Real; ID_TipoCobranca : Integer);
 
   public
     { Public declarations }
@@ -1723,6 +1722,7 @@ type
     vSacolaSelecionada: Boolean;
     vVlrEntrada, vSomaParcelas, vSomaOriginal: Currency;
     vParcela : Integer;
+    vID_TipoCobranca : Integer;
 
     //27/07/2016
     vID_Fechamento: Integer;
@@ -1759,6 +1759,7 @@ type
     vCondicaoPgto : Integer;
     //***
 
+    procedure Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;vQtdParc: Word);
     procedure prcInserir(vId, vClienteId: Integer);
     procedure prcExcluir;
     procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
@@ -2303,10 +2304,8 @@ begin
   fDMGravarFinanceiro.vTipo_ES := 'E';
   fDMGravarFinanceiro.vHistorico_Compl := 'Recto. CF nº ' + cdsCupomFiscalNUMCUPOM.AsString;
   if cdsCupom_ParcPARCELA.AsInteger > 0 then
-    fDMGravarFinanceiro.vHistorico_Compl := fDMGravarFinanceiro.vHistorico_Compl +
-                                            '/' + cdsCupom_ParcPARCELA.AsString;
-  fDMGravarFinanceiro.vHistorico_Compl := fDMGravarFinanceiro.vHistorico_Compl +
-                                          ' de ' + cdsPessoaNOME.AsString;
+    fDMGravarFinanceiro.vHistorico_Compl := fDMGravarFinanceiro.vHistorico_Compl + '/' + cdsCupom_ParcPARCELA.AsString;
+  fDMGravarFinanceiro.vHistorico_Compl := fDMGravarFinanceiro.vHistorico_Compl + ' de ' + cdsPessoaNOME.AsString;
 
   if cdsCupomFiscalID_CONTA.AsInteger <= 0 then
     fDMGravarFinanceiro.vID_Conta := 1
@@ -2318,7 +2317,7 @@ begin
   fDMGravarFinanceiro.vID_Pessoa          := cdsCupomFiscalID_CLIENTE.AsInteger;
 
   cdsTipoCobranca.IndexFieldNames := 'ID';
-  cdsTipoCobranca.FindKey([cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
+  cdsTipoCobranca.FindKey([cdsCupom_ParcID_TIPOCOBRANCA.AsInteger]);
   if cdsTipoCobrancaFATURAMENTO_BRUTO.AsString = 'N' then
     fDMGravarFinanceiro.vID_Conta := cdsCupomParametrosID_CONTAPERDAS.AsInteger;
 
@@ -3820,8 +3819,7 @@ begin
 
 end;
 
-procedure TdmCupomFiscal.Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;
-  vQtdParc: Word);
+procedure TdmCupomFiscal.Gerar_Parcelas(vVlrParcelado, vTxJuros: Real; vQtdParc: Word);
 var
   vVlrParcelas: Real;
   vVlrRestante: Real;
@@ -3831,7 +3829,8 @@ begin
   vSomaParcelas := 0;
   if cdsCupomFiscalTIPO_PGTO.AsString = 'V' then
   begin
-    Gravar_CupomFiscalParc(cdsCupomFiscalDTEMISSAO.AsDateTime,cdsCupomFiscalVLR_TOTAL.AsFloat);
+//    Gravar_CupomFiscalParc(cdsCupomFiscalDTEMISSAO.AsDateTime,cdsCupomFiscalVLR_TOTAL.AsFloat,vID_TipoCobranca);
+    Gravar_CupomFiscalParc(cdsCupomFiscalDTEMISSAO.AsDateTime,vVlrParcelado,vID_TipoCobranca);
     vVlrParcelas := StrToFloat(FormatFloat('0.00',vVlrParcelado));
     vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrParcelado));
   end
@@ -3882,7 +3881,7 @@ begin
           vVlrParcelas := StrToFloat(FormatFloat('0.00',vVlrRestante));
 
         vDataAux := vDataAux + cdsCondPgto_DiaQtdDias.AsInteger;
-        Gravar_CupomFiscalParc(vDataAux,vVlrParcelas);
+        Gravar_CupomFiscalParc(vDataAux,vVlrParcelas, vID_TipoCobranca);
         vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrRestante - vVlrParcelas));
 
         if StrToFloat(FormatFloat('0.00',vVlrRestante)) <= 0 then
@@ -3903,15 +3902,14 @@ begin
            (StrToFloat(FormatFloat('0.00',vVlrParcelas)) < StrToFloat(FormatFloat('0.00',vVlrRestante))) then
           vVlrParcelas := StrToFloat(FormatFloat('0.00',vVlrParcelas + (vVlrRestante - vVlrParcelas)));
         vDataAux := IncMonth(vDataAux,1);
-        Gravar_CupomFiscalParc(vDataAux,vVlrParcelas);
+        Gravar_CupomFiscalParc(vDataAux,vVlrParcelas, vID_TipoCobranca);
         vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrRestante - vVlrParcelas));
       end
     end;
   end;
 end;
 
-procedure TdmCupomFiscal.Gravar_CupomFiscalParc(Data: TDateTime;
-  Valor: Real);
+procedure TdmCupomFiscal.Gravar_CupomFiscalParc(Data: TDateTime; Valor: Real; ID_TipoCobranca : Integer);
 var
   vParcelaAux: Integer;
 begin
@@ -3935,7 +3933,8 @@ begin
   end
   else
   begin
-    cdsCupom_ParcID_TIPOCOBRANCA.AsInteger := cdsCupomFiscalID_TIPOCOBRANCA.AsInteger;
+    cdsTipoCobranca.Locate('ID',ID_TipoCobranca,[loCaseInsensitive]);
+    cdsCupom_ParcID_TIPOCOBRANCA.AsInteger := cdsTipoCobrancaID.AsInteger;
     cdsCupom_ParcTIPO_COBRANCA.AsString    := cdsTipoCobrancaNOME.AsString;
 //    fDmCupomFiscal.cdsCupom_ParcTIPO_COBRANCA.AsString    := ComboFormaPagto.Text;
   end;
