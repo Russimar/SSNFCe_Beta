@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, Menus, ImgList, ComCtrls, jpeg,
   ToolWin, StdCtrls, uDmParametros, DB,  ShellAPI, StrUtils, IniFiles, Buttons, UCBase, UCDBXConn, SpeedBar, RLConsts, TypInfo,
-  uDmCadFechamento, uDmEstoque, SqlExpr;
+  uDmCadFechamento, uDmEstoque, SqlExpr, RXCtrls, JvSpeedBar;
 
 type
   TfMenu = class(TForm)
@@ -29,7 +29,7 @@ type
     Mantueno1: TMenuItem;
     Parmetros1: TMenuItem;
     erminal1: TMenuItem;
-    N1: TMenuItem;
+//    N1: TMenuItem;
     ConsultadeCupons1: TMenuItem;
     Caixa1: TMenuItem;
     btnSuprimento: TSpeedItem;
@@ -39,8 +39,8 @@ type
     Sangria1: TMenuItem;
     CupomFiscal1: TMenuItem;
     ConsultaCupom1: TMenuItem;
-    N2: TMenuItem;
-    N3: TMenuItem;
+//    N2: TMenuItem;
+//    N3: TMenuItem;
     btnFechamento: TSpeedItem;
     Relatrios1: TMenuItem;
     Estoque1: TMenuItem;
@@ -51,11 +51,11 @@ type
     Pagamentos1: TMenuItem;
     DevoluesTrocas1: TMenuItem;
     ConsultaPagamentodeCarns1: TMenuItem;
-    N4: TMenuItem;
-    N5: TMenuItem;
+//    N4: TMenuItem;
+//    N5: TMenuItem;
     Janelas1: TMenuItem;
     Ativas1: TMenuItem;
-    N6: TMenuItem;
+//    N6: TMenuItem;
     btnRecebimento: TSpeedItem;
     ConfiguraoCertificado1: TMenuItem;
     procedure FormShow(Sender: TObject);
@@ -86,7 +86,6 @@ type
     procedure erminal1Click(Sender: TObject);
     procedure btnRecebimentoClick(Sender: TObject);
     procedure ConfiguraoCertificado1Click(Sender: TObject);
-    procedure btnNFCeClick(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -110,7 +109,7 @@ implementation
 
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2;
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uCadFechamento2;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -333,10 +332,9 @@ end;
 procedure TfMenu.Caixa1Click(Sender: TObject);
 begin
   FreeAndNil(fDmParametros);
+
   OpenForm(TfrmCadFechamento2,wsMaximized);
 
-//  OpenForm(TfrmCadFechamento,wsMaximized);
-//
   if not Assigned(fDmParametros) then
     fDmParametros := TDmParametros.Create(Self);
   fDmParametros.cdsCupomParametros.Open;
@@ -359,18 +357,8 @@ end;
 
 procedure TfMenu.ConsultadeCupons1Click(Sender: TObject);
 begin
-  OpenForm(TfrmConsCupom,wsMaximized);
-//  ffrmConsCupom := TfrmConsCupom.Create(nil);
-//  ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
-//  ffrmConsCupom.btnReimprimir.Visible := True;
-//  ffrmConsCupom.edtSerie.Text := vSerieCupom;
-//  try
-//    ffrmConsCupom.ShowModal;
-//  finally
-//    FreeAndNil(ffrmConsCupom);
-//  end;
-//  vTipo_Dig_Cupom := 'Cons';
-//  OpenForm(TfCupomFiscalC,wsMaximized);
+  vTipo_Dig_Cupom := 'Cons';
+  OpenForm(TfCupomFiscalC,wsMaximized);
 end;
 
 procedure TfMenu.btnSangriaClick(Sender: TObject);
@@ -490,63 +478,49 @@ procedure TfMenu.btnFechamentoClick(Sender: TObject);
 var
   resultado: string;
 begin
-//  resultado := DateToStr(Date);
-//  if not InputQuery('Informe a Data', 'Formato DD/MM/AAAA:', resultado ) then
-//    Exit;
-//  if trim(resultado) = '' then
-//    Exit;
-//
-//  try
-//    strToDate(Resultado);
-//  except
-//    on E: exception do
-//    begin
-//      raise Exception.Create('Data inválida!');
-//      Exit;
-//    end;
-//  end;
-//
-//  fDmCadFechamento := TDmCadFechamento.Create(Self);
-//  if not PosicionaCaixa(StrToDate(resultado)) then
-//  begin
-//    FreeAndNil(fDmCadFechamento);
-//    ShowMessage('Não existe caixa aberto para essa data!');
-//    Exit;
-//  end;
+  resultado := DateToStr(Date);
+  if not InputQuery('Informe a Data', 'Formato DD/MM/AAAA:', resultado ) then
+    Exit;
+  if trim(resultado) = '' then
+    Exit;
 
-
-    vConfirma_Fechamento := False;
-    frmCadFechamento_Contagem2 := TfrmCadFechamento_Contagem2.Create(self);
-    frmCadFechamento_Contagem2.vTipo_Valor      := 'I';
-    frmCadFechamento_Contagem2.ShowModal;
-    FreeAndNil(frmCadFechamento_Contagem2);
-    if (vConfirma_Fechamento) and  (SQLLocate('CUPOMFISCAL_PARAMETROS','ID','MOSTRAR_TELA_FECHAMENTO','1') = 'S') then
+  try
+    strToDate(Resultado);
+  except
+    on E: exception do
     begin
-      frmCadFechamento2 := TfrmCadFechamento2.Create(self);
-      frmCadFechamento2.vID_Fechamento_Loc := vID_Fechamento_Pos;
-      frmCadFechamento2.ShowModal;
-      FreeAndNil(frmCadFechamento2);
+      raise Exception.Create('Data inválida!');
+      Exit;
     end;
-//
-//  fDMCadFechamento.prc_Abrir_Financeiro;
-//  fDMCadFechamento.prc_Le_Financeiro;
-//  fDMCadFechamento.prc_Recalcular_Inf;
-//
-//  frmCadFechamento_Contagem := TfrmCadFechamento_Contagem.Create(self);
-//  frmCadFechamento_Contagem.fDMCadFechamento := fDmCadFechamento;
-//  frmCadFechamento_Contagem.vTipo_Valor      := 'I';
-//  frmCadFechamento_Contagem.ShowModal;
-//  FreeAndNil(frmCadFechamento_Contagem);
-//
-//  if fDmCadFechamento.vInfConferencia <> 'S' then
-//    exit;
-//
-//  if fDmCadFechamento.vTipo_Valor = 'X' then
-//    exit;
-//
-//  prc_Fechar_Caixa('I');
-//
-//  FreeAndNil(fDmCadFechamento);
+  end;
+
+  fDmCadFechamento := TDmCadFechamento.Create(Self);
+  if not PosicionaCaixa(StrToDate(resultado)) then
+  begin
+    FreeAndNil(fDmCadFechamento);
+    ShowMessage('Não existe caixa aberto para essa data!');
+    Exit;
+  end;
+
+  fDMCadFechamento.prc_Abrir_Financeiro;
+  fDMCadFechamento.prc_Le_Financeiro;
+  fDMCadFechamento.prc_Recalcular_Inf;
+
+  frmCadFechamento_Contagem := TfrmCadFechamento_Contagem.Create(self);
+  frmCadFechamento_Contagem.fDMCadFechamento := fDmCadFechamento;
+  frmCadFechamento_Contagem.vTipo_Valor      := 'I';
+  frmCadFechamento_Contagem.ShowModal;
+  FreeAndNil(frmCadFechamento_Contagem);
+
+  if fDmCadFechamento.vInfConferencia <> 'S' then
+    exit;
+
+  if fDmCadFechamento.vTipo_Valor = 'X' then
+    exit;
+
+  prc_Fechar_Caixa('I');
+
+  FreeAndNil(fDmCadFechamento);
 end;
 
 procedure TfMenu.prc_Fechar_Caixa(vTipo: String);
@@ -695,25 +669,6 @@ end;
 procedure TfMenu.ConfiguraoCertificado1Click(Sender: TObject);
 begin
   OpenForm(TfrmCadFilial_Certificado,wsMaximized);
-end;
-
-procedure TfMenu.btnNFCeClick(Sender: TObject);
-begin
-  if not Assigned(fDmParametros) then
-    fDmParametros := TdmParametros.Create(Self);
-  fDmParametros.cdsCupomParametros.Close;
-  fDmParametros.cdsCupomParametros.Open;
-  if fDmParametros.cdsCupomParametrosABRIR_CUPOM.AsString = 'I' then
-    vTipo_Dig_Cupom := 'I'
-  else
-    vTipo_Dig_Cupom := 'C';
-  fCupomFiscal := TfCupomFiscal.Create(nil);
-  try
-    fCupomFiscal.WindowState := wsMaximized;
-    fCupomFiscal.ShowModal;
-  finally
-    FreeAndNil(fCupomFiscal);
-  end;
 end;
 
 end.

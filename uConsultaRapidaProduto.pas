@@ -135,6 +135,12 @@ end;
 procedure TfrmConsultaRapidaProduto.FormKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+    ModalResult := mrCancel;
+  end;
+
   if Key = VK_RETURN then
     gridProdutoDblClick(sender);
 end;

@@ -131,6 +131,6 @@ begin
   Application.CreateForm(TfMenu1, fMenu1);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
-
+  
   Application.Run;
 end.

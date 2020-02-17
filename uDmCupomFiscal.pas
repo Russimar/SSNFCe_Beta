@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, UDMCadExtComissao, UDMGravarFinanceiro, StdConvs, StrUtils,
   Printers, logTypes, uUtilPadrao, Graphics, ACBrBarCode, frxClass, frxDBSet, frxBarcode, Windows, Messages, ACBrBase, ACBrBAL,
-  ACBrDevice, Dialogs, ExtCtrls, IniFiles, ACBrValidador, Math, Controls;
+  ACBrDevice, Dialogs, ExtCtrls, IniFiles, ACBrValidador, Math, Controls, Variants;
 
 type
   TdmCupomFiscal = class(TDataModule)
@@ -1690,6 +1690,47 @@ type
     sdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
     cdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
     cdsTipoCobrancaFORMA_PGTO: TStringField;
+    sdsCupom_ItensCOD_CBENEF: TStringField;
+    cdsCupom_ItensCOD_CBENEF: TStringField;
+    sdsCFOP_VariacaoCOD_BENEF: TStringField;
+    cdsCFOP_VariacaoCOD_BENEF: TStringField;
+    qPessoa_Fiscal: TSQLQuery;
+    qPessoa_FiscalCODIGO: TIntegerField;
+    qPessoa_FiscalIPI_SUSPENSO: TStringField;
+    qPessoa_FiscalIPI_DT_INICIO: TDateField;
+    qPessoa_FiscalIPI_DT_FINAL: TDateField;
+    qPessoa_FiscalIPI_OBS: TStringField;
+    qPessoa_FiscalIPI_ID_CSTIPI: TIntegerField;
+    qPessoa_FiscalPIS_SUSPENSO: TStringField;
+    qPessoa_FiscalPIS_DT_INICIO: TDateField;
+    qPessoa_FiscalPIS_DT_FINAL: TDateField;
+    qPessoa_FiscalPIS_OBS: TStringField;
+    qPessoa_FiscalPIS_ID_PIS: TIntegerField;
+    qPessoa_FiscalPIS_ID_COFINS: TIntegerField;
+    qPessoa_FiscalCOD_IPI: TStringField;
+    qPessoa_FiscalCOD_PIS: TStringField;
+    qPessoa_FiscalCOD_COFINS: TStringField;
+    qPessoa_FiscalDESC_SUFRAMA_PIS_COFINS: TStringField;
+    qPessoa_FiscalDESC_SUFRAMA_ICMS: TStringField;
+    qPessoa_FiscalDESC_SUFRAMA_IPI: TStringField;
+    qPessoa_FiscalOBS_LEI_SUFRAMA: TStringField;
+    qPessoa_FiscalOBS_LEI_DADOS_ADICIONAIS: TStringField;
+    qPessoa_FiscalID_CST_ICMS_SUFRAMA: TIntegerField;
+    qPessoa_FiscalID_CST_PIS_COFINS_SUFRAMA: TIntegerField;
+    qPessoa_FiscalID_CST_IPI_SUFRAMA: TIntegerField;
+    qPessoa_FiscalID_ENQIPI_SUFRAMA: TIntegerField;
+    qPessoa_FiscalID_ENQIPI: TIntegerField;
+    qPessoa_FiscalID_CST_ICMS: TIntegerField;
+    qPessoa_FiscalID_CST_ICMS_SUFRAMA_ST: TIntegerField;
+    qPessoa_FiscalDRAW_OBS: TStringField;
+    qPessoa_FiscalDRAW_ID_PIS_COFINS: TIntegerField;
+    qPessoa_FiscalDRAW_ID_IPI: TIntegerField;
+    qPessoa_FiscalDRAW_ENQIPI: TIntegerField;
+    qPessoa_FiscalDRAW_PERC_DESCONTO: TFloatField;
+    qPessoa_FiscalDRAW_POSSUI: TStringField;
+    qPessoa_FiscalCOD_BENEF: TStringField;
+    cdsProdutoCOD_BENEF: TStringField;
+    cdsTab_NCMCOD_BENEF: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1806,6 +1847,7 @@ type
     procedure prcGravaTransacao;
 
     procedure prc_Busca_IBPT;
+    procedure prc_Busca_CodBenef;
     procedure prc_Localizar_Pessoa(vId: Integer ; vCNPJ_CPF : String);
 
     procedure prc_Calcular_Valor_Juros(Perc_Juros : Currency);
@@ -3610,7 +3652,7 @@ end;
 
 procedure TdmCupomFiscal.prc_Digita_Documento;
 begin
-  if vDocumentoClienteVenda = '' then
+//  if vDocumentoClienteVenda = '' then
   begin
     repeat
       vCpfOK := False;
@@ -3620,6 +3662,9 @@ begin
       begin
         if length(vDocumentoClienteVenda) = 11 then
         begin
+         if vDocumentoClienteVenda <> EmptyStr then
+           vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
+
           ACBrValidador.TipoDocto := TACBrValTipoDocto(docCPF);
           ACBrValidador.Documento := vDocumentoClienteVenda;
 
@@ -3635,6 +3680,9 @@ begin
         else
         if length(vDocumentoClienteVenda) = 14 then
         begin
+         if vDocumentoClienteVenda <> EmptyStr then
+           vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
+
           ACBrValidador.TipoDocto := TACBrValTipoDocto(docCNPJ);
           ACBrValidador.Documento := vDocumentoClienteVenda;
           if ACBrValidador.Validar then
@@ -3651,9 +3699,9 @@ begin
         vCpfOK := True;
     until
       vCpfOK;
-  end
-  else
-    vCpfOK := True;
+  end;
+//  else
+//    vCpfOK := True;
 end;
 
 procedure TdmCupomFiscal.cdsCupomFiscalReconcileError(
@@ -3956,6 +4004,78 @@ end;
 procedure TdmCupomFiscal.prc_Gravar_FormaPagto;
 begin
  //
+end;
+
+procedure TdmCupomFiscal.prc_Busca_CodBenef;
+var
+  vCod_CBenef_Loc : String;
+  vID_ICMS : Integer;
+  vUsouICM : Boolean;
+begin
+  if cdsCupom_ItensID_VARIACAO.AsInteger > 0 then
+  begin
+    if not cdsCFOP_Variacao.Locate('ID;ITEM',VarArrayOf([cdsCFOPID.AsInteger,cdsCupom_ItensID_VARIACAO.AsInteger]),[locaseinsensitive]) then
+      cdsCupom_ItensID_VARIACAO.AsInteger := 0
+    else
+    begin
+      if trim(cdsCFOP_VariacaoCOD_BENEF.AsString) <> '' then
+        vCod_CBenef_Loc := cdsCFOP_VariacaoCOD_BENEF.AsString;
+    end
+  end;
+
+  if (cdsCFOPGERAR_ICMS.AsString = 'S') and (cdsFilialSIMPLES.AsString <> 'S') then
+  begin
+    if cdsProdutoID_CSTICMS.AsInteger > 0 then
+    begin
+      vID_ICMS := cdsProdutoID_CSTICMS.AsInteger;
+      if cdsTab_CSTICMS.Locate('ID',vID_ICMS,[loCaseInsensitive]) then
+      begin
+        if cdsTab_CSTICMSCOD_CST.AsString = '00' then
+          vCod_CBenef_Loc := ''
+        else
+        if trim(cdsProdutoCOD_BENEF.AsString) <> '' then
+          vCod_CBenef_Loc := cdsProdutoCOD_BENEF.AsString;
+      end;
+    end
+    else
+    begin
+      if cdsTab_NCMID_CST_ICMS.AsInteger > 0 then
+      begin
+        vID_ICMS := cdsTab_NCMID_CST_ICMS.AsInteger;
+        if cdsTab_CSTICMS.Locate('ID',vID_ICMS,[loCaseInsensitive]) then
+        begin
+          if cdsTab_CSTICMSCOD_CST.AsString = '00' then
+            vCod_CBenef_Loc := ''
+          else
+          if trim(cdsTab_NCMCOD_BENEF.AsString) <> '' then
+            vCod_CBenef_Loc := cdsTab_NCMCOD_BENEF.AsString;
+        end;
+      end;
+    end;
+  end;
+
+  qPessoa_Fiscal.Close;
+  qPessoa_Fiscal.ParamByName('CODIGO').AsInteger := cdsCupomFiscalID_CLIENTE.AsInteger;
+  qPessoa_Fiscal.Open;
+  vUsouICM := False;
+  if (cdsCFOPGERAR_ICMS.AsString = 'S') and (cdsFilialSIMPLES.AsString <> 'S') then
+  begin
+    if qPessoa_FiscalID_CST_ICMS.AsInteger > 0 then
+    begin
+      vID_ICMS := qPessoa_FiscalID_CST_ICMS.AsInteger;
+      if cdsTab_CSTICMS.Locate('ID',vID_ICMS,[loCaseInsensitive]) then
+      begin
+        if cdsTab_CSTICMSCOD_CST.AsString = '00' then
+          vCod_CBenef_Loc := ''
+        else
+        if trim(qPessoa_FiscalCOD_BENEF.AsString) <> '' then
+          vCod_CBenef_Loc := qPessoa_FiscalCOD_BENEF.AsString;
+        vUsouICM := True;
+      end;
+    end;
+  end;
+  //  10/02/2020
+  cdsCupom_ItensCOD_CBENEF.AsString := vCod_CBenef_Loc;
 end;
 
 end.

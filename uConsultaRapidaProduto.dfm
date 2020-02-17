@@ -61,7 +61,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       ParentFont = False
       TabOrder = 0
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
@@ -212,7 +212,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       ParentFont = False
       TabOrder = 1
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
@@ -377,6 +377,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
@@ -397,7 +398,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       ParentFont = False
       TabOrder = 2
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       Caption.Color = clHighlight
       Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET

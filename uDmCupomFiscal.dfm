@@ -838,6 +838,10 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupom_ItensVLR_ICMS_SUBSTITUTO: TFloatField
       FieldName = 'VLR_ICMS_SUBSTITUTO'
     end
+    object sdsCupom_ItensCOD_CBENEF: TStringField
+      FieldName = 'COD_CBENEF'
+      Size = 8
+    end
   end
   object cdsCupom_Itens: TClientDataSet
     Aggregates = <>
@@ -1088,6 +1092,10 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'VLR_ICMS_SUBSTITUTO'
       DisplayFormat = '#0.00'
       EditFormat = '#0.00'
+    end
+    object cdsCupom_ItensCOD_CBENEF: TStringField
+      FieldName = 'COD_CBENEF'
+      Size = 8
     end
   end
   object dsCupom_Itens: TDataSource
@@ -1904,6 +1912,10 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsProdutoPERC_ICMS_NFCE: TFloatField
       FieldName = 'PERC_ICMS_NFCE'
+    end
+    object cdsProdutoCOD_BENEF: TStringField
+      FieldName = 'COD_BENEF'
+      Size = 8
     end
   end
   object dsProduto: TDataSource
@@ -4898,6 +4910,10 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'TIPO_COFINS'
       Size = 2
     end
+    object sdsCFOP_VariacaoCOD_BENEF: TStringField
+      FieldName = 'COD_BENEF'
+      Size = 8
+    end
   end
   object cdsCFOP_Variacao: TClientDataSet
     Aggregates = <>
@@ -5005,6 +5021,10 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'TIPO_COFINS'
       Size = 2
     end
+    object cdsCFOP_VariacaoCOD_BENEF: TStringField
+      FieldName = 'COD_BENEF'
+      Size = 8
+    end
   end
   object dsCFOP_Variacao: TDataSource
     DataSet = cdsCFOP_Variacao
@@ -5043,7 +5063,7 @@ object dmCupomFiscal: TdmCupomFiscal
       'SELECT N.ID, N.NCM, N.NOME, N.PERC_RED_STRIB, N.GERAR_ST, USAR_M' +
       'VA_UF_DESTINO, N.COD_CEST, ID_PIS,'#13#10'ID_COFINS, ID_CST_ICMS, PERC' +
       '_PIS, PERC_COFINS, PERC_BASE_ICMS, ID_OBS_LEI, N.ID_CFOP, N.PERC' +
-      '_ICMS'#13#10'FROM TAB_NCM N'#13#10
+      '_ICMS, N.COD_BENEF'#13#10'FROM TAB_NCM N'#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
@@ -5117,6 +5137,10 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsTab_NCMPERC_ICMS: TFloatField
       FieldName = 'PERC_ICMS'
+    end
+    object cdsTab_NCMCOD_BENEF: TStringField
+      FieldName = 'COD_BENEF'
+      Size = 8
     end
   end
   object dsTab_NCM: TDataSource
@@ -7898,5 +7922,151 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = cdsCupomFiscal_FormaPgto
     Left = 128
     Top = 248
+  end
+  object qPessoa_Fiscal: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'CODIGO'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'SELECT PF.*, TI.cod_ipi, TP.codigo COD_PIS, TC.codigo COD_COFINS'
+      'FROM PESSOA_FISCAL PF'
+      'LEFT JOIN TAB_CSTIPI TI'
+      'ON PF.ipi_id_cstipi = TI.id'
+      'LEFT JOIN tab_pis TP'
+      'ON PF.pis_id_pis = TP.id'
+      'LEFT JOIN tab_cofins TC'
+      'ON PF.pis_id_cofins = TC.id'
+      'WHERE PF.CODIGO = :CODIGO')
+    SQLConnection = dmDatabase.scoDados
+    Left = 881
+    Top = 315
+    object qPessoa_FiscalCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+      Required = True
+    end
+    object qPessoa_FiscalIPI_SUSPENSO: TStringField
+      FieldName = 'IPI_SUSPENSO'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalIPI_DT_INICIO: TDateField
+      FieldName = 'IPI_DT_INICIO'
+    end
+    object qPessoa_FiscalIPI_DT_FINAL: TDateField
+      FieldName = 'IPI_DT_FINAL'
+    end
+    object qPessoa_FiscalIPI_OBS: TStringField
+      FieldName = 'IPI_OBS'
+      Size = 250
+    end
+    object qPessoa_FiscalIPI_ID_CSTIPI: TIntegerField
+      FieldName = 'IPI_ID_CSTIPI'
+    end
+    object qPessoa_FiscalPIS_SUSPENSO: TStringField
+      FieldName = 'PIS_SUSPENSO'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalPIS_DT_INICIO: TDateField
+      FieldName = 'PIS_DT_INICIO'
+    end
+    object qPessoa_FiscalPIS_DT_FINAL: TDateField
+      FieldName = 'PIS_DT_FINAL'
+    end
+    object qPessoa_FiscalPIS_OBS: TStringField
+      FieldName = 'PIS_OBS'
+      Size = 250
+    end
+    object qPessoa_FiscalPIS_ID_PIS: TIntegerField
+      FieldName = 'PIS_ID_PIS'
+    end
+    object qPessoa_FiscalPIS_ID_COFINS: TIntegerField
+      FieldName = 'PIS_ID_COFINS'
+    end
+    object qPessoa_FiscalCOD_IPI: TStringField
+      FieldName = 'COD_IPI'
+      Size = 2
+    end
+    object qPessoa_FiscalCOD_PIS: TStringField
+      FieldName = 'COD_PIS'
+      Size = 2
+    end
+    object qPessoa_FiscalCOD_COFINS: TStringField
+      FieldName = 'COD_COFINS'
+      Size = 2
+    end
+    object qPessoa_FiscalDESC_SUFRAMA_PIS_COFINS: TStringField
+      FieldName = 'DESC_SUFRAMA_PIS_COFINS'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalDESC_SUFRAMA_ICMS: TStringField
+      FieldName = 'DESC_SUFRAMA_ICMS'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalDESC_SUFRAMA_IPI: TStringField
+      FieldName = 'DESC_SUFRAMA_IPI'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalOBS_LEI_SUFRAMA: TStringField
+      FieldName = 'OBS_LEI_SUFRAMA'
+      Size = 250
+    end
+    object qPessoa_FiscalOBS_LEI_DADOS_ADICIONAIS: TStringField
+      FieldName = 'OBS_LEI_DADOS_ADICIONAIS'
+      Size = 250
+    end
+    object qPessoa_FiscalID_CST_ICMS_SUFRAMA: TIntegerField
+      FieldName = 'ID_CST_ICMS_SUFRAMA'
+    end
+    object qPessoa_FiscalID_CST_PIS_COFINS_SUFRAMA: TIntegerField
+      FieldName = 'ID_CST_PIS_COFINS_SUFRAMA'
+    end
+    object qPessoa_FiscalID_CST_IPI_SUFRAMA: TIntegerField
+      FieldName = 'ID_CST_IPI_SUFRAMA'
+    end
+    object qPessoa_FiscalID_ENQIPI_SUFRAMA: TIntegerField
+      FieldName = 'ID_ENQIPI_SUFRAMA'
+    end
+    object qPessoa_FiscalID_ENQIPI: TIntegerField
+      FieldName = 'ID_ENQIPI'
+    end
+    object qPessoa_FiscalID_CST_ICMS: TIntegerField
+      FieldName = 'ID_CST_ICMS'
+    end
+    object qPessoa_FiscalID_CST_ICMS_SUFRAMA_ST: TIntegerField
+      FieldName = 'ID_CST_ICMS_SUFRAMA_ST'
+    end
+    object qPessoa_FiscalDRAW_OBS: TStringField
+      FieldName = 'DRAW_OBS'
+      Size = 250
+    end
+    object qPessoa_FiscalDRAW_ID_PIS_COFINS: TIntegerField
+      FieldName = 'DRAW_ID_PIS_COFINS'
+    end
+    object qPessoa_FiscalDRAW_ID_IPI: TIntegerField
+      FieldName = 'DRAW_ID_IPI'
+    end
+    object qPessoa_FiscalDRAW_ENQIPI: TIntegerField
+      FieldName = 'DRAW_ENQIPI'
+    end
+    object qPessoa_FiscalDRAW_PERC_DESCONTO: TFloatField
+      FieldName = 'DRAW_PERC_DESCONTO'
+    end
+    object qPessoa_FiscalDRAW_POSSUI: TStringField
+      FieldName = 'DRAW_POSSUI'
+      FixedChar = True
+      Size = 1
+    end
+    object qPessoa_FiscalCOD_BENEF: TStringField
+      FieldName = 'COD_BENEF'
+      Size = 8
+    end
   end
 end

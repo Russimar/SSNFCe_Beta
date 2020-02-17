@@ -8,7 +8,6 @@ uses
 
 type
   TfrmCadFechamento_Contagem2 = class(TForm)
-    gridContagem2: TSMDBGrid;
     Panel1: TPanel;
     btConfirmar: TNxButton;
     brCancelar: TNxButton;
@@ -21,6 +20,8 @@ type
     procedure btConfirmarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dateFachamentoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
     { Private declarations }
@@ -266,6 +267,13 @@ begin
   fDMCadFechamento.cdsFechamentoVLR_ENTRADA.AsCurrency  := 0;
   fDMCadFechamento.cdsFechamentoVLR_SALDO.AsCurrency    := 0;
   fDMCadFechamento.cdsFechamento.Post;
+end;
+
+procedure TfrmCadFechamento_Contagem2.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if (Key = Vk_F10) then
+    btConfirmarClick(Sender);
 end;
 
 end.

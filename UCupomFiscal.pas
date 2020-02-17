@@ -539,7 +539,7 @@ begin
   if (Key = Vk_F4) then
     prc_ConsPreco;
 
-  if (Key = Vk_F5) then
+  if (Key = Vk_F5) and (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     fDmCupomFiscal.prc_Digita_Documento;
 
   if (Key = Vk_F6) then
@@ -1156,6 +1156,8 @@ begin
     ShowMessage('Variação da CFOP não localizada para a operação!' + #13 + 'Cupom fiscal não será validado!')
   else
     fDmCupomFiscal.prc_Mover_CST;
+
+
 end;
 
 function TfCupomFiscal.fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
@@ -2116,6 +2118,7 @@ begin
 
     fDmCupomFiscal.prc_Busca_IBPT;
 
+
     if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
     begin
       if fDmCupomFiscal.vID_CFOP > 0 then
@@ -2142,7 +2145,8 @@ begin
       else
         fDmCupomFiscal.cdsCupom_ItensPERC_IPI.AsFloat := fDmCupomFiscal.vPerc_IPI;
 
-      prc_Calculo_GeralItem(fDmCupomFiscal, fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensPERC_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_ACRESCIMO.AsFloat, 'S', 0);
+      fDmCupomFiscal.prc_Busca_CodBenef;
+        prc_Calculo_GeralItem(fDmCupomFiscal, fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensPERC_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_ACRESCIMO.AsFloat, 'S', 0);
     end;
 
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CFI') then

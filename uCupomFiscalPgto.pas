@@ -1317,7 +1317,15 @@ begin
   if key = Enter then
   begin
     if EstadoFechVenda = FinalizandoVenda then
-      btConfirmar.SetFocus;
+    begin
+
+
+
+
+
+      btConfirmarClick(Sender);
+      Exit;
+    end;
     if EstadoFechVenda = InformandoValorRecebido then
     begin
       if not (edtValorPagamento.FloatValue > 0) then

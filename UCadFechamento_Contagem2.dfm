@@ -1,6 +1,6 @@
 object frmCadFechamento_Contagem2: TfrmCadFechamento_Contagem2
-  Left = 348
-  Top = 120
+  Left = 439
+  Top = 107
   Width = 564
   Height = 563
   BorderIcons = [biSystemMenu, biMaximize]
@@ -15,77 +15,10 @@ object frmCadFechamento_Contagem2: TfrmCadFechamento_Contagem2
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object gridContagem2: TSMDBGrid
-    Left = 0
-    Top = 40
-    Width = 548
-    Height = 89
-    Cursor = crHelp
-    Align = alTop
-    Ctl3D = False
-    DataSource = DMCadFechamento.dsmContagem
-    Enabled = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Verdana'
-    Font.Style = []
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-    ParentCtl3D = False
-    ParentFont = False
-    TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -16
-    TitleFont.Name = 'Verdana'
-    TitleFont.Style = []
-    Visible = False
-    Flat = True
-    BandsFont.Charset = DEFAULT_CHARSET
-    BandsFont.Color = clWindowText
-    BandsFont.Height = -11
-    BandsFont.Name = 'MS Sans Serif'
-    BandsFont.Style = []
-    Groupings = <>
-    GridStyle.Style = gsCustom
-    GridStyle.OddColor = clWindow
-    GridStyle.EvenColor = clWindow
-    TitleHeight.PixelCount = 24
-    FooterColor = clBtnFace
-    ExOptions = [eoDisableInsert, eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
-    FixedCols = 1
-    RegistryKey = 'Software\Scalabium'
-    RegistrySection = 'SMDBGrid'
-    WidthOfIndicator = 11
-    DefaultRowHeight = 22
-    ScrollBars = ssHorizontal
-    ColCount = 3
-    RowCount = 2
-    Columns = <
-      item
-        Color = clBtnFace
-        Expanded = False
-        FieldName = 'NOME_TIPOCOBRANCA'
-        ReadOnly = True
-        Title.Alignment = taCenter
-        Title.Caption = 'Forma de Pagamento'
-        Title.Color = 16761220
-        Width = 342
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'VALOR'
-        Title.Alignment = taCenter
-        Title.Caption = 'Valor Informado'
-        Title.Color = 16761220
-        Width = 150
-        Visible = True
-      end>
-  end
   object Panel1: TPanel
     Left = 0
     Top = 484
@@ -93,13 +26,13 @@ object frmCadFechamento_Contagem2: TfrmCadFechamento_Contagem2
     Height = 41
     Align = alBottom
     Color = clSilver
-    TabOrder = 2
+    TabOrder = 1
     object btConfirmar: TNxButton
       Left = 95
       Top = 6
       Width = 187
       Height = 30
-      Caption = '&Confirmar'
+      Caption = '&Confirmar (F10)'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -16
@@ -173,9 +106,9 @@ object frmCadFechamento_Contagem2: TfrmCadFechamento_Contagem2
   end
   object gridContagem: TDBGrid
     Left = 0
-    Top = 129
+    Top = 40
     Width = 548
-    Height = 355
+    Height = 444
     Align = alClient
     DataSource = DMCadFechamento.dsmContagem
     Font.Charset = DEFAULT_CHARSET
@@ -184,7 +117,7 @@ object frmCadFechamento_Contagem2: TfrmCadFechamento_Contagem2
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -16

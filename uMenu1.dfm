@@ -1,6 +1,6 @@
 object fMenu1: TfMenu1
-  Left = 208
-  Top = 25
+  Left = 317
+  Top = 33
   Width = 928
   Height = 630
   BorderIcons = []
@@ -123,6 +123,7 @@ object fMenu1: TfMenu1
         Font.Name = 'Courier New'
         Font.Style = [fsBold]
         ParentFont = False
+        Visible = False
         OnClick = LabelBkpClick
         OnDblClick = LabelBkpClick
         HotTrackFont.Charset = DEFAULT_CHARSET

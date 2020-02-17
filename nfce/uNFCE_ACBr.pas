@@ -235,12 +235,9 @@ begin
         if (StrToFloat(FormatFloat('0.0000',
           fDMNFCe.qProdutoQTD_EMBALAGEM.AsFloat)) > 0) and
           (trim(fDMNFCe.qProdutoCOD_BARRA2.AsString) <> EmptyStr) then
-          Prod.vUnTrib := StrToFloat(FormatFloat('0.0000000000',
-            fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat /
-            fDMNFCe.qProdutoQTD_EMBALAGEM.AsFloat))
+          Prod.vUnTrib := StrToFloat(FormatFloat('0.0000000000', fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat / fDMNFCe.qProdutoQTD_EMBALAGEM.AsFloat))
         else
-          Prod.vUnTrib := StrToFloat(FormatFloat('0.0000000000',
-            fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat));
+          Prod.vUnTrib := StrToFloat(FormatFloat('0.0000000000', fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat));
         Prod.vOutro := StrToFloat(FormatFloat('0.000',
           fDMCupomFiscal.cdsCupomFiscalVLR_OUTROS.AsCurrency));
         Prod.vFrete := 0;
@@ -257,12 +254,14 @@ begin
         if (trim(fDMCupomFiscal.cdsTab_NCMCOD_CEST.AsString) <> EmptyStr) and
           (Prod.CEST = EmptyStr) then
           Prod.CEST := fDMCupomFiscal.cdsTab_NCMCOD_CEST.AsString;
+        if fdmCupomFiscal.cdsCupom_ItensCOD_CBENEF.AsString = EmptyStr then
+          Prod.cBenef := 'SEM CBENEF'
+        else
+          Prod.cBenef := fdmCupomFiscal.cdsCupom_ItensCOD_CBENEF.AsString;
 
         with Imposto do
         begin
-          fdmCupomFiscal.cdsTab_CSTICMS.Locate('ID',
-            fdmCupomFiscal.cdsCupom_ItensID_CSTICMS.AsInteger,
-            [loCaseInsensitive]);
+          fdmCupomFiscal.cdsTab_CSTICMS.Locate('ID', fdmCupomFiscal.cdsCupom_ItensID_CSTICMS.AsInteger,[loCaseInsensitive]);
           vCodCST := fDMCupomFiscal.cdsTab_CSTICMSCOD_CST.AsString;
           if fDMCupomFiscal.cdsCupom_ItensORIGEM_PROD.AsString = '0' then
             ICMS.orig := oeNacional
@@ -778,7 +777,11 @@ begin
     Form := TForm.Create(Application);
     try
       prc_Form_Aguarde(Form, '..Enviando Cupom..');
-      fDMNFCe.ACBrNFe.Enviar('1', False, False);
+      try
+        fDMNFCe.ACBrNFe.Enviar('1', False, False);
+      except
+
+      end;
     finally
       FreeAndNil(Form);
     end;
