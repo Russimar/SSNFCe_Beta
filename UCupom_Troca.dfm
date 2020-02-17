@@ -1,9 +1,9 @@
-object Form1: TForm1
-  Left = 251
-  Top = 170
+object frmCupom_Troca: TfrmCupom_Troca
+  Left = 246
+  Top = 183
   Width = 979
   Height = 563
-  Caption = 'Form1'
+  Caption = 'frmCupom_Troca'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -272,7 +272,7 @@ object Form1: TForm1
       TabOrder = 7
     end
     object btnExcluir: TNxButton
-      Left = 856
+      Left = 848
       Top = 82
       Width = 75
       Caption = 'Excluir'
@@ -293,7 +293,6 @@ object Form1: TForm1
     Height = 395
     Align = alClient
     Ctl3D = False
-    DataSource = dmCupomFiscal.dsCupom_Troca
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     ParentCtl3D = False
     TabOrder = 1
@@ -366,13 +365,11 @@ object Form1: TForm1
       item
         Expanded = False
         FieldName = 'VLR_UNITARIO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_TOTAL'
-        Width = 64
         Visible = True
       end
       item

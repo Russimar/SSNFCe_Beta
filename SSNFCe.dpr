@@ -107,8 +107,11 @@ uses
   UCadFechamento_Contagem2 in 'UCadFechamento_Contagem2.pas' {frmCadFechamento_Contagem2},
   UCadFechamento2 in 'UCadFechamento2.pas' {frmCadFechamento2},
   uMenu in 'uMenu.pas' {fMenu},
-  uConsRapidaPedido in 'uConsRapidaPedido.pas' {frmConsRapidaPedido};
+  uConsRapidaPedido in 'uConsRapidaPedido.pas' {frmConsRapidaPedido},
   USel_Troca in 'USel_Troca.pas' {frmSel_Troca},
+  UCupom_Troca in 'UCupom_Troca.pas' {frmCupom_Troca};
+
+USel_Troca in 'USel_Troca.pas' {frmSel_Troca},
   UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 
 {$R *.res}
@@ -133,6 +136,8 @@ begin
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
   Application.CreateForm(TfrmConsRapidaPedido, frmConsRapidaPedido);
+  Application.CreateForm(TfrmSel_Troca, frmSel_Troca);
+  Application.CreateForm(TfrmCupom_Troca, frmCupom_Troca);
   Application.CreateForm(TfrmSel_Troca, frmSel_Troca);
   Application.CreateForm(TForm1, Form1);
   fMenu1.FormStyle := fsMDIChild;
