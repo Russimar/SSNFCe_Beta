@@ -141,6 +141,7 @@ type
     vEstoqueOK, vFinanceiroOK: String;
     vAplicarDescontoItem : Boolean;
     Cont : Integer;
+    vTroca : Boolean;
 
     procedure Limpa_Campos;
     function posicionaProduto: Boolean;
@@ -208,7 +209,7 @@ uses
   uCupomCliente, uCalculo_CupomFiscal, Math, USenha, uUtilCupom, UConsPreco,
   USel_Sacola_CF, USel_Pedido_CF, DmdDatabase, uMenu, UCupomFiscalCli,
   USel_Comanda_CF, uCupomFiscalParcela, uSel_CorTamanho, uBalanca,
-  uGrava_Erro;
+  uGrava_Erro, USel_Troca;
 
 {$R *.dfm}
 
@@ -483,15 +484,45 @@ end;
 
 procedure TfCupomFiscal.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+  if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
+  begin
+    fDmCupomFiscal.vID_Troca := 0;
+    frmSel_Troca := TfrmSel_Troca.Create(Self);
+    frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
+    frmSel_Troca.CurrencyEdit1.AsInteger := vID_Produto;
+    frmSel_Troca.ShowModal;
+    FreeAndNil(frmSel_Troca);
+  
+    //vTroca := not(vTroca);
+  end
+  else
   if (Key = Vk_Return) then
   begin
-    if Copy(Edit1.Text, Length(Edit1.Text), 1) = '*' then
+    if vTroca then
     begin
-      CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 1, Length(Edit1.Text) - 1));
-      Edit1.Clear;
-      Exit;
+      if (trim(Edit1.Text) <> '') and not(posicionaProduto) then
+        Exit;
+
+      fDmCupomFiscal.vID_Troca := 0;
+      frmSel_Troca := TfrmSel_Troca.Create(Self);
+      frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
+      frmSel_Troca.CurrencyEdit1.AsInteger := vID_Produto;
+      frmSel_Troca.ShowModal;
+      FreeAndNil(frmSel_Troca);
+      //if fDmCupomFiscal.vID_Troca > 0 then
+      //  prc_Gravar_Troca;
+
+    end
+    else
+    begin
+      if Copy(Edit1.Text, Length(Edit1.Text), 1) = '*' then
+      begin
+        CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 1, Length(Edit1.Text) - 1));
+        Edit1.Clear;
+        Exit;
+      end;
+      prc_EnterCodigo;
     end;
-    prc_EnterCodigo;
   end;
 end;
 
@@ -1773,8 +1804,6 @@ begin
         end;
         fDmCupomFiscal.cdsCupom_Parc.Next;
       end;
-
-
 
       fDmCupomFiscal.cdsCupom_Parc.ApplyUpdates(0);
 

@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 65528
-  Top = 65528
+  Left = 66
+  Top = 11
   Height = 744
   Width = 1382
   object sdsCupomFiscal: TSQLDataSet
@@ -279,6 +279,9 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object sdsCupomFiscalID_CANAL_VENDA: TIntegerField
       FieldName = 'ID_CANAL_VENDA'
+    end
+    object sdsCupomFiscalVLR_TROCA: TFloatField
+      FieldName = 'VLR_TROCA'
     end
   end
   object dspCupomFiscal: TDataSetProvider
@@ -579,6 +582,9 @@ object dmCupomFiscal: TdmCupomFiscal
     object cdsCupomFiscalsdsCupomFiscal_FormaPgto: TDataSetField
       FieldName = 'sdsCupomFiscal_FormaPgto'
     end
+    object cdsCupomFiscalVLR_TROCA: TFloatField
+      FieldName = 'VLR_TROCA'
+    end
   end
   object dsCupomFiscal: TDataSource
     DataSet = cdsCupomFiscal
@@ -842,6 +848,18 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'COD_CBENEF'
       Size = 8
     end
+    object sdsCupom_ItensID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+    object sdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField
+      FieldName = 'ITEM_CUPOM_TROCA'
+    end
+    object sdsCupom_ItensQTD_TROCA: TFloatField
+      FieldName = 'QTD_TROCA'
+    end
+    object sdsCupom_ItensVLR_TROCA: TFloatField
+      FieldName = 'VLR_TROCA'
+    end
   end
   object cdsCupom_Itens: TClientDataSet
     Aggregates = <>
@@ -1096,6 +1114,18 @@ object dmCupomFiscal: TdmCupomFiscal
     object cdsCupom_ItensCOD_CBENEF: TStringField
       FieldName = 'COD_CBENEF'
       Size = 8
+    end
+    object cdsCupom_ItensID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+    object cdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField
+      FieldName = 'ITEM_CUPOM_TROCA'
+    end
+    object cdsCupom_ItensQTD_TROCA: TFloatField
+      FieldName = 'QTD_TROCA'
+    end
+    object cdsCupom_ItensVLR_TROCA: TFloatField
+      FieldName = 'VLR_TROCA'
     end
   end
   object dsCupom_Itens: TDataSource
@@ -8164,5 +8194,192 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = cdsCupomPedido
     Left = 664
     Top = 640
+  object sdsTroca: TSQLDataSet
+    CommandText = 
+      'SELECT C.ID, C.dtemissao, C.cliente_nome, I.ITEM, I.id_produto, ' +
+      'I.referencia,'#13#10'I.nome_produto, I.qtd, I.vlr_unitario, I.vlr_tota' +
+      'l, I.vlr_desconto, c.numcupom,'#13#10'c.serie'#13#10'FROM cupomfiscal C'#13#10'INN' +
+      'ER JOIN cupomfiscal_itens I'#13#10'ON C.ID = I.ID'#13#10'WHERE  ROUND((I.QTD' +
+      ' - coalesce(I.qtd_troca,0)),4) > 0'#13#10'  and (C.dtemissao >= :DATA ' +
+      'or :Data is null )'#13#10
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'DATA'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Data'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 952
+    Top = 392
+  end
+  object dspTroca: TDataSetProvider
+    DataSet = sdsTroca
+    Left = 984
+    Top = 392
+  end
+  object cdsTroca: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspTroca'
+    Left = 1016
+    Top = 392
+    object cdsTrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsTrocaDTEMISSAO: TDateField
+      FieldName = 'DTEMISSAO'
+    end
+    object cdsTrocaCLIENTE_NOME: TStringField
+      FieldName = 'CLIENTE_NOME'
+      Size = 30
+    end
+    object cdsTrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object cdsTrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object cdsTrocaREFERENCIA: TStringField
+      FieldName = 'REFERENCIA'
+    end
+    object cdsTrocaNOME_PRODUTO: TStringField
+      FieldName = 'NOME_PRODUTO'
+      Size = 100
+    end
+    object cdsTrocaQTD: TFloatField
+      FieldName = 'QTD'
+    end
+    object cdsTrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object cdsTrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object cdsTrocaVLR_DESCONTO: TFloatField
+      FieldName = 'VLR_DESCONTO'
+    end
+    object cdsTrocaNUMCUPOM: TIntegerField
+      FieldName = 'NUMCUPOM'
+    end
+    object cdsTrocaSERIE: TStringField
+      FieldName = 'SERIE'
+      Size = 3
+    end
+  end
+  object dsTroca: TDataSource
+    DataSet = cdsTroca
+    Left = 1048
+    Top = 392
+  end
+  object sdsCupom_Troca: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 
+      'SELECT * FROM CUPOMFISCAL_TROCA C'#13#10'WHERE C.id_cupom = :ID_CUPOM'#13 +
+      #10
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_CUPOM'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 880
+    Top = 608
+    object sdsCupom_TrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsCupom_TrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object sdsCupom_TrocaID_CUPOM: TIntegerField
+      FieldName = 'ID_CUPOM'
+    end
+    object sdsCupom_TrocaITEM_CUPOM: TIntegerField
+      FieldName = 'ITEM_CUPOM'
+    end
+    object sdsCupom_TrocaITEM_TROCA: TIntegerField
+      FieldName = 'ITEM_TROCA'
+    end
+    object sdsCupom_TrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object sdsCupom_TrocaQTD: TFloatField
+      FieldName = 'QTD'
+    end
+    object sdsCupom_TrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object sdsCupom_TrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object sdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+  end
+  object dspCupom_Troca: TDataSetProvider
+    DataSet = sdsCupom_Troca
+    UpdateMode = upWhereKeyOnly
+    Left = 920
+    Top = 608
+  end
+  object cdsCupom_Troca: TClientDataSet
+    Aggregates = <>
+    IndexFieldNames = 'ID;ITEM'
+    Params = <>
+    ProviderName = 'dspCupom_Troca'
+    Left = 960
+    Top = 608
+    object cdsCupom_TrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsCupom_TrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object cdsCupom_TrocaID_CUPOM: TIntegerField
+      FieldName = 'ID_CUPOM'
+    end
+    object cdsCupom_TrocaITEM_CUPOM: TIntegerField
+      FieldName = 'ITEM_CUPOM'
+    end
+    object cdsCupom_TrocaID_CUPOM_TROTAL: TIntegerField
+      FieldName = 'ID_CUPOM_TROTAL'
+    end
+    object cdsCupom_TrocaITEM_TROCA: TIntegerField
+      FieldName = 'ITEM_TROCA'
+    end
+    object cdsCupom_TrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object ASI: TFloatField
+      FieldName = 'QTD'
+    end
+    object cdsCupom_TrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object cdsCupom_TrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+  end
+  object dsCupom_Troca: TDataSource
+    DataSet = cdsCupom_Troca
+    Left = 1000
+    Top = 608
   end
 end
