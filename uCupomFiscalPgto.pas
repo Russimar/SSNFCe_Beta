@@ -326,14 +326,14 @@ begin
   if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger > 0 then
   begin
     edtPagamento.Text := IntToStr(fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger);
-    edtValorPagamento.FloatValue := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat;
+    edtValorPagamento.FloatValue := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat - fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat;
     edtPagamentoKeyDown(Sender, Enter, [ssAlt]);
     EstadoFechVenda := InformandoValorRecebido;
   end
   else
   begin
     edtPagamento.SetFocus;
-    EstadoFechVenda := InformandoValorRecebido;
+    EstadoFechVenda := InformandoFormaPagamento;
   end;
 
   //04/02/2017

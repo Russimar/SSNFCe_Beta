@@ -79,6 +79,12 @@ begin
     fDmCupomFiscal.cdsCidade.Open;
   end;
 
+  if not fDmCupomFiscal.cdsCupomFiscal_Cli.Active then
+  begin
+    fDmCupomFiscal.cdsCupomFiscal_Cli.Close;
+    fDmCupomFiscal.cdsCupomFiscal_Cli.Open;
+  end;
+
   if fDmCupomFiscal.cdsCupomFiscal_Cli.IsEmpty then
     fDmCupomFiscal.cdsCupomFiscal_Cli.Insert
   else

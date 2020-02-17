@@ -1306,6 +1306,16 @@ begin
     FinalizaParcial('PED');
     fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
   end;
+    if fDmCupomFiscal.cdsCupomFiscal.Active then
+      fDmCupomFiscal.cdsCupomFiscal.Close;
+  vDocumentoClienteVenda := '';
+  vCpfOK := False;
+  pnlDescricaoProduto.Text := '';
+  pnlDescricaoProduto.Update;
+  pnlCaixaLivre.Visible := True;
+  Edit1.SelectAll;
+  Edit1.Clear;
+  Edit1.SetFocus;
 end;
 
 procedure TfCupomFiscal.FinalizaParcial(vTipo: string);
@@ -1341,12 +1351,12 @@ begin
         fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
     end;
 
-  if fDmCupomFiscal.cdsCupomFiscal.State in [dsBrowse] then
-  begin
-    Tag := 99;
-    fDmCupomFiscal.vSair_Tela := False;
-    Close;
-  end;
+//  if fDmCupomFiscal.cdsCupomFiscal.State in [dsBrowse] then
+//  begin
+//    Tag := 99;
+//    fDmCupomFiscal.vSair_Tela := False;
+//    Close;
+//  end;
 end;
 
 procedure TfCupomFiscal.prc_ImprimeComanda;

@@ -47,7 +47,6 @@ type
     btnEnviar: TNxButton;
     btnReimprimir: TNxButton;
     edtSerie: TEdit;
-    AdvPanelStyler1: TAdvPanelStyler;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     chkNFCE: TCheckBox;
     procedure FormShow(Sender: TObject);

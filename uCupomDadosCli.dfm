@@ -90,9 +90,9 @@ object frmCupomDadosCli: TfrmCupomDadosCli
     ParentFont = False
   end
   object Label5: TLabel
-    Left = 22
+    Left = 21
     Top = 363
-    Width = 121
+    Width = 122
     Height = 18
     Alignment = taRightJustify
     Caption = 'Transportadora:'

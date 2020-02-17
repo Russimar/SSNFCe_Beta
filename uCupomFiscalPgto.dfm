@@ -1,5 +1,5 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 156
+  Left = 249
   Top = 90
   Width = 1131
   Height = 557

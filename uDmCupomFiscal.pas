@@ -5,7 +5,8 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, UDMCadExtComissao, UDMGravarFinanceiro, StdConvs, StrUtils,
   Printers, logTypes, uUtilPadrao, Graphics, ACBrBarCode, frxClass, frxDBSet, frxBarcode, Windows, Messages, ACBrBase, ACBrBAL,
-  ACBrDevice, Dialogs, ExtCtrls, IniFiles, ACBrValidador, Math, Controls, Variants;
+  ACBrDevice, Dialogs, ExtCtrls, IniFiles, ACBrValidador, Math, Controls, Variants,
+  AdvPanel;
 
 type
   TdmCupomFiscal = class(TDataModule)
@@ -1731,6 +1732,11 @@ type
     qPessoa_FiscalCOD_BENEF: TStringField;
     cdsProdutoCOD_BENEF: TStringField;
     cdsTab_NCMCOD_BENEF: TStringField;
+    AdvPanelStyler1: TAdvPanelStyler;
+    sdsCupomPedido: TSQLDataSet;
+    dspCupomPedido: TDataSetProvider;
+    cdsCupomPedido: TClientDataSet;
+    dsCupomPedido: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -3928,7 +3934,7 @@ begin
            (StrToFloat(FormatFloat('0.00',vVlrParcelas)) <> StrToFloat(FormatFloat('0.00',vVlrRestante))) then
           vVlrParcelas := StrToFloat(FormatFloat('0.00',vVlrRestante));
 
-        vDataAux := vDataAux + cdsCondPgto_DiaQtdDias.AsInteger;
+        vDataAux := cdsCupomFiscalDTEMISSAO.AsDateTime + cdsCondPgto_DiaQtdDias.AsInteger;
         Gravar_CupomFiscalParc(vDataAux,vVlrParcelas, vID_TipoCobranca);
         vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrRestante - vVlrParcelas));
 

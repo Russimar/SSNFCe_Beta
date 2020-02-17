@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, Mask, DBCtrls,
-  uDmCupomFiscal, rsDBUtils, NxCollection, ExtCtrls, RxDBComb, RxLookup, DB, Buttons, dbTables;
+  uDmCupomFiscal, rsDBUtils, NxCollection, ExtCtrls, RxDBComb, RxLookup, DB, Buttons, dbTables,
+  FMTBcd, DBClient, Provider, SqlExpr, Grids, DBGrids, SMDBGrid;
 
 type
   TfCupomCliente = class(TForm)
@@ -26,6 +27,16 @@ type
     BitBtn1: TBitBtn;
     Label6: TLabel;
     DBEdit3: TDBEdit;
+    sdsClientes: TSQLDataSet;
+    dspClientes: TDataSetProvider;
+    cdsClientes: TClientDataSet;
+    dsClientes: TDataSource;
+    gridDados: TSMDBGrid;
+    cdsClientesCLIENTE_NOME: TStringField;
+    cdsClientesCLIENTE_FONE: TStringField;
+    DBMemo3: TDBMemo;
+    cdsClientesCLIENTE_ENDERECO: TStringField;
+    cdsClientesCPF: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure brCancelarClick(Sender: TObject);
@@ -33,6 +44,11 @@ type
     procedure RxDBComboBox2Exit(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure DBEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure DBEdit3KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure gridDadosDblClick(Sender: TObject);
+    procedure gridDadosKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
     { Private declarations }
@@ -46,7 +62,7 @@ var
 
 implementation
 
-uses UCupomFiscalCli;
+uses UCupomFiscalCli, DmdDatabase;
 
 {$R *.dfm}
 
@@ -86,8 +102,7 @@ procedure TfCupomCliente.RxDBComboBox2Exit(Sender: TObject);
 begin
   if (RxDBComboBox2.ItemIndex = 1) and (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <>  fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) then
   begin
-    fDmCupomFiscal.prc_Localizar_Pessoa(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
-    if not fDmCupomFiscal.cdsPessoa.IsEmpty then
+    if fDmCupomFiscal.cdsPessoa.Locate('CODIGO',fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]) then
     begin
       if trim(fDmCupomFiscal.cdsPessoaENDERECO_ENT.AsString) <> '' then
       begin
@@ -168,6 +183,42 @@ procedure TfCupomCliente.DBEdit1KeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = Vk_F6) then
     BitBtn1Click(Sender);
+end;
+
+procedure TfCupomCliente.DBEdit3KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Vk_Return) then
+  begin
+    cdsClientes.Close;
+    sdsClientes.ParamByName('F1').AsString := Trim(DBEdit3.Text);
+    cdsClientes.Open;
+    if not cdsClientes.IsEmpty then
+    begin
+      DBMemo3.Visible := True;
+      DBMemo3.BringToFront;
+      gridDados.Visible := True;
+      gridDados.BringToFront;
+      gridDados.SetFocus;
+    end;
+  end;
+end;
+
+procedure TfCupomCliente.gridDadosDblClick(Sender: TObject);
+begin
+  fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString := Trim(cdsClientesCLIENTE_NOME.AsString);
+  fDmCupomFiscal.cdsCupomFiscalCLIENTE_FONE.AsString := Trim(cdsClientesCLIENTE_FONE.AsString);
+  fDmCupomFiscal.cdsCupomFiscalCLIENTE_ENDERECO.AsString := Trim(cdsClientesCLIENTE_ENDERECO.AsString);
+  fDmCupomFiscal.cdsCupomFiscalCPF.AsString := Trim(cdsClientesCPF.AsString);
+  gridDados.Visible := False;
+  gridDados.Visible   := False;
+end;
+
+procedure TfCupomCliente.gridDadosKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = Vk_Return then
+    gridDadosDblClick(Sender);
 end;
 
 end.

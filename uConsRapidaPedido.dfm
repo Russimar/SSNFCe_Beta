@@ -1,35 +1,30 @@
-object frmConsCupom: TfrmConsCupom
-  Left = 121
-  Top = 148
-  Width = 1087
-  Height = 524
-  Caption = 'Consulta Cupons'
+object frmConsRapidaPedido: TfrmConsRapidaPedido
+  Left = 201
+  Top = 142
+  Width = 928
+  Height = 480
+  Caption = 'Consulta Pedido '
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
-  WindowState = wsMaximized
-  OnClose = FormClose
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlPrincipal: TPanel
     Left = 0
     Top = 0
-    Width = 1071
-    Height = 486
+    Width = 912
+    Height = 442
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 90
-      Width = 1069
-      Height = 395
+      Width = 910
+      Height = 351
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -40,7 +35,6 @@ object frmConsCupom: TfrmConsCupom
       TabOrder = 0
       object cxGrid1DBTableView1: TcxGridDBTableView
         NavigatorButtons.ConfirmDelete = False
-        OnCellDblClick = cxGrid1DBTableView1CellDblClick
         DataController.DataSource = dmCupomFiscal.dsCupom_Cons
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
@@ -135,7 +129,7 @@ object frmConsCupom: TfrmConsCupom
     object AdvPanel1: TAdvPanel
       Left = 1
       Top = 1
-      Width = 1069
+      Width = 910
       Height = 89
       Align = alTop
       BevelOuter = bvNone
@@ -321,7 +315,6 @@ object frmConsCupom: TfrmConsCupom
         ParentFont = False
         TabOrder = 2
         Transparent = True
-        OnClick = btnConsultarClick
       end
       object ComboTerminal: TRxDBLookupCombo
         Left = 57
@@ -425,7 +418,6 @@ object frmConsCupom: TfrmConsCupom
         ParentFont = False
         TabOrder = 5
         Transparent = True
-        OnClick = btnEnviarClick
       end
       object btnReimprimir: TNxButton
         Left = 592
@@ -500,7 +492,6 @@ object frmConsCupom: TfrmConsCupom
         TabOrder = 6
         Transparent = True
         Visible = False
-        OnClick = btnReimprimirClick
       end
       object edtSerie: TEdit
         Left = 57
@@ -525,28 +516,6 @@ object frmConsCupom: TfrmConsCupom
         State = cbChecked
         TabOrder = 8
       end
-    end
-  end
-  object cxGridViewRepository1: TcxGridViewRepository
-    Left = 616
-    Top = 327
-  end
-  object cxLookAndFeelController1: TcxLookAndFeelController
-    SkinName = 'Office2007Blue'
-    Left = 857
-    Top = 312
-  end
-  object cxStyleRepository1: TcxStyleRepository
-    Left = 888
-    Top = 312
-    PixelsPerInch = 96
-    object cxStyle1: TcxStyle
-      AssignedValues = [svFont]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
-      Font.Height = -13
-      Font.Name = 'Verdana'
-      Font.Style = [fsBold, fsItalic]
     end
   end
 end

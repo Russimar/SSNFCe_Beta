@@ -14,7 +14,7 @@ object dmCupomFiscal: TdmCupomFiscal
       'R'#13#10'FROM CUPOMFISCAL CF'#13#10'INNER JOIN PESSOA P ON (CF.ID_CLIENTE = ' +
       'P.CODIGO)'#13#10'LEFT JOIN CONDPGTO CP ON (CP.ID = CF.ID_CONDPGTO)'#13#10'LE' +
       'FT JOIN TIPOCOBRANCA TC ON (TC.ID = CF.ID_TIPOCOBRANCA)'#13#10'LEFT JO' +
-      'IN PESSOA V ON (CF.ID_VENDEDOR = V.CODIGO)'#13#10#13#10
+      'IN PESSOA V ON (CF.ID_VENDEDOR = V.CODIGO)'#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
@@ -6272,6 +6272,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object cdsCupomFiscal_Cli: TClientDataSet
     Aggregates = <>
+    DataSetField = cdsCupomFiscalsdsCupomFiscal_Cli
     IndexFieldNames = 'ID'
     Params = <>
     Left = 96
@@ -8068,5 +8069,100 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'COD_BENEF'
       Size = 8
     end
+  end
+  object AdvPanelStyler1: TAdvPanelStyler
+    Tag = 0
+    Settings.AnchorHint = False
+    Settings.AutoHideChildren = False
+    Settings.BevelInner = bvNone
+    Settings.BevelOuter = bvNone
+    Settings.BevelWidth = 1
+    Settings.BorderColor = clGray
+    Settings.BorderShadow = True
+    Settings.BorderStyle = bsNone
+    Settings.BorderWidth = 0
+    Settings.CanMove = False
+    Settings.CanSize = False
+    Settings.Caption.Color = clWhite
+    Settings.Caption.ColorTo = clNone
+    Settings.Caption.Font.Charset = DEFAULT_CHARSET
+    Settings.Caption.Font.Color = clBlack
+    Settings.Caption.Font.Height = -11
+    Settings.Caption.Font.Name = 'Tahoma'
+    Settings.Caption.Font.Style = []
+    Settings.Caption.Indent = 4
+    Settings.Caption.ShadeLight = 255
+    Settings.Caption.ShadeType = stRMetal
+    Settings.Caption.Visible = True
+    Settings.Collaps = False
+    Settings.CollapsColor = clBtnFace
+    Settings.CollapsDelay = 0
+    Settings.CollapsSteps = 0
+    Settings.Color = clWhite
+    Settings.ColorTo = 15000804
+    Settings.ColorMirror = clNone
+    Settings.ColorMirrorTo = clNone
+    Settings.Cursor = crDefault
+    Settings.Font.Charset = DEFAULT_CHARSET
+    Settings.Font.Color = clWindowText
+    Settings.Font.Height = -11
+    Settings.Font.Name = 'Tahoma'
+    Settings.Font.Style = []
+    Settings.FixedTop = False
+    Settings.FixedLeft = False
+    Settings.FixedHeight = False
+    Settings.FixedWidth = False
+    Settings.Height = 120
+    Settings.Hover = False
+    Settings.HoverColor = clBlack
+    Settings.HoverFontColor = clBlack
+    Settings.Indent = 0
+    Settings.ShadowColor = clBlack
+    Settings.ShadowOffset = 0
+    Settings.ShowHint = False
+    Settings.ShowMoveCursor = False
+    Settings.StatusBar.BorderColor = clWhite
+    Settings.StatusBar.BorderStyle = bsSingle
+    Settings.StatusBar.Font.Charset = DEFAULT_CHARSET
+    Settings.StatusBar.Font.Color = clBlack
+    Settings.StatusBar.Font.Height = -11
+    Settings.StatusBar.Font.Name = 'Tahoma'
+    Settings.StatusBar.Font.Style = []
+    Settings.StatusBar.Color = 14606046
+    Settings.StatusBar.ColorTo = 11119017
+    Settings.TextVAlign = tvaTop
+    Settings.TopIndent = 0
+    Settings.URLColor = clTeal
+    Settings.Width = 0
+    Style = psTMS
+    Left = 1025
+    Top = 353
+  end
+  object sdsCupomPedido: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT * FROM CUPOMFISCAL '#13#10'WHERE TIPO = '#39'PED'#39
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 568
+    Top = 640
+  end
+  object dspCupomPedido: TDataSetProvider
+    DataSet = sdsCupomPedido
+    Left = 600
+    Top = 640
+  end
+  object cdsCupomPedido: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspCupomPedido'
+    Left = 632
+    Top = 640
+  end
+  object dsCupomPedido: TDataSource
+    DataSet = cdsCupomPedido
+    Left = 664
+    Top = 640
   end
 end

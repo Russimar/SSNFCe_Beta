@@ -106,7 +106,8 @@ uses
   uTipoFormaPagto in 'uTipoFormaPagto.pas' {frmTelaTipoFormaPagto},
   UCadFechamento_Contagem2 in 'UCadFechamento_Contagem2.pas' {frmCadFechamento_Contagem2},
   UCadFechamento2 in 'UCadFechamento2.pas' {frmCadFechamento2},
-  uMenu in 'uMenu.pas' {fMenu};
+  uMenu in 'uMenu.pas' {fMenu},
+  uConsRapidaPedido in 'uConsRapidaPedido.pas' {frmConsRapidaPedido};
 
 {$R *.res}
 
@@ -129,6 +130,7 @@ begin
   Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
+  Application.CreateForm(TfrmConsRapidaPedido, frmConsRapidaPedido);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
   
