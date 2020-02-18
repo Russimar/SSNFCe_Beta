@@ -1799,6 +1799,17 @@ type
     qPessoa_FiscalCOD_IPI: TStringField;
     qPessoa_FiscalCOD_PIS: TStringField;
     qPessoa_FiscalCOD_COFINS: TStringField;
+    sdsCupom_TrocaNUM_CUPOM_TROCA: TIntegerField;
+    sdsCupom_TrocaSERIE_TROCA: TStringField;
+    cdsCupom_TrocaNUM_CUPOM_TROCA: TIntegerField;
+    cdsCupom_TrocaSERIE_TROCA: TStringField;
+    cdsCupom_TrocaclNome_Produto: TStringField;
+    qProd: TSQLQuery;
+    qProdID: TIntegerField;
+    qProdNOME: TStringField;
+    qProdREFERENCIA: TStringField;
+    cdsTipoCobrancaTROCA: TStringField;
+    cdsCupom_ConsVLR_TROCA: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1808,6 +1819,7 @@ type
     procedure cdsCupomFiscalReconcileError(DataSet: TCustomClientDataSet;
       E: EReconcileError; UpdateKind: TUpdateKind;
       var Action: TReconcileAction);
+    procedure cdsCupom_TrocaCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     ctCupomFiscal: String;
@@ -1871,7 +1883,7 @@ type
     //***
 
     procedure Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;vQtdParc: Word);
-    procedure prcInserir(vId, vClienteId: Integer);
+    procedure prcInserir(vId, vClienteId: Integer ; Serie : String);
     procedure prcExcluir;
     procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
     procedure prc_Gravar_Estoque_Movimento(ID_Cupom : Integer; Tipo : string);
@@ -1966,7 +1978,7 @@ uses DmdDatabase, uImpFiscal_Bematech, uImpFiscal_Daruma, uUtilDaruma, uUtilBema
 
 { TdmCupomFiscal }
 
-procedure TdmCupomFiscal.prcInserir(vId, vClienteId: Integer);
+procedure TdmCupomFiscal.prcInserir(vId, vClienteId: Integer ; Serie : String);
 var
   vAux: Integer;
 begin
@@ -2009,6 +2021,51 @@ begin
 
   if cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S' then
     prc_Abrir_Cupom_ProdPrincipal(cdsCupomFiscalID.AsInteger,0);
+
+  if cdsParametrosUSA_NFCE.AsString = 'S' then
+  begin
+    cdsCupomFiscalTIPO.AsString := 'NFC';
+    if cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
+      cdsCupomFiscalNUM_CARTAO.AsInteger := fnc_IncrementaCartao(vTerminal);
+    cdsCupomFiscalID_CLIENTE.AsInteger := vClienteID;
+    cdsCupomFiscalTIPO_DESTINO_OPERACAO.AsInteger := 1;
+    cdsCupomFiscalTIPO_ATENDIMENTO.AsInteger := 1;
+    cdsCupomFiscalTIPO_ENVIONFE.AsString := '1-NORMAL';
+    if Serie <> EmptyStr then
+      cdsCupomFiscalSERIE.AsString := Serie
+    else
+      cdsCupomFiscalSERIE.AsString := cdsFilialSERIE_NFCE.AsString;
+  end
+  else
+  begin
+//---------------TROCAR IMPRESSORA
+    case cdsParametrosIMPRESSORA_FISCAL.AsInteger of
+      5:
+        begin
+          prcNumNaoFiscal;
+          cdsCupomFiscalTIPO.AsString  := 'CNF';
+          cdsCupomFiscalSERIE.AsString := Serie;
+          if cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
+            cdsCupomFiscalNUM_CARTAO.AsInteger := fnc_IncrementaCartao(vTerminal);
+        end;
+      6:
+        begin
+          prcNumNaoFiscal;
+          cdsCupomFiscalTIPO.AsString := 'CNF';
+          cdsCupomFiscalSERIE.AsString := Serie;
+          if cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
+            cdsCupomFiscalNUM_CARTAO.AsInteger := fnc_IncrementaCartao(vTerminal);
+        end;
+    end;
+  end;
+
+  if cdsCupomFiscal.State in [dsInsert] then
+  begin
+    cdsCupomFiscal.Post;
+    cdsCupomFiscal.ApplyUpdates(0);
+    cdsCupomFiscal.Edit;
+  end;
+
 end;
 
 procedure TdmCupomFiscal.prcLocalizar(vId: Integer);
@@ -2040,6 +2097,7 @@ begin
   ctDuplicata   := sdsDuplicata.CommandText;
   ctTotais      := sdsTotais.CommandText;
   ctConsCupom   := sdsCupom_Cons.CommandText;
+  ctTroca       := sdsTroca.CommandText;
 
   cdsFilial.Open;
   cdsTipoCobranca.Open;
@@ -4055,7 +4113,7 @@ begin
     cdsTipoCobranca.Locate('ID',ID_TipoCobranca,[loCaseInsensitive]);
     cdsCupom_ParcID_TIPOCOBRANCA.AsInteger := cdsTipoCobrancaID.AsInteger;
     cdsCupom_ParcTIPO_COBRANCA.AsString    := cdsTipoCobrancaNOME.AsString;
-//    fDmCupomFiscal.cdsCupom_ParcTIPO_COBRANCA.AsString    := ComboFormaPagto.Text;
+//    cdsCupom_ParcTIPO_COBRANCA.AsString    := ComboFormaPagto.Text;
   end;
   cdsCupom_ParcEDITADA.AsString := 'N';
   cdsCupom_Parc.Post;
@@ -4077,12 +4135,13 @@ procedure TdmCupomFiscal.prc_Consultar_Troca(NumCupom, ID_Produto: Integer;
   Serie, Referencia, Nome: String; Data: TDateTime);
 begin
   cdsTroca.Close;
-  cdsTroca.Close;
+  sdsTroca.CommandText := ctTroca;
   if NumCupom > 0 then
   begin
-    sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.NUM_CUPOM = ' + IntToStr(NumCupom);
+    sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.NUMCUPOM = ' + IntToStr(NumCupom);
     if trim(Serie) <> '' then
       sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
+    sdsTroca.ParamByName('DATA').AsDate := 0;
   end
   else
   begin
@@ -4094,9 +4153,9 @@ begin
       sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.REFERENCIA LIKE ' + QuotedStr('%'+Referencia+'%');
     if trim(Nome) <> '' then
       sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.NOME_PRODUTO LIKE ' + QuotedStr('%'+Nome+'%');
+    if Data > 10 then
+      sdsTroca.ParamByName('DATA').AsDate := Data;
   end;
-  if Data > 10 then
-    sdsTroca.ParamByName('DATA').AsDate := Data;
   cdsTroca.Open;
   cdsTroca.IndexFieldNames := 'DTEMISSAO;NOME_PRODUTO';
 end;
@@ -4196,5 +4255,13 @@ begin
   cdsCupom_ItensCOD_CBENEF.AsString := vCod_CBenef_Loc;
 end;
 
+
+procedure TdmCupomFiscal.cdsCupom_TrocaCalcFields(DataSet: TDataSet);
+begin
+  qProd.Close;
+  qProd.ParamByName('ID').AsInteger := cdsCupom_TrocaID_PRODUTO.AsInteger;
+  qProd.Open;
+  cdsCupom_TrocaclNome_Produto.AsString := qProdNOME.AsString;
+end;
 
 end.

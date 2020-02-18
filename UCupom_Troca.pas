@@ -5,10 +5,10 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, NxCollection, StdCtrls, Mask, ToolEdit, CurrEdit, UDMCupomFiscal,
-  Grids, DBGrids, SMDBGrid;
+  Grids, DBGrids, SMDBGrid, ExtCtrls, SqlExpr, DB;
 
 type
-  TfrmCupomTroca = class(TForm)
+  TfrmCupom_Troca = class(TForm)
     NxPanel1: TNxPanel;
     btnConfirmar: TNxButton;
     Edit1: TEdit;
@@ -27,6 +27,10 @@ type
     Label7: TLabel;
     ceID_Produto: TCurrencyEdit;
     btnExcluir: TNxButton;
+    lblNome: TLabel;
+    Panel1: TPanel;
+    lblObs: TLabel;
+    btnCancelar: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word;
@@ -35,40 +39,62 @@ type
       Shift: TShiftState);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure Edit1Enter(Sender: TObject);
+    procedure ceNumCupomEnter(Sender: TObject);
+    procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ceVlr_UnitarioKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ceVlr_TotalKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure CurrencyEdit1Exit(Sender: TObject);
+    procedure ceVlr_UnitarioExit(Sender: TObject);
+    procedure ceVlr_TotalEnter(Sender: TObject);
+    procedure ceVlr_TotalExit(Sender: TObject);
   private
     { Private declarations }
     vID_Produto : Integer;
     vNum_Cupom_Ant : Integer;
     vSerie_Ant : String;
+    vVlr_TotalAnt : Real;
+
     function posicionaProduto: Boolean;
     procedure prc_Monta;
+    function fnc_erro_cupom : Boolean;
+
+    procedure prc_Inserir_Cupom;
+    procedure prc_Limpa_Campos;
+    procedure prc_Calcular;
 
   public
     { Public declarations }
     fDmCupomFiscal: TDmCupomFiscal;
-    
+    vSerieCupom : String;
+
+
   end;
 
 var
-  frmCupomTroca: TfrmCupomTroca;
+  frmCupom_Troca: TfrmCupom_Troca;
 
 implementation
 
-uses rsDBUtils, uUtilPadrao, Types, USel_Troca;
+uses rsDBUtils, uUtilPadrao, Types, USel_Troca, DmdDatabase;
 
 {$R *.dfm}
 
-procedure TfrmCupomTroca.FormShow(Sender: TObject);
+procedure TfrmCupom_Troca.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 end;
 
-procedure TfrmCupomTroca.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmCupom_Troca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := Cafree;
 end;
 
-function TfrmCupomTroca.posicionaProduto: Boolean;
+function TfrmCupom_Troca.posicionaProduto: Boolean;
 var
   vCampoPesquisa: string;
   vTamCod: Byte;
@@ -153,7 +179,7 @@ begin
             0:
               ;
             1:
-              begin //peso
+              begin 
                 CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 7, 6)) / 1000;
                 ceVlr_Total.Value := StrToFloat(FormatFloat('0.00',ceVlr_Unitario.Value * CurrencyEdit1.Value));
               end;
@@ -230,15 +256,20 @@ begin
     Edit1.Clear;
     Edit1.SetFocus;
   end;
+
 end;
 
-procedure TfrmCupomTroca.Edit1KeyDown(Sender: TObject; var Key: Word;
+procedure TfrmCupom_Troca.Edit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
     if (trim(Edit1.Text) <> '') and (posicionaProduto) then
-      ceNumCupom.SetFocus
+    begin
+      ceNumCupom.SetFocus;
+      ceID_Produto.AsInteger := vID_Produto;
+      lblNome.Caption := fDmCupomFiscal.cdsProdutoNOME.AsString;
+    end
     else
     begin
       frmSel_Troca := TfrmSel_Troca.Create(Self);
@@ -257,10 +288,10 @@ begin
 
 end;
 
-procedure TfrmCupomTroca.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmCupom_Troca.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if (Key = Vk_F3) then
+  if (Key = Vk_F2) or ((ceNumCupom.AsInteger = 0) and (Key = VK_RETURN))  then
   begin
     frmSel_Troca := TfrmSel_Troca.Create(Self);
     frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
@@ -276,20 +307,23 @@ begin
 
 end;
 
-procedure TfrmCupomTroca.prc_Monta;
+procedure TfrmCupom_Troca.prc_Monta;
 begin
-  ceNumCupom.AsInteger := fDmCupomFiscal.cdsTrocaNUMCUPOM.AsInteger;
-  edtSerie.Text        := fDmCupomFiscal.cdsTrocaSERIE.AsString;
-  ceVlr_Total.Value    := fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat;
-  CurrencyEdit1.Value  := fDmCupomFiscal.cdsTrocaQTD.AsFloat;
+  Edit1.Clear;
+  vID_Produto            := fDmCupomFiscal.cdsTrocaID_PRODUTO.AsInteger;
+  ceID_Produto.AsInteger := vID_Produto;
+  ceNumCupom.AsInteger   := fDmCupomFiscal.cdsTrocaNUMCUPOM.AsInteger;
+  edtSerie.Text          := fDmCupomFiscal.cdsTrocaSERIE.AsString;
+  ceVlr_Total.Value      := fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat;
+  CurrencyEdit1.Value    := fDmCupomFiscal.cdsTrocaQTD.AsFloat;
   if StrToFloat(FormatFloat('0.000',CurrencyEdit1.Value)) <> 1 then
     ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.000#',fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat / CurrencyEdit1.Value))
   else
     ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.000#',ceVlr_Total.Value));
-
+  lblNome.Caption := fDmCupomFiscal.cdsTrocaNOME_PRODUTO.AsString;
 end;
 
-procedure TfrmCupomTroca.btnConfirmarClick(Sender: TObject);
+procedure TfrmCupom_Troca.btnConfirmarClick(Sender: TObject);
 var
   vMSG : String;
 begin
@@ -298,29 +332,146 @@ begin
     vMSG := vMSG + #13 + '*** ID Produto não informado!';
   if ceVlr_Unitario.Value <= 0 then
     vMSG := vMSG + #13 + '*** Valor não informado!';
+  if CurrencyEdit1.Value <= 0 then
+    vMSG := vMSG + #13 + '*** Quantidade não preenchida!';
+  if (ceNumCupom.AsInteger > 0) and (fnc_erro_cupom) then
+    vMSG := vMSG + #13 + '*** Cupom não encontrado ou Quantidade maior que a do Cupom de Origem!';
   if trim(vMSG) <> '' then
   begin
-    MessageDlg('*** Preço de venda não cadastrado no produto!', mtInformation, [mbOk], 0);
+    MessageDlg(vMSG, mtInformation, [mbOk], 0);
     exit;
   end;
+
+  if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+    prc_Inserir_Cupom;
+
   fDmCupomFiscal.prc_Inserir_Troca;
-  fDmCupomFiscal.cdsCupom_TrocaID_CUPOM_TROCA.AsInteger := fDmCupomFiscal.vID_Troca;
-  fDmCupomFiscal.cdsCupom_TrocaITEM_TROCA.AsInteger     := fDmCupomFiscal.vItem_Troca;
-  fDmCupomFiscal.cdsCupom_TrocaID_PRODUTO.AsInteger     := ceID_Produto.AsInteger;
-  fDmCupomFiscal.cdsCupom_TrocaQTD.AsFloat              := CurrencyEdit1.Value;
-  fDmCupomFiscal.cdsCupom_TrocaVLR_UNITARIO.AsFloat     := ceVlr_Unitario.Value;
-  fDmCupomFiscal.cdsCupom_TrocaVLR_TOTAL.AsFloat        := ceVlr_Total.Value;
+  fDmCupomFiscal.cdsCupom_TrocaID_CUPOM_TROCA.AsInteger  := fDmCupomFiscal.vID_Troca;
+  fDmCupomFiscal.cdsCupom_TrocaITEM_TROCA.AsInteger      := fDmCupomFiscal.vItem_Troca;
+  fDmCupomFiscal.cdsCupom_TrocaID_PRODUTO.AsInteger      := ceID_Produto.AsInteger;
+  fDmCupomFiscal.cdsCupom_TrocaQTD.AsFloat               := CurrencyEdit1.Value;
+  fDmCupomFiscal.cdsCupom_TrocaVLR_UNITARIO.AsFloat      := ceVlr_Unitario.Value;
+  fDmCupomFiscal.cdsCupom_TrocaVLR_TOTAL.AsFloat         := ceVlr_Total.Value;
+  fDmCupomFiscal.cdsCupom_TrocaNUM_CUPOM_TROCA.AsInteger := ceNumCupom.AsInteger;
+  fDmCupomFiscal.cdsCupom_TrocaSERIE_TROCA.AsString      := edtSerie.Text;
   fDmCupomFiscal.cdsCupom_Troca.Post;
 
   fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat + ceVlr_Total.Value;
+
+  btnCancelarClick(Sender);
 end;
 
-procedure TfrmCupomTroca.btnExcluirClick(Sender: TObject);
+procedure TfrmCupom_Troca.btnExcluirClick(Sender: TObject);
 begin
   if MessageDlg('Deseja excluir a troca?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     exit;
   fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat := StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat - fDmCupomFiscal.cdsCupom_TrocaVLR_TOTAL.AsFloat));
   fDmCupomFiscal.cdsCupom_Troca.Delete;
+end;
+
+procedure TfrmCupom_Troca.Edit1Enter(Sender: TObject);
+begin
+  lblObs.Caption := 'Informe o Produto ou Pressione Enter para Buscar o Cupom';
+end;
+
+procedure TfrmCupom_Troca.ceNumCupomEnter(Sender: TObject);
+begin
+  lblObs.Caption := 'F2- Para Buscar o Cupom';
+end;
+
+function TfrmCupom_Troca.fnc_erro_cupom: Boolean;
+var
+  sds: TSQLDataSet;
+begin
+  Result := True;
+  sds := TSQLDataSet.Create(nil);
+  try
+    sds.SQLConnection := dmDatabase.scoDados;
+    sds.NoMetadata    := True;
+    sds.GetMetadata   := False;
+    sds.CommandText   := 'SELECT I.QTD FROM cupomfiscal_itens I WHERE I.ID = :ID AND I.ITEM = :ITEM ';
+    sds.ParamByName('ID').AsInteger   := fDmCupomFiscal.vID_Troca;
+    sds.ParamByName('ITEM').AsInteger := fDmCupomFiscal.vItem_Troca;
+    sds.Open;
+
+    if (sds.FieldByName('QTD').AsFloat > 0) and (sds.FieldByName('QTD').AsFloat <= CurrencyEdit1.Value) then
+      Result := False;
+
+  finally
+    FreeAndNil(sds);
+  end;
+
+end;
+
+procedure TfrmCupom_Troca.prc_Inserir_Cupom;
+begin
+  fDmCupomFiscal.mPedidoAux.EmptyDataSet;
+  fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
+  fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID,vSerieCupom);
+end;
+
+procedure TfrmCupom_Troca.CurrencyEdit1KeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    ceVlr_Unitario.SetFocus;
+end;
+
+procedure TfrmCupom_Troca.ceVlr_UnitarioKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    ceVlr_Total.SetFocus;
+
+end;
+
+procedure TfrmCupom_Troca.ceVlr_TotalKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    btnConfirmarClick(Sender);
+end;
+
+procedure TfrmCupom_Troca.btnCancelarClick(Sender: TObject);
+begin
+  prc_Limpa_Campos;
+  Edit1.Clear;
+  Edit1.SetFocus;
+end;
+
+procedure TfrmCupom_Troca.prc_Limpa_Campos;
+begin
+  ceID_Produto.Clear;
+  ceNumCupom.Clear;
+  edtSerie.Clear;
+  ceVlr_Total.Clear;
+  ceVlr_Unitario.Clear;
+end;
+
+procedure TfrmCupom_Troca.CurrencyEdit1Exit(Sender: TObject);
+begin
+  prc_Calcular;
+end;
+
+procedure TfrmCupom_Troca.prc_Calcular;
+begin
+  ceVlr_Total.Value := StrToFloat(FormatFloat('0.00',ceVlr_Unitario.Value * CurrencyEdit1.Value));
+end;
+
+procedure TfrmCupom_Troca.ceVlr_UnitarioExit(Sender: TObject);
+begin
+  prc_Calcular;
+end;
+
+procedure TfrmCupom_Troca.ceVlr_TotalEnter(Sender: TObject);
+begin
+  vVlr_TotalAnt := StrToFloat(FormatFloat('0.00',ceVlr_Total.Value));
+end;
+
+procedure TfrmCupom_Troca.ceVlr_TotalExit(Sender: TObject);
+begin
+  if ceVlr_Total.Value <> StrToFloat(FormatFloat('0.00',vVlr_TotalAnt)) then
+    ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.0000',ceVlr_Total.Value / CurrencyEdit1.Value));
 end;
 
 end.

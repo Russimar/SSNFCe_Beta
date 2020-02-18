@@ -58,6 +58,8 @@ type
     N6: TMenuItem;
     btnRecebimento: TSpeedItem;
     ConfiguraoCertificado1: TMenuItem;
+    Consultas1: TMenuItem;
+    Consultatrocas1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedItem5Click(Sender: TObject);
@@ -87,6 +89,7 @@ type
     procedure btnRecebimentoClick(Sender: TObject);
     procedure ConfiguraoCertificado1Click(Sender: TObject);
     procedure btnNFCeClick(Sender: TObject);
+    procedure Consultatrocas1Click(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -110,7 +113,8 @@ implementation
 
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2;
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2,
+  uConsTrocas;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -714,6 +718,11 @@ begin
   finally
     FreeAndNil(fCupomFiscal);
   end;
+end;
+
+procedure TfMenu.Consultatrocas1Click(Sender: TObject);
+begin
+  OpenForm(TfrmConsTrocas,wsMaximized);
 end;
 
 end.

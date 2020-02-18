@@ -24,7 +24,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 1115
-    Height = 469
+    Height = 468
     Align = alClient
     BevelOuter = bvNone
     Color = 16645114
@@ -69,9 +69,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Styler = AdvPanelStyler1
     FullHeight = 0
     object Label15: TLabel
-      Left = 744
+      Left = 746
       Top = 10
-      Width = 59
+      Width = 57
       Height = 25
       Alignment = taRightJustify
       Caption = 'Total:'
@@ -101,9 +101,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 744
+      Left = 746
       Top = 247
-      Width = 64
+      Width = 62
       Height = 25
       Alignment = taRightJustify
       Caption = 'Troco:'
@@ -149,8 +149,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
     end
     object Label17: TLabel
-      Left = 751
-      Top = 360
+      Left = 776
+      Top = 349
       Width = 114
       Height = 23
       Alignment = taRightJustify
@@ -166,8 +166,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Visible = False
     end
     object Label10: TLabel
-      Left = 762
-      Top = 401
+      Left = 787
+      Top = 390
       Width = 58
       Height = 23
       Alignment = taRightJustify
@@ -196,6 +196,22 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Height = -36
       Font.Name = 'Arial'
       Font.Style = [fsBold, fsItalic]
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblVlr_Troca: TLabel
+      Left = 26
+      Top = 373
+      Width = 133
+      Height = 25
+      Alignment = taRightJustify
+      Caption = 'Vlr. da Troca:'
+      Color = 16643051
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 3683329
+      Font.Height = -20
+      Font.Name = 'Verdana'
+      Font.Style = []
       ParentColor = False
       ParentFont = False
     end
@@ -607,8 +623,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       end
     end
     object ceJuros: TCurrencyEdit
-      Left = 874
-      Top = 351
+      Left = 899
+      Top = 340
       Width = 96
       Height = 32
       AutoSize = False
@@ -625,8 +641,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       OnExit = ceJurosExit
     end
     object cbNFCe: TComboBox
-      Left = 825
-      Top = 391
+      Left = 850
+      Top = 380
       Width = 145
       Height = 32
       Style = csDropDownList
@@ -648,7 +664,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         'N'#195'O')
     end
     object Edit1: TEdit
-      Left = 18
+      Left = 722
       Top = 418
       Width = 57
       Height = 46
@@ -734,10 +750,30 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         TabOrder = 1
       end
     end
+    object dbedtVlr_Troca: TDBEdit
+      Left = 24
+      Top = 398
+      Width = 252
+      Height = 60
+      TabStop = False
+      Color = 12633514
+      Ctl3D = True
+      DataField = 'VLR_TROCA'
+      DataSource = dmCupomFiscal.dsCupomFiscal
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 3683329
+      Font.Height = -43
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentCtl3D = False
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 10
+    end
   end
   object pnlBotton: TAdvPanel
     Left = 0
-    Top = 469
+    Top = 468
     Width = 1115
     Height = 50
     Align = alBottom

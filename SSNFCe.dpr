@@ -109,7 +109,9 @@ uses
   uMenu in 'uMenu.pas' {fMenu},
   uConsRapidaPedido in 'uConsRapidaPedido.pas' {frmConsRapidaPedido},
   USel_Troca in 'USel_Troca.pas' {frmSel_Troca},
-  UCupom_Troca in 'UCupom_Troca.pas' {frmCupomTroca};
+  UCupom_Troca in 'UCupom_Troca.pas' {frmCupom_Troca},
+  UDMConsCupom in 'UDMConsCupom.pas' {DMConsCupom: TDataModule},
+  uConsTrocas in 'uConsTrocas.pas' {frmConsTrocas};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 

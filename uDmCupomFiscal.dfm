@@ -1420,6 +1420,10 @@ object dmCupomFiscal: TdmCupomFiscal
       DisplayLabel = 'Data Original'
       FieldName = 'DTORIGINAL'
     end
+    object cdsCupom_ConsVLR_TROCA: TFloatField
+      DisplayLabel = 'Vlr. Troca'
+      FieldName = 'VLR_TROCA'
+    end
   end
   object dsCupom_Cons: TDataSource
     DataSet = cdsCupom_Cons
@@ -2540,6 +2544,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsTipoCobrancaFORMA_PGTO: TStringField
       FieldName = 'FORMA_PGTO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsTipoCobrancaTROCA: TStringField
+      FieldName = 'TROCA'
       FixedChar = True
       Size = 1
     end
@@ -8172,10 +8181,12 @@ object dmCupomFiscal: TdmCupomFiscal
     Top = 432
     object sdsCupom_TrocaID: TIntegerField
       FieldName = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object sdsCupom_TrocaITEM: TIntegerField
       FieldName = 'ITEM'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object sdsCupom_TrocaID_CUPOM: TIntegerField
@@ -8199,9 +8210,17 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupom_TrocaVLR_TOTAL: TFloatField
       FieldName = 'VLR_TOTAL'
     end
+    object sdsCupom_TrocaNUM_CUPOM_TROCA: TIntegerField
+      FieldName = 'NUM_CUPOM_TROCA'
+    end
+    object sdsCupom_TrocaSERIE_TROCA: TStringField
+      FieldName = 'SERIE_TROCA'
+      Size = 3
+    end
   end
   object dspCupom_Troca: TDataSetProvider
     DataSet = sdsCupom_Troca
+    UpdateMode = upWhereKeyOnly
     Left = 849
     Top = 432
   end
@@ -8210,36 +8229,64 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspCupom_Troca'
+    OnCalcFields = cdsCupom_TrocaCalcFields
     Left = 881
     Top = 432
     object cdsCupom_TrocaID: TIntegerField
       FieldName = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object cdsCupom_TrocaITEM: TIntegerField
+      DisplayLabel = 'Item'
       FieldName = 'ITEM'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object cdsCupom_TrocaID_CUPOM: TIntegerField
+      DisplayLabel = 'ID Cupom'
       FieldName = 'ID_CUPOM'
     end
     object cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
+      DisplayLabel = 'ID Cupom Troca'
       FieldName = 'ID_CUPOM_TROCA'
     end
     object cdsCupom_TrocaITEM_TROCA: TIntegerField
+      DisplayLabel = 'Item Troca'
       FieldName = 'ITEM_TROCA'
     end
     object cdsCupom_TrocaID_PRODUTO: TIntegerField
+      DisplayLabel = 'ID Produto'
       FieldName = 'ID_PRODUTO'
     end
     object cdsCupom_TrocaQTD: TFloatField
+      DisplayLabel = 'Qtd'
       FieldName = 'QTD'
     end
     object cdsCupom_TrocaVLR_UNITARIO: TFloatField
+      DisplayLabel = 'Vlr. Unit'#225'rio'
       FieldName = 'VLR_UNITARIO'
     end
     object cdsCupom_TrocaVLR_TOTAL: TFloatField
+      DisplayLabel = 'Vlr. Total'
       FieldName = 'VLR_TOTAL'
+    end
+    object cdsCupom_TrocaNUM_CUPOM_TROCA: TIntegerField
+      DisplayLabel = 'N'#186' Cupom Troca'
+      FieldName = 'NUM_CUPOM_TROCA'
+    end
+    object cdsCupom_TrocaSERIE_TROCA: TStringField
+      DisplayLabel = 'S'#233'rie da Troca'
+      FieldName = 'SERIE_TROCA'
+      Size = 3
+    end
+    object cdsCupom_TrocaclNome_Produto: TStringField
+      DisplayLabel = 'Nome Produto'
+      FieldKind = fkCalculated
+      FieldName = 'clNome_Produto'
+      ProviderFlags = []
+      Size = 60
+      Calculated = True
     end
   end
   object dsCupom_Troca: TDataSource
@@ -8405,6 +8452,33 @@ object dmCupomFiscal: TdmCupomFiscal
     object qPessoa_FiscalCOD_COFINS: TStringField
       FieldName = 'COD_COFINS'
       Size = 2
+    end
+  end
+  object qProd: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'SELECT ID, NOME, REFERENCIA'
+      'FROM PRODUTO'
+      'WHERE ID = :ID')
+    SQLConnection = dmDatabase.scoDados
+    Left = 1040
+    Top = 408
+    object qProdID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qProdNOME: TStringField
+      FieldName = 'NOME'
+      Size = 100
+    end
+    object qProdREFERENCIA: TStringField
+      FieldName = 'REFERENCIA'
     end
   end
 end

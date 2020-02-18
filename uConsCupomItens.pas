@@ -27,6 +27,9 @@ type
     dbtTerminal: TDBText;
     Label8: TLabel;
     dbtRecibo: TDBText;
+    pnlTroca: TPanel;
+    GroupBox1: TGroupBox;
+    SMDBGrid1: TSMDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
   private
@@ -54,6 +57,14 @@ end;
 procedure TfrmConsCupomItens.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+  pnlTroca.Visible := (StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
+  if StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0 then
+  begin
+    fDMCupomFiscal.cdsCupom_Troca.Close;
+    fDMCupomFiscal.sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := fDMCupomFiscal.cdsCupomFiscalID.AsInteger;
+    fDMCupomFiscal.cdsCupom_Troca.Open;
+  end;
+
 end;
 
 end.

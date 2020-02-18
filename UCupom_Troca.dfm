@@ -1,9 +1,11 @@
-object frmCupomTroca: TfrmCupomTroca
+object frmCupom_Troca: TfrmCupom_Troca
   Left = 309
   Top = 77
-  Width = 979
-  Height = 563
-  Caption = 'frmCupomTroca'
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'frmCupom_Troca'
+  ClientHeight = 524
+  ClientWidth = 963
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +14,7 @@ object frmCupomTroca: TfrmCupomTroca
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
@@ -20,7 +23,7 @@ object frmCupomTroca: TfrmCupomTroca
     Left = 0
     Top = 0
     Width = 963
-    Height = 129
+    Height = 122
     Align = alTop
     UseDockManager = False
     ParentBackground = False
@@ -123,12 +126,27 @@ object frmCupomTroca: TfrmCupomTroca
       ParentFont = False
       Transparent = True
     end
+    object lblNome: TLabel
+      Left = 222
+      Top = 11
+      Width = 665
+      Height = 18
+      AutoSize = False
+      Caption = '.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      Transparent = True
+    end
     object btnConfirmar: TNxButton
       Left = 848
-      Top = 42
+      Top = 26
       Width = 75
       Caption = 'Confirmar'
-      TabOrder = 0
+      TabOrder = 1
       OnClick = btnConfirmarClick
     end
     object Edit1: TEdit
@@ -146,7 +164,8 @@ object frmCupomTroca: TfrmCupomTroca
       Font.Style = []
       ParentCtl3D = False
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 0
+      OnEnter = Edit1Enter
       OnKeyDown = Edit1KeyDown
     end
     object ceNumCupom: TCurrencyEdit
@@ -170,6 +189,8 @@ object frmCupomTroca: TfrmCupomTroca
       ParentFont = False
       ReadOnly = True
       TabOrder = 2
+      OnEnter = ceNumCupomEnter
+      OnKeyDown = ceNumCupomKeyDown
     end
     object edtSerie: TEdit
       Left = 311
@@ -210,6 +231,8 @@ object frmCupomTroca: TfrmCupomTroca
       ParentFont = False
       TabOrder = 4
       Value = 1.000000000000000000
+      OnExit = CurrencyEdit1Exit
+      OnKeyDown = CurrencyEdit1KeyDown
     end
     object ceVlr_Unitario: TCurrencyEdit
       Left = 522
@@ -229,6 +252,8 @@ object frmCupomTroca: TfrmCupomTroca
       ParentCtl3D = False
       ParentFont = False
       TabOrder = 5
+      OnExit = ceVlr_UnitarioExit
+      OnKeyDown = ceVlr_UnitarioKeyDown
     end
     object ceVlr_Total: TCurrencyEdit
       Left = 670
@@ -238,8 +263,7 @@ object frmCupomTroca: TfrmCupomTroca
       AutoSize = False
       BorderStyle = bsNone
       Ctl3D = False
-      DecimalPlaces = 3
-      DisplayFormat = '0.000'
+      DisplayFormat = '0.00'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 5585152
       Font.Height = -25
@@ -248,6 +272,9 @@ object frmCupomTroca: TfrmCupomTroca
       ParentCtl3D = False
       ParentFont = False
       TabOrder = 6
+      OnEnter = ceVlr_TotalEnter
+      OnExit = ceVlr_TotalExit
+      OnKeyDown = ceVlr_TotalKeyDown
     end
     object ceID_Produto: TCurrencyEdit
       Left = 16
@@ -272,8 +299,8 @@ object frmCupomTroca: TfrmCupomTroca
       TabOrder = 7
     end
     object btnExcluir: TNxButton
-      Left = 856
-      Top = 82
+      Left = 848
+      Top = 58
       Width = 75
       Caption = 'Excluir'
       Font.Charset = DEFAULT_CHARSET
@@ -285,14 +312,29 @@ object frmCupomTroca: TfrmCupomTroca
       TabOrder = 8
       OnClick = btnExcluirClick
     end
+    object btnCancelar: TNxButton
+      Left = 848
+      Top = 90
+      Width = 75
+      Caption = 'Cancelar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 9
+      OnClick = btnCancelarClick
+    end
   end
   object SMDBGrid1: TSMDBGrid
     Left = 0
-    Top = 129
+    Top = 146
     Width = 963
-    Height = 396
+    Height = 378
     Align = alClient
     Ctl3D = False
+    DataSource = dmCupomFiscal.dsCupom_Troca
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     ParentCtl3D = False
     TabOrder = 1
@@ -319,63 +361,210 @@ object frmCupomTroca: TfrmCupomTroca
     WidthOfIndicator = 11
     DefaultRowHeight = 17
     ScrollBars = ssHorizontal
-    ColCount = 12
+    ColCount = 11
     RowCount = 2
     Columns = <
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'ID'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'DTEMISSAO'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'CLIENTE_NOME'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 54
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'ITEM'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Item'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 39
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NUM_CUPOM_TROCA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'N'#186' Cupom Troca'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SERIE_TROCA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'S'#233'rie Troca'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 41
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ITEM_TROCA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Item Troca'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 39
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'ID_PRODUTO'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'REFERENCIA'
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOME_PRODUTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'ID Produto'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'QTD'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Qtd'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 92
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_UNITARIO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Vlr. Unit'#225'rio'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_TOTAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Vlr. Total'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'VLR_DESCONTO'
+        FieldName = 'clNome_Produto'
+        Title.Alignment = taCenter
+        Title.Caption = 'Produto'
+        Title.Color = 16757606
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -12
+        Title.Font.Name = 'Verdana'
+        Title.Font.Style = []
+        Width = 282
         Visible = True
       end>
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 122
+    Width = 963
+    Height = 24
+    Align = alTop
+    TabOrder = 2
+    object lblObs: TLabel
+      Left = 21
+      Top = 4
+      Width = 5
+      Height = 16
+      Caption = '.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
   end
 end

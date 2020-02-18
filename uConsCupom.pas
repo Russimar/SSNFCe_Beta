@@ -49,6 +49,7 @@ type
     edtSerie: TEdit;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     chkNFCE: TCheckBox;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

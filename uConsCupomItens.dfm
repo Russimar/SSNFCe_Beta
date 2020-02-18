@@ -1,9 +1,11 @@
 object frmConsCupomItens: TfrmConsCupomItens
   Left = 184
   Top = 90
-  Width = 1082
-  Height = 480
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Consulta Itens Cupons'
+  ClientHeight = 533
+  ClientWidth = 1066
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -208,14 +210,14 @@ object frmConsCupomItens: TfrmConsCupomItens
     Left = 0
     Top = 60
     Width = 1066
-    Height = 382
+    Height = 473
     Align = alClient
     TabOrder = 1
     object gridConsulta: TSMDBGrid
       Left = 1
       Top = 1
       Width = 1064
-      Height = 380
+      Height = 347
       Align = alClient
       DataSource = dmCupomFiscal.dsCupom_Itens
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -379,6 +381,125 @@ object frmConsCupomItens: TfrmConsCupomItens
           Title.Font.Style = []
           Visible = True
         end>
+    end
+    object pnlTroca: TPanel
+      Left = 1
+      Top = 348
+      Width = 1064
+      Height = 124
+      Align = alBottom
+      TabOrder = 1
+      object GroupBox1: TGroupBox
+        Left = 1
+        Top = 1
+        Width = 1062
+        Height = 122
+        Align = alClient
+        Caption = ' Itens de Troca '
+        TabOrder = 0
+        object SMDBGrid1: TSMDBGrid
+          Left = 2
+          Top = 15
+          Width = 1058
+          Height = 105
+          Align = alClient
+          Ctl3D = False
+          DataSource = dmCupomFiscal.dsCupom_Troca
+          Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+          ParentCtl3D = False
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+          Flat = True
+          BandsFont.Charset = DEFAULT_CHARSET
+          BandsFont.Color = clWindowText
+          BandsFont.Height = -11
+          BandsFont.Name = 'MS Sans Serif'
+          BandsFont.Style = []
+          Groupings = <>
+          GridStyle.Style = gsAquaBlue
+          GridStyle.OddColor = 16774361
+          GridStyle.EvenColor = 16768959
+          TitleHeight.PixelCount = 24
+          FooterColor = clBtnFace
+          ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
+          RegistryKey = 'Software\Scalabium'
+          RegistrySection = 'gridConsulta'
+          WidthOfIndicator = 11
+          DefaultRowHeight = 16
+          ScrollBars = ssHorizontal
+          ColCount = 11
+          RowCount = 2
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'NUM_CUPOM_TROCA'
+              Title.Color = 13828006
+              Width = 73
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'SERIE_TROCA'
+              Title.Color = 13828006
+              Width = 51
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ITEM_TROCA'
+              Title.Color = 13828006
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ID_PRODUTO'
+              Title.Color = 13828006
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'QTD'
+              Title.Color = 13828006
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_UNITARIO'
+              Title.Color = 13828006
+              Width = 87
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_TOTAL'
+              Title.Color = 13828006
+              Width = 91
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'clNome_Produto'
+              Title.Color = 13828006
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ID'
+              Title.Color = 13828006
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ITEM'
+              Title.Color = 13828006
+              Visible = True
+            end>
+        end
+      end
     end
   end
 end

@@ -92,6 +92,7 @@ type
     ACBrValidador: TACBrValidador;
     GradientLabel7: TGradientLabel;
     GradientLabel8: TGradientLabel;
+    GradientLabel9: TGradientLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -209,7 +210,7 @@ uses
   uCupomCliente, uCalculo_CupomFiscal, Math, USenha, uUtilCupom, UConsPreco,
   USel_Sacola_CF, USel_Pedido_CF, DmdDatabase, uMenu, UCupomFiscalCli,
   USel_Comanda_CF, uCupomFiscalParcela, uSel_CorTamanho, uBalanca,
-  uGrava_Erro, USel_Troca;
+  uGrava_Erro, USel_Troca, UCupom_Troca;
 
 {$R *.dfm}
 
@@ -484,14 +485,17 @@ end;
 
 procedure TfCupomFiscal.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
+if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
   begin
+    if fDmCupomFiscal.cdsFilialID.AsInteger <> vFilial_Loc then
+      fDmCupomFiscal.cdsFilial.Locate('ID', vFilial_Loc, [loCaseInsensitive]);
+
     fDmCupomFiscal.vID_Troca := 0;
-    frmSel_Troca := TfrmSel_Troca.Create(Self);
-    frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
-    frmSel_Troca.CurrencyEdit1.AsInteger := vID_Produto;
-    frmSel_Troca.ShowModal;
-    FreeAndNil(frmSel_Troca);
+    frmCupom_Troca := TfrmCupom_Troca.Create(Self);
+    frmCupom_Troca.fDmCupomFiscal := fDmCupomFiscal;
+    frmCupom_Troca.vSerieCupom := vSerieCupom;
+    frmCupom_Troca.ShowModal;
+    FreeAndNil(frmCupom_Troca);
   
     //vTroca := not(vTroca);
   end
@@ -1045,7 +1049,7 @@ begin
             if vVias <= 0 then
               vVias := 1;
             fDmCupomFiscal.cdsTipoCobranca.Open;
-            fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
+            fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
             if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
               vVias := vVias - 1;
             fDmCupomFiscal.cdsTipoCobranca.Close;
@@ -1705,62 +1709,16 @@ begin
 end;
 
 procedure TfCupomFiscal.prc_Inserir;
-var
-  iRetorno: Integer;
-  NCupom, vEst: string;
-  vArq: string;
 begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
 
   fDmCupomFiscal.cdsFilial.IndexFieldNames := 'ID';
   fDmCupomFiscal.cdsFilial.FindKey([vFilial_Loc]);
+
   fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
 
-  fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID);
+  fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID,vSerieCupom);
 
-  if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
-  begin
-    fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'NFC';
-    if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
-      fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
-    fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger := fDmCupomFiscal.vClienteID;
-    fDmCupomFiscal.cdsCupomFiscalTIPO_DESTINO_OPERACAO.AsInteger := 1;
-    fDMCupomFiscal.cdsCupomFiscalTIPO_ATENDIMENTO.AsInteger := 1;
-    fDMCupomFiscal.cdsCupomFiscalTIPO_ENVIONFE.AsString := '1-NORMAL';
-    if vSerieCupom <> EmptyStr then
-      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom
-    else
-      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
-  end
-  else
-  begin
-//---------------TROCAR IMPRESSORA
-    case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
-      5:
-        begin
-          fDmCupomFiscal.prcNumNaoFiscal;
-          fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
-          fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom;
-          if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
-            fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
-        end;
-      6:
-        begin
-          fDmCupomFiscal.prcNumNaoFiscal;
-          fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
-          fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom;
-          if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
-            fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
-        end;
-    end;
-  end;
-
-  if fDmCupomFiscal.cdsCupomFiscal.State in [dsInsert] then
-  begin
-    fDmCupomFiscal.cdsCupomFiscal.Post;
-    fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
-    fDmCupomFiscal.cdsCupomFiscal.Edit;
-  end;
 end;
 
 procedure TfCupomFiscal.prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);

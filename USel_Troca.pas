@@ -23,16 +23,18 @@ type
     Label5: TLabel;
     CurrencyEdit2: TCurrencyEdit;
     Panel2: TPanel;
-    btnCopiar: TNxButton;
+    Label6: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure btnConsultaClick(Sender: TObject);
     procedure SMDBGrid1DblClick(Sender: TObject);
+    procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure SMDBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
 
-    procedure prc_Consultar;
-        
   public
     { Public declarations }
     fDmCupomFiscal: TDmCupomFiscal;
@@ -57,33 +59,15 @@ end;
 procedure TfrmSel_Troca.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+  fDmCupomFiscal.cdsTroca.Close;
   DateEdit1.Date := Date - 15;
 end;
 
 procedure TfrmSel_Troca.btnConsultaClick(Sender: TObject);
 begin
-  prc_Consultar;
-end;
-
-procedure TfrmSel_Troca.prc_Consultar;
-begin
-  fDMCupomFiscal.cdsTroca.Close;
-  DMCupomFiscal.cdsTroca.Close;
-
-  if CurrencyEdit2.AsInteger > 0 then
-    DMCupomFiscal.sdsTroca.CommandText := DMCupomFiscal.sdsTroca.CommandText + ' AND C.NUM_CUPOM = ' + IntToStr(CurrencyEdit2.AsInteger)
-  else
-  begin
-    if CurrencyEdit1.AsInteger > 0 then
-      DMCupomFiscal.sdsTroca.CommandText := DMCupomFiscal.sdsTroca.CommandText + ' AND I.ID_PRODUTO = ' + IntToStr(CurrencyEdit1.AsInteger);
-    if trim(Edit1.Text) <> '' then
-      DMCupomFiscal.sdsTroca.CommandText := DMCupomFiscal.sdsTroca.CommandText + ' AND I.REFERENCIA LIKE ' + QuotedStr('%'+Edit1.Text+'%');
-    if trim(Edit2.Text) <> '' then
-      DMCupomFiscal.sdsTroca.CommandText := DMCupomFiscal.sdsTroca.CommandText + ' AND I.NOME_PRODUTO LIKE ' + QuotedStr('%'+Edit2.Text+'%');
-  end;
-  DMCupomFiscal.sdsTroca.ParamByName('DATA').AsDate := DateEdit1.Date;
-  DMCupomFiscal.cdsTroca.Open;
-  DMCupomFiscal.cdsTroca.IndexFieldNames := 'DTEMISSAO;NOME_PRODUTO';
+  fDmCupomFiscal.prc_Consultar_Troca(CurrencyEdit2.AsInteger,CurrencyEdit1.AsInteger,'',Edit1.Text,Edit2.Text,DateEdit1.Date);
+  if not fDmCupomFiscal.cdsTroca.IsEmpty then
+    SMDBGrid1.SetFocus;
 end;
 
 procedure TfrmSel_Troca.SMDBGrid1DblClick(Sender: TObject);
@@ -93,6 +77,21 @@ begin
   fDmCupomFiscal.vID_Troca    := fDmCupomFiscal.cdsTrocaID.AsInteger;
   fDmCupomFiscal.vItem_Troca  := fDmCupomFiscal.cdsTrocaITEM.AsInteger;
   Close;
+end;
+
+procedure TfrmSel_Troca.CurrencyEdit1KeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+ if Key = VK_RETURN then
+   btnConsultaClick(Sender);
+
+end;
+
+procedure TfrmSel_Troca.SMDBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = vk_Return then
+    SMDBGrid1DblClick(Sender);
 end;
 
 end.

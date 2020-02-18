@@ -66,6 +66,8 @@ type
     btnVendedor: TSpeedButton;
     edtCodigoVendedor: TDBEdit;
     edtNomeVendedor: TEdit;
+    lblVlr_Troca: TLabel;
+    dbedtVlr_Troca: TDBEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure comboCondicaoPgtoChange(Sender: TObject);
@@ -293,6 +295,11 @@ begin
   mPagamentosSelecionados.CreateDataSet;
   mPagamentosSelecionados.EmptyDataSet;
 
+  //18/02/2020
+  lblVlr_Troca.Visible   := (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
+  dbedtVlr_Troca.Visible := (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
+  //************
+
   if not fdmCupomFiscal.cdsTipoCobranca.Active then
     fDmCupomFiscal.cdsTipoCobranca.Open;
 
@@ -355,6 +362,19 @@ begin
   DrawControl(edtValorPagamento);
   //Desabilita a barra de rolagem da grid
   ShowScrollBar(gridPagamentosDisponiveis.Handle, SB_VERT, False);
+
+  //18/02/2020
+  if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0 then
+  begin
+    if (fDmCupomFiscal.cdsTipoCobranca.Locate('TROCA','S' ,[loCaseInsensitive])) then
+    begin
+      EstadoFechVenda        := InformandoValorRecebido;
+      edtPagamento.Text      := fDmCupomFiscal.cdsTipoCobrancaID.AsString;
+      edtValorPagamento.Text := FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat);
+      edtValorPagamentoKeyDown(Sender, Enter, [ssAlt]);
+    end;
+  end;
+  //************
 
 end;
 
@@ -582,6 +602,14 @@ begin
     begin
       vGravar_OK := True;
       fDmCupomFiscal.vEncerrado := True;
+      //18/02/2020
+      if fDmCupomFiscal.cdsCupom_Troca.Active then
+      begin
+        if fDmCupomFiscal.cdsCupom_Troca.State in [dsEdit,dsInsert] then
+          fDmCupomFiscal.cdsCupom_Troca.Post;
+        fDmCupomFiscal.cdsCupom_Troca.ApplyUpdates(0);
+      end;
+      //******************
     end;
 
     if fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S' then

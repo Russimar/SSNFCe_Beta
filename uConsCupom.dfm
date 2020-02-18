@@ -22,14 +22,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 1071
-    Height = 486
+    Height = 485
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 90
       Width = 1069
-      Height = 395
+      Height = 394
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -126,6 +126,9 @@ object frmConsCupom: TfrmConsCupom
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
           Options.Editing = False
+        end
+        object cxGrid1DBTableView1Column1: TcxGridDBColumn
+          DataBinding.FieldName = 'VLR_TROCA'
         end
       end
       object cxGrid1Level1: TcxGridLevel

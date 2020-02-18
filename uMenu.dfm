@@ -25,7 +25,7 @@ object fMenu: TfMenu
     Left = 0
     Top = 0
     Width = 89
-    Height = 615
+    Height = 614
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -2523,10 +2523,6 @@ object fMenu: TfMenu
         Caption = 'Cupom Fiscal'
         OnClick = CupomFiscal1Click
       end
-      object ConsultaCupom1: TMenuItem
-        Caption = 'Consulta Cupom'
-        OnClick = ConsultaCupom1Click
-      end
       object ImpressoraFiscal1: TMenuItem
         Caption = 'Impressora Fiscal'
         object LeituraX1: TMenuItem
@@ -2558,6 +2554,17 @@ object fMenu: TfMenu
       object ConfiguraoCertificado1: TMenuItem
         Caption = 'Configura'#231#227'o Certificado'
         OnClick = ConfiguraoCertificado1Click
+      end
+    end
+    object Consultas1: TMenuItem
+      Caption = 'Consultas'
+      object ConsultaCupom1: TMenuItem
+        Caption = 'Consulta Cupom'
+        OnClick = ConsultaCupom1Click
+      end
+      object Consultatrocas1: TMenuItem
+        Caption = 'Consulta Trocas'
+        OnClick = Consultatrocas1Click
       end
     end
     object Financeiro1: TMenuItem
