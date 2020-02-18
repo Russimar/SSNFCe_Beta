@@ -1692,74 +1692,9 @@ type
     cdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
     cdsTipoCobrancaFORMA_PGTO: TStringField;
     sdsCupom_ItensCOD_CBENEF: TStringField;
-    sdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
-    sdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
-    sdsCupom_ItensQTD_TROCA: TFloatField;
-    sdsCupom_ItensVLR_TROCA: TFloatField;
     cdsCupom_ItensCOD_CBENEF: TStringField;
-    cdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
-    cdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
-    cdsCupom_ItensQTD_TROCA: TFloatField;
-    cdsCupom_ItensVLR_TROCA: TFloatField;
-    AdvPanelStyler1: TAdvPanelStyler;
-    sdsTroca: TSQLDataSet;
-    dspTroca: TDataSetProvider;
-    cdsTroca: TClientDataSet;
-    dsTroca: TDataSource;
-    sdsTrocaID: TIntegerField;
-    sdsTrocaDTEMISSAO: TDateField;
-    sdsTrocaCLIENTE_NOME: TStringField;
-    sdsTrocaITEM: TIntegerField;
-    sdsTrocaID_PRODUTO: TIntegerField;
-    sdsTrocaREFERENCIA: TStringField;
-    sdsTrocaNOME_PRODUTO: TStringField;
-    sdsTrocaQTD: TFloatField;
-    sdsTrocaVLR_UNITARIO: TFloatField;
-    sdsTrocaVLR_TOTAL: TFloatField;
-    sdsTrocaVLR_DESCONTO: TFloatField;
-    sdsTrocaNUMCUPOM: TIntegerField;
-    sdsTrocaSERIE: TStringField;
-    cdsTrocaID: TIntegerField;
-    cdsTrocaDTEMISSAO: TDateField;
-    cdsTrocaCLIENTE_NOME: TStringField;
-    cdsTrocaITEM: TIntegerField;
-    cdsTrocaID_PRODUTO: TIntegerField;
-    cdsTrocaREFERENCIA: TStringField;
-    cdsTrocaNOME_PRODUTO: TStringField;
-    cdsTrocaQTD: TFloatField;
-    cdsTrocaVLR_UNITARIO: TFloatField;
-    cdsTrocaVLR_TOTAL: TFloatField;
-    cdsTrocaVLR_DESCONTO: TFloatField;
-    cdsTrocaNUMCUPOM: TIntegerField;
-    cdsTrocaSERIE: TStringField;
-    sdsCupomFiscalVLR_TROCA: TFloatField;
-    cdsCupomFiscalVLR_TROCA: TFloatField;
-    sdsCupom_Troca: TSQLDataSet;
-    dspCupom_Troca: TDataSetProvider;
-    cdsCupom_Troca: TClientDataSet;
-    dsCupom_Troca: TDataSource;
-    sdsCupom_TrocaID: TIntegerField;
-    sdsCupom_TrocaITEM: TIntegerField;
-    sdsCupom_TrocaID_CUPOM: TIntegerField;
-    sdsCupom_TrocaID_CUPOM_TROCA: TIntegerField;
-    sdsCupom_TrocaITEM_TROCA: TIntegerField;
-    sdsCupom_TrocaID_PRODUTO: TIntegerField;
-    sdsCupom_TrocaQTD: TFloatField;
-    sdsCupom_TrocaVLR_UNITARIO: TFloatField;
-    sdsCupom_TrocaVLR_TOTAL: TFloatField;
-    cdsCupom_TrocaID: TIntegerField;
-    cdsCupom_TrocaITEM: TIntegerField;
-    cdsCupom_TrocaID_CUPOM: TIntegerField;
-    cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField;
-    cdsCupom_TrocaITEM_TROCA: TIntegerField;
-    cdsCupom_TrocaID_PRODUTO: TIntegerField;
-    cdsCupom_TrocaQTD: TFloatField;
-    cdsCupom_TrocaVLR_UNITARIO: TFloatField;
-    cdsCupom_TrocaVLR_TOTAL: TFloatField;
     sdsCFOP_VariacaoCOD_BENEF: TStringField;
     cdsCFOP_VariacaoCOD_BENEF: TStringField;
-    cdsProdutoCOD_BENEF: TStringField;
-    cdsTab_NCMCOD_BENEF: TStringField;
     qPessoa_Fiscal: TSQLQuery;
     qPessoa_FiscalCODIGO: TIntegerField;
     qPessoa_FiscalIPI_SUSPENSO: TStringField;
@@ -1773,6 +1708,9 @@ type
     qPessoa_FiscalPIS_OBS: TStringField;
     qPessoa_FiscalPIS_ID_PIS: TIntegerField;
     qPessoa_FiscalPIS_ID_COFINS: TIntegerField;
+    qPessoa_FiscalCOD_IPI: TStringField;
+    qPessoa_FiscalCOD_PIS: TStringField;
+    qPessoa_FiscalCOD_COFINS: TStringField;
     qPessoa_FiscalDESC_SUFRAMA_PIS_COFINS: TStringField;
     qPessoa_FiscalDESC_SUFRAMA_ICMS: TStringField;
     qPessoa_FiscalDESC_SUFRAMA_IPI: TStringField;
@@ -1791,14 +1729,66 @@ type
     qPessoa_FiscalDRAW_ENQIPI: TIntegerField;
     qPessoa_FiscalDRAW_PERC_DESCONTO: TFloatField;
     qPessoa_FiscalDRAW_POSSUI: TStringField;
-    qPessoa_FiscalCAE_1: TStringField;
-    qPessoa_FiscalCAE_2: TStringField;
-    qPessoa_FiscalCAE_3: TStringField;
     qPessoa_FiscalCOD_BENEF: TStringField;
-    qPessoa_FiscalOPCAO_DIFERIMENTO: TStringField;
-    qPessoa_FiscalCOD_IPI: TStringField;
-    qPessoa_FiscalCOD_PIS: TStringField;
-    qPessoa_FiscalCOD_COFINS: TStringField;
+    cdsProdutoCOD_BENEF: TStringField;
+    cdsTab_NCMCOD_BENEF: TStringField;
+    AdvPanelStyler1: TAdvPanelStyler;
+    sdsCupomPedido: TSQLDataSet;
+    dspCupomPedido: TDataSetProvider;
+    cdsCupomPedido: TClientDataSet;
+    dsCupomPedido: TDataSource;
+    sdsCupomFiscalVLR_TROCA: TFloatField;
+    cdsCupomFiscalVLR_TROCA: TFloatField;
+    sdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
+    sdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
+    sdsCupom_ItensQTD_TROCA: TFloatField;
+    sdsCupom_ItensVLR_TROCA: TFloatField;
+    cdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
+    cdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
+    cdsCupom_ItensQTD_TROCA: TFloatField;
+    cdsCupom_ItensVLR_TROCA: TFloatField;
+    sdsTroca: TSQLDataSet;
+    dspTroca: TDataSetProvider;
+    cdsTroca: TClientDataSet;
+    cdsTrocaID: TIntegerField;
+    cdsTrocaDTEMISSAO: TDateField;
+    cdsTrocaCLIENTE_NOME: TStringField;
+    cdsTrocaITEM: TIntegerField;
+    cdsTrocaID_PRODUTO: TIntegerField;
+    cdsTrocaREFERENCIA: TStringField;
+    cdsTrocaNOME_PRODUTO: TStringField;
+    cdsTrocaQTD: TFloatField;
+    cdsTrocaVLR_UNITARIO: TFloatField;
+    cdsTrocaVLR_TOTAL: TFloatField;
+    cdsTrocaVLR_DESCONTO: TFloatField;
+    dsTroca: TDataSource;
+    cdsTrocaNUMCUPOM: TIntegerField;
+    cdsTrocaSERIE: TStringField;
+    sdsCupom_Troca: TSQLDataSet;
+    sdsCupom_TrocaID: TIntegerField;
+    sdsCupom_TrocaITEM: TIntegerField;
+    sdsCupom_TrocaID_CUPOM: TIntegerField;
+    sdsCupom_TrocaITEM_CUPOM: TIntegerField;
+    sdsCupom_TrocaITEM_TROCA: TIntegerField;
+    sdsCupom_TrocaID_PRODUTO: TIntegerField;
+    sdsCupom_TrocaQTD: TFloatField;
+    sdsCupom_TrocaVLR_UNITARIO: TFloatField;
+    sdsCupom_TrocaVLR_TOTAL: TFloatField;
+    dspCupom_Troca: TDataSetProvider;
+    cdsCupom_Troca: TClientDataSet;
+    cdsCupom_TrocaID: TIntegerField;
+    cdsCupom_TrocaITEM: TIntegerField;
+    cdsCupom_TrocaID_CUPOM: TIntegerField;
+    cdsCupom_TrocaITEM_CUPOM: TIntegerField;
+    cdsCupom_TrocaID_CUPOM_TROTAL: TIntegerField;
+    cdsCupom_TrocaITEM_TROCA: TIntegerField;
+    cdsCupom_TrocaID_PRODUTO: TIntegerField;
+    cdsCupom_TrocaQTD: TFloatField;
+    cdsCupom_TrocaVLR_UNITARIO: TFloatField;
+    cdsCupom_TrocaVLR_TOTAL: TFloatField;
+    dsCupom_Troca: TDataSource;
+    sdsCupom_TrocaID_CUPOM_TROCA: TIntegerField;
+    cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1864,6 +1854,8 @@ type
     vVlr_ICMS : Real;
     vVlr_ICMS_Ret, vBase_ICMS_Ret, vVlr_ICMS_Efet : Real;
     vQtd_Troca : Real;
+    
+
     vIdCombinacao: Integer;
     vTamanho, vCombinacao: String;
     vDataEntrada: TDateTime;
@@ -1918,14 +1910,17 @@ type
 
     procedure prc_Busca_IBPT;
     procedure prc_Busca_CodBenef;
-
     procedure prc_Localizar_Pessoa(vId: Integer ; vCNPJ_CPF : String);
 
     procedure prc_Calcular_Valor_Juros(Perc_Juros : Currency);
     procedure prc_Calcular_CondPagto(sender : TObject; vVlr_Pagto : Currency; vPercJuros : Currency = 0);
     procedure prc_Inserir_FormaPagto;
+    procedure prc_Gravar_FormaPagto;
+
     procedure prc_Consultar_Troca(NumCupom, ID_Produto : Integer ; Serie,Referencia,Nome : String ; Data : TDateTime );
+
     procedure prc_Inserir_Troca;
+
   end;
 
   //Funções Balança Urano
@@ -2040,7 +2035,8 @@ begin
   ctDuplicata   := sdsDuplicata.CommandText;
   ctTotais      := sdsTotais.CommandText;
   ctConsCupom   := sdsCupom_Cons.CommandText;
-
+  ctTroca       := sdsTroca.CommandText;
+  
   cdsFilial.Open;
   cdsTipoCobranca.Open;
   cdsParametros.Open;
@@ -3753,7 +3749,7 @@ begin
         begin
          if vDocumentoClienteVenda <> EmptyStr then
            vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
-        
+
           ACBrValidador.TipoDocto := TACBrValTipoDocto(docCNPJ);
           ACBrValidador.Documento := vDocumentoClienteVenda;
           if ACBrValidador.Validar then
@@ -3770,7 +3766,7 @@ begin
         vCpfOK := True;
     until
       vCpfOK;
-  end
+  end;
 //  else
 //    vCpfOK := True;
 end;
@@ -4072,56 +4068,9 @@ begin
   cdsCupomFiscal_FormaPgtoITEM.AsInteger := vItem;
 end;
 
-
-procedure TdmCupomFiscal.prc_Consultar_Troca(NumCupom, ID_Produto: Integer;
-  Serie, Referencia, Nome: String; Data: TDateTime);
+procedure TdmCupomFiscal.prc_Gravar_FormaPagto;
 begin
-  cdsTroca.Close;
-  cdsTroca.Close;
-  if NumCupom > 0 then
-  begin
-    sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.NUM_CUPOM = ' + IntToStr(NumCupom);
-    if trim(Serie) <> '' then
-      sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
-  end
-  else
-  begin
-    if trim(Serie) <> '' then
-      sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
-    if ID_Produto > 0 then
-      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.ID_PRODUTO = ' + IntToStr(ID_Produto);
-    if trim(Referencia) <> '' then
-      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.REFERENCIA LIKE ' + QuotedStr('%'+Referencia+'%');
-    if trim(Nome) <> '' then
-      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.NOME_PRODUTO LIKE ' + QuotedStr('%'+Nome+'%');
-  end;
-  if Data > 10 then
-    sdsTroca.ParamByName('DATA').AsDate := Data;
-  cdsTroca.Open;
-  cdsTroca.IndexFieldNames := 'DTEMISSAO;NOME_PRODUTO';
-end;
-
-procedure TdmCupomFiscal.prc_Inserir_Troca;
-var
-  vAux, vItem : Integer;
-begin
-  if not(cdsCupom_Troca.Active) or (cdsCupom_TrocaID_CUPOM.AsInteger <> cdsCupomFiscalID.AsInteger) then
-  begin
-    cdsCupom_Troca.Close;
-    sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := cdsCupomFiscalID.AsInteger;
-    cdsCupom_Troca.Open;
-    vAux := dmDatabase.ProximaSequencia('CUPOMFISCAL',0);
-    vAux := vAux + 1;
-  end
-  else
-    vAux := cdsCupom_TrocaID.AsInteger;
-  cdsCupom_Troca.Last;
-  vItem := cdsCupom_TrocaITEM.AsInteger;
-
-  cdsCupom_Troca.Insert;
-  cdsCupom_TrocaID.AsInteger       := vAux;
-  cdsCupom_TrocaITEM.AsInteger     := vItem + 1;
-  cdsCupom_TrocaID_CUPOM.AsInteger := cdsCupomFiscalID.AsInteger;
+ //
 end;
 
 procedure TdmCupomFiscal.prc_Busca_CodBenef;
@@ -4196,5 +4145,56 @@ begin
   cdsCupom_ItensCOD_CBENEF.AsString := vCod_CBenef_Loc;
 end;
 
+procedure TdmCupomFiscal.prc_Consultar_Troca(NumCupom, ID_Produto: Integer;
+  Serie, Referencia, Nome: String; Data: TDateTime);
+begin
+  cdsTroca.Close;
+  cdsTroca.Close;
+
+  if NumCupom > 0 then
+  begin
+    sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.NUM_CUPOM = ' + IntToStr(NumCupom);
+    if trim(Serie) <> '' then
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
+  end
+  else
+  begin
+    if trim(Serie) <> '' then
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
+    if ID_Produto > 0 then
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.ID_PRODUTO = ' + IntToStr(ID_Produto);
+    if trim(Referencia) <> '' then
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.REFERENCIA LIKE ' + QuotedStr('%'+Referencia+'%');
+    if trim(Nome) <> '' then
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.NOME_PRODUTO LIKE ' + QuotedStr('%'+Nome+'%');
+  end;
+  if Data > 10 then
+    sdsTroca.ParamByName('DATA').AsDate := Data;
+  cdsTroca.Open;
+  cdsTroca.IndexFieldNames := 'DTEMISSAO;NOME_PRODUTO';
+end;
+
+procedure TdmCupomFiscal.prc_Inserir_Troca;
+var
+  vAux, vItem : Integer;
+begin
+  if not(cdsCupom_Troca.Active) or (cdsCupom_TrocaID_CUPOM.AsInteger <> cdsCupomFiscalID.AsInteger) then
+  begin
+    cdsCupom_Troca.Close;
+    sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := cdsCupomFiscalID.AsInteger;
+    cdsCupom_Troca.Open;
+    vAux := dmDatabase.ProximaSequencia('CUPOMFISCAL',0);
+    vAux := vAux + 1;
+  end
+  else
+    vAux := cdsCupom_TrocaID.AsInteger;
+  cdsCupom_Troca.Last;
+  vItem := cdsCupom_TrocaITEM.AsInteger;
+
+  cdsCupom_Troca.Insert;
+  cdsCupom_TrocaID.AsInteger       := vAux;
+  cdsCupom_TrocaITEM.AsInteger     := vItem + 1;
+  cdsCupom_TrocaID_CUPOM.AsInteger := cdsCupomFiscalID.AsInteger;
+end;
 
 end.

@@ -1,6 +1,6 @@
 object frmSel_Troca: TfrmSel_Troca
-  Left = 297
-  Top = 168
+  Left = 167
+  Top = 98
   Width = 979
   Height = 563
   Caption = 'frmSel_Troca'
@@ -119,7 +119,7 @@ object frmSel_Troca: TfrmSel_Troca
     Left = 0
     Top = 97
     Width = 963
-    Height = 386
+    Height = 387
     Align = alClient
     Ctl3D = False
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
@@ -210,7 +210,7 @@ object frmSel_Troca: TfrmSel_Troca
   end
   object Panel2: TPanel
     Left = 0
-    Top = 483
+    Top = 484
     Width = 963
     Height = 41
     Align = alBottom

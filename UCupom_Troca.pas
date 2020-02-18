@@ -8,7 +8,7 @@ uses
   Grids, DBGrids, SMDBGrid;
 
 type
-  TForm1 = class(TForm)
+  TfrmCupomTroca = class(TForm)
     NxPanel1: TNxPanel;
     btnConfirmar: TNxButton;
     Edit1: TEdit;
@@ -50,25 +50,25 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmCupomTroca: TfrmCupomTroca;
 
 implementation
 
-uses rsDBUtils, uUtilPadrao, Types;
+uses rsDBUtils, uUtilPadrao, Types, USel_Troca;
 
 {$R *.dfm}
 
-procedure TForm1.FormShow(Sender: TObject);
+procedure TfrmCupomTroca.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmCupomTroca.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := Cafree;
 end;
 
-function TForm1.posicionaProduto: Boolean;
+function TfrmCupomTroca.posicionaProduto: Boolean;
 var
   vCampoPesquisa: string;
   vTamCod: Byte;
@@ -232,7 +232,7 @@ begin
   end;
 end;
 
-procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
+procedure TfrmCupomTroca.Edit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
@@ -257,7 +257,7 @@ begin
 
 end;
 
-procedure TForm1.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmCupomTroca.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = Vk_F3) then
@@ -276,7 +276,7 @@ begin
 
 end;
 
-procedure TForm1.prc_Monta;
+procedure TfrmCupomTroca.prc_Monta;
 begin
   ceNumCupom.AsInteger := fDmCupomFiscal.cdsTrocaNUMCUPOM.AsInteger;
   edtSerie.Text        := fDmCupomFiscal.cdsTrocaSERIE.AsString;
@@ -289,7 +289,7 @@ begin
 
 end;
 
-procedure TForm1.btnConfirmarClick(Sender: TObject);
+procedure TfrmCupomTroca.btnConfirmarClick(Sender: TObject);
 var
   vMSG : String;
 begin
@@ -309,13 +309,13 @@ begin
   fDmCupomFiscal.cdsCupom_TrocaID_PRODUTO.AsInteger     := ceID_Produto.AsInteger;
   fDmCupomFiscal.cdsCupom_TrocaQTD.AsFloat              := CurrencyEdit1.Value;
   fDmCupomFiscal.cdsCupom_TrocaVLR_UNITARIO.AsFloat     := ceVlr_Unitario.Value;
-  fDmCupomFiscal.cdsCupom_TrocaVLR_TOTAL.AsFloat        :=´ceVlr_Total.Value;
+  fDmCupomFiscal.cdsCupom_TrocaVLR_TOTAL.AsFloat        := ceVlr_Total.Value;
   fDmCupomFiscal.cdsCupom_Troca.Post;
 
   fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat + ceVlr_Total.Value;
 end;
 
-procedure TForm1.btnExcluirClick(Sender: TObject);
+procedure TfrmCupomTroca.btnExcluirClick(Sender: TObject);
 begin
   if MessageDlg('Deseja excluir a troca?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     exit;

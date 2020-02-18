@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 65528
-  Top = 65528
+  Left = 66
+  Top = 11
   Height = 744
   Width = 1382
   object sdsCupomFiscal: TSQLDataSet
@@ -4121,7 +4121,6 @@ object dmCupomFiscal: TdmCupomFiscal
     Top = 16
   end
   object cdsCFOP: TClientDataSet
-    Active = True
     Aggregates = <>
     IndexFieldNames = 'CODCFOP;ID'
     Params = <>
@@ -4947,7 +4946,6 @@ object dmCupomFiscal: TdmCupomFiscal
     end
   end
   object cdsCFOP_Variacao: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsCFOPsdsCFOP_Variacao
     IndexFieldNames = 'NOME'
@@ -7956,297 +7954,6 @@ object dmCupomFiscal: TdmCupomFiscal
     Left = 128
     Top = 248
   end
-  object AdvPanelStyler1: TAdvPanelStyler
-    Tag = 0
-    Settings.AnchorHint = False
-    Settings.AutoHideChildren = False
-    Settings.BevelInner = bvNone
-    Settings.BevelOuter = bvNone
-    Settings.BevelWidth = 1
-    Settings.BorderColor = clGray
-    Settings.BorderShadow = True
-    Settings.BorderStyle = bsNone
-    Settings.BorderWidth = 0
-    Settings.CanMove = False
-    Settings.CanSize = False
-    Settings.Caption.Color = clWhite
-    Settings.Caption.ColorTo = clNone
-    Settings.Caption.Font.Charset = DEFAULT_CHARSET
-    Settings.Caption.Font.Color = clBlack
-    Settings.Caption.Font.Height = -11
-    Settings.Caption.Font.Name = 'Tahoma'
-    Settings.Caption.Font.Style = []
-    Settings.Caption.Indent = 4
-    Settings.Caption.ShadeLight = 255
-    Settings.Caption.ShadeType = stRMetal
-    Settings.Caption.Visible = True
-    Settings.Collaps = False
-    Settings.CollapsColor = clBtnFace
-    Settings.CollapsDelay = 0
-    Settings.CollapsSteps = 0
-    Settings.Color = clWhite
-    Settings.ColorTo = 15000804
-    Settings.ColorMirror = clNone
-    Settings.ColorMirrorTo = clNone
-    Settings.Cursor = crDefault
-    Settings.Font.Charset = DEFAULT_CHARSET
-    Settings.Font.Color = clWindowText
-    Settings.Font.Height = -11
-    Settings.Font.Name = 'Tahoma'
-    Settings.Font.Style = []
-    Settings.FixedTop = False
-    Settings.FixedLeft = False
-    Settings.FixedHeight = False
-    Settings.FixedWidth = False
-    Settings.Height = 120
-    Settings.Hover = False
-    Settings.HoverColor = clBlack
-    Settings.HoverFontColor = clBlack
-    Settings.Indent = 0
-    Settings.ShadowColor = clBlack
-    Settings.ShadowOffset = 0
-    Settings.ShowHint = False
-    Settings.ShowMoveCursor = False
-    Settings.StatusBar.BorderColor = clWhite
-    Settings.StatusBar.BorderStyle = bsSingle
-    Settings.StatusBar.Font.Charset = DEFAULT_CHARSET
-    Settings.StatusBar.Font.Color = clBlack
-    Settings.StatusBar.Font.Height = -11
-    Settings.StatusBar.Font.Name = 'Tahoma'
-    Settings.StatusBar.Font.Style = []
-    Settings.StatusBar.Color = 14606046
-    Settings.StatusBar.ColorTo = 11119017
-    Settings.TextVAlign = tvaTop
-    Settings.TopIndent = 0
-    Settings.URLColor = clTeal
-    Settings.Width = 0
-    Style = psTMS
-    Left = 1201
-    Top = 41
-  end
-  object sdsTroca: TSQLDataSet
-    NoMetadata = True
-    GetMetadata = False
-    CommandText = 
-      'select C.ID, C.DTEMISSAO, C.CLIENTE_NOME, I.ITEM, I.ID_PRODUTO, ' +
-      'I.REFERENCIA, I.NOME_PRODUTO, I.QTD, I.VLR_UNITARIO,'#13#10'       I.V' +
-      'LR_TOTAL, I.VLR_DESCONTO, C.NUMCUPOM, C.SERIE'#13#10'from CUPOMFISCAL ' +
-      'C'#13#10'inner join CUPOMFISCAL_ITENS I on C.ID = I.ID'#13#10'where round((I' +
-      '.QTD - coalesce(I.QTD_TROCA, 0)), 4) > 0 and'#13#10'      (C.DTEMISSAO' +
-      ' >= :DATA or :DATA is null) '
-    MaxBlobSize = -1
-    Params = <
-      item
-        DataType = ftDate
-        Name = 'DATA'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftDate
-        Name = 'DATA'
-        ParamType = ptInput
-      end>
-    SQLConnection = dmDatabase.scoDados
-    Left = 817
-    Top = 376
-    object sdsTrocaID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object sdsTrocaDTEMISSAO: TDateField
-      FieldName = 'DTEMISSAO'
-    end
-    object sdsTrocaCLIENTE_NOME: TStringField
-      FieldName = 'CLIENTE_NOME'
-      Size = 30
-    end
-    object sdsTrocaITEM: TIntegerField
-      FieldName = 'ITEM'
-      Required = True
-    end
-    object sdsTrocaID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
-    end
-    object sdsTrocaREFERENCIA: TStringField
-      FieldName = 'REFERENCIA'
-    end
-    object sdsTrocaNOME_PRODUTO: TStringField
-      FieldName = 'NOME_PRODUTO'
-      Size = 100
-    end
-    object sdsTrocaQTD: TFloatField
-      FieldName = 'QTD'
-    end
-    object sdsTrocaVLR_UNITARIO: TFloatField
-      FieldName = 'VLR_UNITARIO'
-    end
-    object sdsTrocaVLR_TOTAL: TFloatField
-      FieldName = 'VLR_TOTAL'
-    end
-    object sdsTrocaVLR_DESCONTO: TFloatField
-      FieldName = 'VLR_DESCONTO'
-    end
-    object sdsTrocaNUMCUPOM: TIntegerField
-      FieldName = 'NUMCUPOM'
-    end
-    object sdsTrocaSERIE: TStringField
-      FieldName = 'SERIE'
-      Size = 3
-    end
-  end
-  object dspTroca: TDataSetProvider
-    DataSet = sdsTroca
-    Left = 849
-    Top = 376
-  end
-  object cdsTroca: TClientDataSet
-    Aggregates = <>
-    IndexFieldNames = 'ID'
-    Params = <>
-    ProviderName = 'dspTroca'
-    Left = 881
-    Top = 376
-    object cdsTrocaID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object cdsTrocaDTEMISSAO: TDateField
-      FieldName = 'DTEMISSAO'
-    end
-    object cdsTrocaCLIENTE_NOME: TStringField
-      FieldName = 'CLIENTE_NOME'
-      Size = 30
-    end
-    object cdsTrocaITEM: TIntegerField
-      FieldName = 'ITEM'
-      Required = True
-    end
-    object cdsTrocaID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
-    end
-    object cdsTrocaREFERENCIA: TStringField
-      FieldName = 'REFERENCIA'
-    end
-    object cdsTrocaNOME_PRODUTO: TStringField
-      FieldName = 'NOME_PRODUTO'
-      Size = 100
-    end
-    object cdsTrocaQTD: TFloatField
-      FieldName = 'QTD'
-    end
-    object cdsTrocaVLR_UNITARIO: TFloatField
-      FieldName = 'VLR_UNITARIO'
-    end
-    object cdsTrocaVLR_TOTAL: TFloatField
-      FieldName = 'VLR_TOTAL'
-    end
-    object cdsTrocaVLR_DESCONTO: TFloatField
-      FieldName = 'VLR_DESCONTO'
-    end
-    object cdsTrocaNUMCUPOM: TIntegerField
-      FieldName = 'NUMCUPOM'
-    end
-    object cdsTrocaSERIE: TStringField
-      FieldName = 'SERIE'
-      Size = 3
-    end
-  end
-  object dsTroca: TDataSource
-    DataSet = cdsTroca
-    Left = 913
-    Top = 376
-  end
-  object sdsCupom_Troca: TSQLDataSet
-    NoMetadata = True
-    GetMetadata = False
-    CommandText = 'SELECT * FROM CUPOMFISCAL_TROCA C WHERE C.id_cupom = :ID_CUPOM'
-    MaxBlobSize = -1
-    Params = <
-      item
-        DataType = ftInteger
-        Name = 'ID_CUPOM'
-        ParamType = ptInput
-      end>
-    SQLConnection = dmDatabase.scoDados
-    Left = 817
-    Top = 432
-    object sdsCupom_TrocaID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object sdsCupom_TrocaITEM: TIntegerField
-      FieldName = 'ITEM'
-      Required = True
-    end
-    object sdsCupom_TrocaID_CUPOM: TIntegerField
-      FieldName = 'ID_CUPOM'
-    end
-    object sdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
-      FieldName = 'ID_CUPOM_TROCA'
-    end
-    object sdsCupom_TrocaITEM_TROCA: TIntegerField
-      FieldName = 'ITEM_TROCA'
-    end
-    object sdsCupom_TrocaID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
-    end
-    object sdsCupom_TrocaQTD: TFloatField
-      FieldName = 'QTD'
-    end
-    object sdsCupom_TrocaVLR_UNITARIO: TFloatField
-      FieldName = 'VLR_UNITARIO'
-    end
-    object sdsCupom_TrocaVLR_TOTAL: TFloatField
-      FieldName = 'VLR_TOTAL'
-    end
-  end
-  object dspCupom_Troca: TDataSetProvider
-    DataSet = sdsCupom_Troca
-    Left = 849
-    Top = 432
-  end
-  object cdsCupom_Troca: TClientDataSet
-    Aggregates = <>
-    IndexFieldNames = 'ID'
-    Params = <>
-    ProviderName = 'dspCupom_Troca'
-    Left = 881
-    Top = 432
-    object cdsCupom_TrocaID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object cdsCupom_TrocaITEM: TIntegerField
-      FieldName = 'ITEM'
-      Required = True
-    end
-    object cdsCupom_TrocaID_CUPOM: TIntegerField
-      FieldName = 'ID_CUPOM'
-    end
-    object cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
-      FieldName = 'ID_CUPOM_TROCA'
-    end
-    object cdsCupom_TrocaITEM_TROCA: TIntegerField
-      FieldName = 'ITEM_TROCA'
-    end
-    object cdsCupom_TrocaID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
-    end
-    object cdsCupom_TrocaQTD: TFloatField
-      FieldName = 'QTD'
-    end
-    object cdsCupom_TrocaVLR_UNITARIO: TFloatField
-      FieldName = 'VLR_UNITARIO'
-    end
-    object cdsCupom_TrocaVLR_TOTAL: TFloatField
-      FieldName = 'VLR_TOTAL'
-    end
-  end
-  object dsCupom_Troca: TDataSource
-    DataSet = cdsCupom_Troca
-    Left = 913
-    Top = 432
-  end
   object qPessoa_Fiscal: TSQLQuery
     MaxBlobSize = -1
     Params = <
@@ -8256,15 +7963,18 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQL.Strings = (
-      'select PF.*, TI.COD_IPI, TP.CODIGO COD_PIS, TC.CODIGO COD_COFINS'
-      'from PESSOA_FISCAL PF'
-      'left join TAB_CSTIPI TI on PF.IPI_ID_CSTIPI = TI.ID'
-      'left join TAB_PIS TP on PF.PIS_ID_PIS = TP.ID'
-      'left join TAB_COFINS TC on PF.PIS_ID_COFINS = TC.ID'
-      'where PF.CODIGO = :CODIGO')
+      'SELECT PF.*, TI.cod_ipi, TP.codigo COD_PIS, TC.codigo COD_COFINS'
+      'FROM PESSOA_FISCAL PF'
+      'LEFT JOIN TAB_CSTIPI TI'
+      'ON PF.ipi_id_cstipi = TI.id'
+      'LEFT JOIN tab_pis TP'
+      'ON PF.pis_id_pis = TP.id'
+      'LEFT JOIN tab_cofins TC'
+      'ON PF.pis_id_cofins = TC.id'
+      'WHERE PF.CODIGO = :CODIGO')
     SQLConnection = dmDatabase.scoDados
-    Left = 931
-    Top = 324
+    Left = 881
+    Top = 315
     object qPessoa_FiscalCODIGO: TIntegerField
       FieldName = 'CODIGO'
       Required = True
@@ -8307,6 +8017,18 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object qPessoa_FiscalPIS_ID_COFINS: TIntegerField
       FieldName = 'PIS_ID_COFINS'
+    end
+    object qPessoa_FiscalCOD_IPI: TStringField
+      FieldName = 'COD_IPI'
+      Size = 2
+    end
+    object qPessoa_FiscalCOD_PIS: TStringField
+      FieldName = 'COD_PIS'
+      Size = 2
+    end
+    object qPessoa_FiscalCOD_COFINS: TStringField
+      FieldName = 'COD_COFINS'
+      Size = 2
     end
     object qPessoa_FiscalDESC_SUFRAMA_PIS_COFINS: TStringField
       FieldName = 'DESC_SUFRAMA_PIS_COFINS'
@@ -8373,38 +8095,291 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
-    object qPessoa_FiscalCAE_1: TStringField
-      FieldName = 'CAE_1'
-      Size = 9
-    end
-    object qPessoa_FiscalCAE_2: TStringField
-      FieldName = 'CAE_2'
-      Size = 9
-    end
-    object qPessoa_FiscalCAE_3: TStringField
-      FieldName = 'CAE_3'
-      Size = 9
-    end
     object qPessoa_FiscalCOD_BENEF: TStringField
       FieldName = 'COD_BENEF'
       Size = 8
     end
-    object qPessoa_FiscalOPCAO_DIFERIMENTO: TStringField
-      FieldName = 'OPCAO_DIFERIMENTO'
-      FixedChar = True
-      Size = 1
+  end
+  object AdvPanelStyler1: TAdvPanelStyler
+    Tag = 0
+    Settings.AnchorHint = False
+    Settings.AutoHideChildren = False
+    Settings.BevelInner = bvNone
+    Settings.BevelOuter = bvNone
+    Settings.BevelWidth = 1
+    Settings.BorderColor = clGray
+    Settings.BorderShadow = True
+    Settings.BorderStyle = bsNone
+    Settings.BorderWidth = 0
+    Settings.CanMove = False
+    Settings.CanSize = False
+    Settings.Caption.Color = clWhite
+    Settings.Caption.ColorTo = clNone
+    Settings.Caption.Font.Charset = DEFAULT_CHARSET
+    Settings.Caption.Font.Color = clBlack
+    Settings.Caption.Font.Height = -11
+    Settings.Caption.Font.Name = 'Tahoma'
+    Settings.Caption.Font.Style = []
+    Settings.Caption.Indent = 4
+    Settings.Caption.ShadeLight = 255
+    Settings.Caption.ShadeType = stRMetal
+    Settings.Caption.Visible = True
+    Settings.Collaps = False
+    Settings.CollapsColor = clBtnFace
+    Settings.CollapsDelay = 0
+    Settings.CollapsSteps = 0
+    Settings.Color = clWhite
+    Settings.ColorTo = 15000804
+    Settings.ColorMirror = clNone
+    Settings.ColorMirrorTo = clNone
+    Settings.Cursor = crDefault
+    Settings.Font.Charset = DEFAULT_CHARSET
+    Settings.Font.Color = clWindowText
+    Settings.Font.Height = -11
+    Settings.Font.Name = 'Tahoma'
+    Settings.Font.Style = []
+    Settings.FixedTop = False
+    Settings.FixedLeft = False
+    Settings.FixedHeight = False
+    Settings.FixedWidth = False
+    Settings.Height = 120
+    Settings.Hover = False
+    Settings.HoverColor = clBlack
+    Settings.HoverFontColor = clBlack
+    Settings.Indent = 0
+    Settings.ShadowColor = clBlack
+    Settings.ShadowOffset = 0
+    Settings.ShowHint = False
+    Settings.ShowMoveCursor = False
+    Settings.StatusBar.BorderColor = clWhite
+    Settings.StatusBar.BorderStyle = bsSingle
+    Settings.StatusBar.Font.Charset = DEFAULT_CHARSET
+    Settings.StatusBar.Font.Color = clBlack
+    Settings.StatusBar.Font.Height = -11
+    Settings.StatusBar.Font.Name = 'Tahoma'
+    Settings.StatusBar.Font.Style = []
+    Settings.StatusBar.Color = 14606046
+    Settings.StatusBar.ColorTo = 11119017
+    Settings.TextVAlign = tvaTop
+    Settings.TopIndent = 0
+    Settings.URLColor = clTeal
+    Settings.Width = 0
+    Style = psTMS
+    Left = 1025
+    Top = 353
+  end
+  object sdsCupomPedido: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT * FROM CUPOMFISCAL '#13#10'WHERE TIPO = '#39'PED'#39
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 568
+    Top = 640
+  end
+  object dspCupomPedido: TDataSetProvider
+    DataSet = sdsCupomPedido
+    Left = 600
+    Top = 640
+  end
+  object cdsCupomPedido: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspCupomPedido'
+    Left = 632
+    Top = 640
+  end
+  object dsCupomPedido: TDataSource
+    DataSet = cdsCupomPedido
+    Left = 664
+    Top = 640
+  object sdsTroca: TSQLDataSet
+    CommandText = 
+      'SELECT C.ID, C.dtemissao, C.cliente_nome, I.ITEM, I.id_produto, ' +
+      'I.referencia,'#13#10'I.nome_produto, I.qtd, I.vlr_unitario, I.vlr_tota' +
+      'l, I.vlr_desconto, c.numcupom,'#13#10'c.serie'#13#10'FROM cupomfiscal C'#13#10'INN' +
+      'ER JOIN cupomfiscal_itens I'#13#10'ON C.ID = I.ID'#13#10'WHERE  ROUND((I.QTD' +
+      ' - coalesce(I.qtd_troca,0)),4) > 0'#13#10'  and (C.dtemissao >= :DATA ' +
+      'or :Data is null )'#13#10
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'DATA'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftUnknown
+        Name = 'Data'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 952
+    Top = 392
+  end
+  object dspTroca: TDataSetProvider
+    DataSet = sdsTroca
+    Left = 984
+    Top = 392
+  end
+  object cdsTroca: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspTroca'
+    Left = 1016
+    Top = 392
+    object cdsTrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
     end
-    object qPessoa_FiscalCOD_IPI: TStringField
-      FieldName = 'COD_IPI'
-      Size = 2
+    object cdsTrocaDTEMISSAO: TDateField
+      FieldName = 'DTEMISSAO'
     end
-    object qPessoa_FiscalCOD_PIS: TStringField
-      FieldName = 'COD_PIS'
-      Size = 2
+    object cdsTrocaCLIENTE_NOME: TStringField
+      FieldName = 'CLIENTE_NOME'
+      Size = 30
     end
-    object qPessoa_FiscalCOD_COFINS: TStringField
-      FieldName = 'COD_COFINS'
-      Size = 2
+    object cdsTrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
     end
+    object cdsTrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object cdsTrocaREFERENCIA: TStringField
+      FieldName = 'REFERENCIA'
+    end
+    object cdsTrocaNOME_PRODUTO: TStringField
+      FieldName = 'NOME_PRODUTO'
+      Size = 100
+    end
+    object cdsTrocaQTD: TFloatField
+      FieldName = 'QTD'
+    end
+    object cdsTrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object cdsTrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object cdsTrocaVLR_DESCONTO: TFloatField
+      FieldName = 'VLR_DESCONTO'
+    end
+    object cdsTrocaNUMCUPOM: TIntegerField
+      FieldName = 'NUMCUPOM'
+    end
+    object cdsTrocaSERIE: TStringField
+      FieldName = 'SERIE'
+      Size = 3
+    end
+  end
+  object dsTroca: TDataSource
+    DataSet = cdsTroca
+    Left = 1048
+    Top = 392
+  end
+  object sdsCupom_Troca: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 
+      'SELECT * FROM CUPOMFISCAL_TROCA C'#13#10'WHERE C.id_cupom = :ID_CUPOM'#13 +
+      #10
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_CUPOM'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 880
+    Top = 608
+    object sdsCupom_TrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsCupom_TrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object sdsCupom_TrocaID_CUPOM: TIntegerField
+      FieldName = 'ID_CUPOM'
+    end
+    object sdsCupom_TrocaITEM_CUPOM: TIntegerField
+      FieldName = 'ITEM_CUPOM'
+    end
+    object sdsCupom_TrocaITEM_TROCA: TIntegerField
+      FieldName = 'ITEM_TROCA'
+    end
+    object sdsCupom_TrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object sdsCupom_TrocaQTD: TFloatField
+      FieldName = 'QTD'
+    end
+    object sdsCupom_TrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object sdsCupom_TrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object sdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+  end
+  object dspCupom_Troca: TDataSetProvider
+    DataSet = sdsCupom_Troca
+    UpdateMode = upWhereKeyOnly
+    Left = 920
+    Top = 608
+  end
+  object cdsCupom_Troca: TClientDataSet
+    Aggregates = <>
+    IndexFieldNames = 'ID;ITEM'
+    Params = <>
+    ProviderName = 'dspCupom_Troca'
+    Left = 960
+    Top = 608
+    object cdsCupom_TrocaID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsCupom_TrocaITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
+    object cdsCupom_TrocaID_CUPOM: TIntegerField
+      FieldName = 'ID_CUPOM'
+    end
+    object cdsCupom_TrocaITEM_CUPOM: TIntegerField
+      FieldName = 'ITEM_CUPOM'
+    end
+    object cdsCupom_TrocaID_CUPOM_TROTAL: TIntegerField
+      FieldName = 'ID_CUPOM_TROTAL'
+    end
+    object cdsCupom_TrocaITEM_TROCA: TIntegerField
+      FieldName = 'ITEM_TROCA'
+    end
+    object cdsCupom_TrocaID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object cdsCupom_TrocaQTD: TFloatField
+      FieldName = 'QTD'
+    end
+    object cdsCupom_TrocaVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+    end
+    object cdsCupom_TrocaVLR_TOTAL: TFloatField
+      FieldName = 'VLR_TOTAL'
+    end
+    object cdsCupom_TrocaID_CUPOM_TROCA: TIntegerField
+      FieldName = 'ID_CUPOM_TROCA'
+    end
+  end
+  object dsCupom_Troca: TDataSource
+    DataSet = cdsCupom_Troca
+    Left = 1000
+    Top = 608
   end
 end

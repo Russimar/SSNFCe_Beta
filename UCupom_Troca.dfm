@@ -1,9 +1,9 @@
-object Form1: TForm1
-  Left = 251
-  Top = 170
+object frmCupomTroca: TfrmCupomTroca
+  Left = 309
+  Top = 77
   Width = 979
   Height = 563
-  Caption = 'Form1'
+  Caption = 'frmCupomTroca'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -290,10 +290,9 @@ object Form1: TForm1
     Left = 0
     Top = 129
     Width = 963
-    Height = 395
+    Height = 396
     Align = alClient
     Ctl3D = False
-    DataSource = dmCupomFiscal.dsCupom_Troca
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     ParentCtl3D = False
     TabOrder = 1
@@ -366,13 +365,11 @@ object Form1: TForm1
       item
         Expanded = False
         FieldName = 'VLR_UNITARIO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_TOTAL'
-        Width = 64
         Visible = True
       end
       item

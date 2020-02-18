@@ -24,7 +24,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 1115
-    Height = 468
+    Height = 469
     Align = alClient
     BevelOuter = bvNone
     Color = 16645114
@@ -36,7 +36,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     ParentFont = False
     TabOrder = 0
     UseDockManager = True
-    Version = '1.6.0.3'
+    Version = '2.0.1.0'
     AutoHideChildren = False
     BorderColor = 16765615
     Caption.Color = 16575452
@@ -69,9 +69,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Styler = AdvPanelStyler1
     FullHeight = 0
     object Label15: TLabel
-      Left = 746
+      Left = 744
       Top = 10
-      Width = 57
+      Width = 59
       Height = 25
       Alignment = taRightJustify
       Caption = 'Total:'
@@ -101,9 +101,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 746
+      Left = 744
       Top = 247
-      Width = 62
+      Width = 64
       Height = 25
       Alignment = taRightJustify
       Caption = 'Troco:'
@@ -369,7 +369,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
       TabOrder = 5
       UseDockManager = True
-      Version = '1.6.0.3'
+      Version = '2.0.1.0'
       AutoHideChildren = False
       BorderColor = 16765615
       Caption.Color = 16575452
@@ -477,7 +477,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         TabOrder = 0
         Visible = True
         OnKeyDown = edtPagamentoKeyDown
-        Version = '2.7.0.2'
+        Version = '2.8.6.1'
       end
       object gridPagamentosDisponiveis: TDBGrid
         Left = 334
@@ -603,7 +603,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Text = '0,00'
         Visible = True
         OnKeyDown = edtValorPagamentoKeyDown
-        Version = '2.7.0.2'
+        Version = '2.8.6.1'
       end
     end
     object ceJuros: TCurrencyEdit
@@ -737,7 +737,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
   end
   object pnlBotton: TAdvPanel
     Left = 0
-    Top = 468
+    Top = 469
     Width = 1115
     Height = 50
     Align = alBottom
@@ -751,7 +751,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     ParentFont = False
     TabOrder = 1
     UseDockManager = True
-    Version = '1.6.0.3'
+    Version = '2.0.1.0'
     AutoHideChildren = False
     BorderColor = 16765615
     Caption.Color = 16575452
@@ -871,6 +871,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Settings.CollapsSteps = 0
     Settings.Color = 16645114
     Settings.ColorTo = 16643051
+    Settings.ColorMirror = clNone
+    Settings.ColorMirrorTo = clNone
     Settings.Cursor = crDefault
     Settings.Font.Charset = DEFAULT_CHARSET
     Settings.Font.Color = 7485192
@@ -904,7 +906,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Settings.TopIndent = 0
     Settings.URLColor = clBlue
     Settings.Width = 0
-    Style = P‹D$Pj j ‹L$ ‹T$‹ÆèWYìÿ‹T$‹FèSX
+    Style = psWindows7
     Left = 1045
     Top = 17
   end
