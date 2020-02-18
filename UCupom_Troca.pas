@@ -8,7 +8,7 @@ uses
   Grids, DBGrids, SMDBGrid;
 
 type
-  TfrmCupom_Troca = class(TForm)
+  TForm1 = class(TForm)
     NxPanel1: TNxPanel;
     btnConfirmar: TNxButton;
     Edit1: TEdit;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  frmCupom_Troca: TfrmCupom_Troca;
+  Form1: TForm1;
 
 implementation
 
@@ -58,17 +58,17 @@ uses rsDBUtils, uUtilPadrao, Types;
 
 {$R *.dfm}
 
-procedure TfrmCupom_Troca.FormShow(Sender: TObject);
+procedure TForm1.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 end;
 
-procedure TfrmCupom_Troca.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := Cafree;
 end;
 
-function TfrmCupom_Troca.posicionaProduto: Boolean;
+function TForm1.posicionaProduto: Boolean;
 var
   vCampoPesquisa: string;
   vTamCod: Byte;
@@ -232,7 +232,7 @@ begin
   end;
 end;
 
-procedure TfrmCupom_Troca.Edit1KeyDown(Sender: TObject; var Key: Word;
+procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
@@ -257,7 +257,7 @@ begin
 
 end;
 
-procedure TfrmCupom_Troca.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
+procedure TForm1.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = Vk_F3) then
@@ -276,7 +276,7 @@ begin
 
 end;
 
-procedure TfrmCupom_Troca.prc_Monta;
+procedure TForm1.prc_Monta;
 begin
   ceNumCupom.AsInteger := fDmCupomFiscal.cdsTrocaNUMCUPOM.AsInteger;
   edtSerie.Text        := fDmCupomFiscal.cdsTrocaSERIE.AsString;
@@ -289,7 +289,7 @@ begin
 
 end;
 
-procedure TfrmCupom_Troca.btnConfirmarClick(Sender: TObject);
+procedure TForm1.btnConfirmarClick(Sender: TObject);
 var
   vMSG : String;
 begin
@@ -315,7 +315,7 @@ begin
   fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat + ceVlr_Total.Value;
 end;
 
-procedure TfrmCupom_Troca.btnExcluirClick(Sender: TObject);
+procedure TForm1.btnExcluirClick(Sender: TObject);
 begin
   if MessageDlg('Deseja excluir a troca?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     exit;
