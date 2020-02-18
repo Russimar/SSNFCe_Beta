@@ -164,6 +164,8 @@ type
     function fnc_Altera_Preco : Boolean;
     function fnc_Aplicar_Desconto : Boolean;
 
+    procedure prc_Gravar_Estoque_Troca;
+
   public
     { Public declarations }
     fDmEstoque: TDmEstoque;
@@ -1048,11 +1050,11 @@ begin
             vVias := fDmCupomFiscal.cdsCupomParametrosVIAS_CUPOM.AsInteger;
             if vVias <= 0 then
               vVias := 1;
+            fDmCupomFiscal.cdsTipoCobranca.Close;
             fDmCupomFiscal.cdsTipoCobranca.Open;
             fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
             if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
               vVias := vVias - 1;
-            fDmCupomFiscal.cdsTipoCobranca.Close;
             if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') then
             begin
               if (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) = mrYes) then
@@ -1102,6 +1104,7 @@ begin
     begin
       fDmCupomFiscal.prc_Gravar_Estoque_Movimento(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'CFI');
       prc_Controle_Gravar_Diversos(True,True);
+      prc_Gravar_Estoque_Troca;
     end;
 
     {else
@@ -2335,6 +2338,58 @@ begin
   vSubTotal := (CurrencyEdit1.Value * vVlrItem - vDescItemValor);
   vValorDesconto := vDescItemValor;
   Result := True;
+end;
+
+procedure TfCupomFiscal.prc_Gravar_Estoque_Troca;
+var
+  vID_Estoque : Integer;
+begin
+  if fDmCupomFiscal.cdsCupomParametrosGERAR_ESTOQUE_TROCA.AsString <> 'S' then
+    exit;
+
+  fDmCupomFiscal.cdsCupom_Troca.Close;
+  fDmCupomFiscal.sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+  fDmCupomFiscal.cdsCupom_Troca.Open;
+  fDmCupomFiscal.cdsCupom_Troca.First;
+  while not fDmCupomFiscal.cdsCupom_Troca.Eof do
+  begin
+    fDmCupomFiscal.qProd.Close;
+    fDmCupomFiscal.qProd.ParamByName('ID').AsInteger := fDmCupomFiscal.cdsCupom_TrocaID_PRODUTO.AsInteger;
+    fDmCupomFiscal.qProd.Open;
+
+    vID_Estoque := fDMEstoque.fnc_Gravar_Estoque(fDmCupomFiscal.cdsCupom_TrocaID_MOVESTOQUE.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger,
+                                                 vLocalEstoque,
+                                                 fDmCupomFiscal.cdsCupom_TrocaID_PRODUTO.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,
+                                                 0,
+                                                 fDmCupomFiscal.cdsCupom_TrocaID.AsInteger,0,
+                                                 'E','CFITR',
+                                                 fDmCupomFiscal.qProdUNIDADE.AsString,
+                                                 fDmCupomFiscal.qProdUNIDADE.AsString,
+                                                 fDmCupomFiscal.cdsCupomFiscalSERIE.AsString,
+                                                 '',
+                                                 fDmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime,
+                                                 fDmCupomFiscal.cdsCupom_TrocaVLR_UNITARIO.AsFloat,
+                                                 fDmCupomFiscal.cdsCupom_TrocaQTD.AsFloat,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 fDmCupomFiscal.cdsCupom_TrocaQTD.AsFloat,
+                                                 fDmCupomFiscal.cdsCupom_TrocaVLR_UNITARIO.AsFloat,
+                                                 0,0,'',
+                                                 0,'','S',0,0,0,0,0);
+    fDmCupomFiscal.cdsCupom_Troca.Edit;
+    fDmCupomFiscal.cdsCupom_TrocaID_MOVESTOQUE.AsInteger := vID_Estoque;
+    fDmCupomFiscal.cdsCupom_Troca.Post;
+
+    fDmCupomFiscal.cdsCupom_Troca.Next;
+  end;
+  fDmCupomFiscal.cdsCupom_Troca.ApplyUpdates(0);
+
 end;
 
 end.

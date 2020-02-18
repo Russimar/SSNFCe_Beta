@@ -1692,15 +1692,7 @@ type
     cdsCupomFiscal_FormaPgtoTIPO_PGTO: TStringField;
     cdsTipoCobrancaFORMA_PGTO: TStringField;
     sdsCupom_ItensCOD_CBENEF: TStringField;
-    sdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
-    sdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
-    sdsCupom_ItensQTD_TROCA: TFloatField;
-    sdsCupom_ItensVLR_TROCA: TFloatField;
     cdsCupom_ItensCOD_CBENEF: TStringField;
-    cdsCupom_ItensID_CUPOM_TROCA: TIntegerField;
-    cdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField;
-    cdsCupom_ItensQTD_TROCA: TFloatField;
-    cdsCupom_ItensVLR_TROCA: TFloatField;
     AdvPanelStyler1: TAdvPanelStyler;
     sdsTroca: TSQLDataSet;
     dspTroca: TDataSetProvider;
@@ -1810,6 +1802,13 @@ type
     qProdREFERENCIA: TStringField;
     cdsTipoCobrancaTROCA: TStringField;
     cdsCupom_ConsVLR_TROCA: TFloatField;
+    sdsCupomParametrosGERAR_ESTOQUE_TROCA: TStringField;
+    cdsCupomParametrosGERAR_ESTOQUE_TROCA: TStringField;
+    sdsCupom_TrocaID_MOVESTOQUE: TIntegerField;
+    cdsCupom_TrocaID_MOVESTOQUE: TIntegerField;
+    qProdUNIDADE: TStringField;
+    sdsCupom_ItensQTD_TROCA: TFloatField;
+    cdsCupom_ItensQTD_TROCA: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -4254,7 +4253,6 @@ begin
   //  10/02/2020
   cdsCupom_ItensCOD_CBENEF.AsString := vCod_CBenef_Loc;
 end;
-
 
 procedure TdmCupomFiscal.cdsCupom_TrocaCalcFields(DataSet: TDataSet);
 begin

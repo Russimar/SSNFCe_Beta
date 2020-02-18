@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 65528
-  Top = 65528
+  Left = 29
+  Top = 59
   Height = 744
   Width = 1382
   object sdsCupomFiscal: TSQLDataSet
@@ -848,17 +848,8 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'COD_CBENEF'
       Size = 8
     end
-    object sdsCupom_ItensID_CUPOM_TROCA: TIntegerField
-      FieldName = 'ID_CUPOM_TROCA'
-    end
-    object sdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField
-      FieldName = 'ITEM_CUPOM_TROCA'
-    end
     object sdsCupom_ItensQTD_TROCA: TFloatField
       FieldName = 'QTD_TROCA'
-    end
-    object sdsCupom_ItensVLR_TROCA: TFloatField
-      FieldName = 'VLR_TROCA'
     end
   end
   object cdsCupom_Itens: TClientDataSet
@@ -1115,17 +1106,8 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'COD_CBENEF'
       Size = 8
     end
-    object cdsCupom_ItensID_CUPOM_TROCA: TIntegerField
-      FieldName = 'ID_CUPOM_TROCA'
-    end
-    object cdsCupom_ItensITEM_CUPOM_TROCA: TIntegerField
-      FieldName = 'ITEM_CUPOM_TROCA'
-    end
     object cdsCupom_ItensQTD_TROCA: TFloatField
       FieldName = 'QTD_TROCA'
-    end
-    object cdsCupom_ItensVLR_TROCA: TFloatField
-      FieldName = 'VLR_TROCA'
     end
   end
   object dsCupom_Itens: TDataSource
@@ -2869,6 +2851,11 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupomParametrosID_TIPOCOBRANCA_PADRAO: TIntegerField
       FieldName = 'ID_TIPOCOBRANCA_PADRAO'
     end
+    object sdsCupomParametrosGERAR_ESTOQUE_TROCA: TStringField
+      FieldName = 'GERAR_ESTOQUE_TROCA'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3183,6 +3170,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomParametrosID_TIPOCOBRANCA_PADRAO: TIntegerField
       FieldName = 'ID_TIPOCOBRANCA_PADRAO'
+    end
+    object cdsCupomParametrosGERAR_ESTOQUE_TROCA: TStringField
+      FieldName = 'GERAR_ESTOQUE_TROCA'
+      FixedChar = True
+      Size = 1
     end
   end
   object sdsSitTribCF: TSQLDataSet
@@ -8217,6 +8209,9 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'SERIE_TROCA'
       Size = 3
     end
+    object sdsCupom_TrocaID_MOVESTOQUE: TIntegerField
+      FieldName = 'ID_MOVESTOQUE'
+    end
   end
   object dspCupom_Troca: TDataSetProvider
     DataSet = sdsCupom_Troca
@@ -8279,6 +8274,9 @@ object dmCupomFiscal: TdmCupomFiscal
       DisplayLabel = 'S'#233'rie da Troca'
       FieldName = 'SERIE_TROCA'
       Size = 3
+    end
+    object cdsCupom_TrocaID_MOVESTOQUE: TIntegerField
+      FieldName = 'ID_MOVESTOQUE'
     end
     object cdsCupom_TrocaclNome_Produto: TStringField
       DisplayLabel = 'Nome Produto'
@@ -8463,7 +8461,7 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQL.Strings = (
-      'SELECT ID, NOME, REFERENCIA'
+      'SELECT ID, NOME, REFERENCIA, UNIDADE'
       'FROM PRODUTO'
       'WHERE ID = :ID')
     SQLConnection = dmDatabase.scoDados
@@ -8479,6 +8477,10 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object qProdREFERENCIA: TStringField
       FieldName = 'REFERENCIA'
+    end
+    object qProdUNIDADE: TStringField
+      FieldName = 'UNIDADE'
+      Size = 6
     end
   end
 end

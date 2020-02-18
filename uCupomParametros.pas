@@ -202,6 +202,8 @@ type
     comboSolicitaCPF: TRxDBComboBox;
     Label84: TLabel;
     comboFormaPagtoPadrao: TRxDBLookupCombo;
+    Label85: TLabel;
+    RxDBComboBox48: TRxDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

@@ -1,6 +1,6 @@
 object fCupomParametros: TfCupomParametros
-  Left = 164
-  Top = 0
+  Left = 170
+  Top = 23
   Width = 1036
   Height = 768
   BorderIcons = [biSystemMenu, biMaximize]
@@ -80,8 +80,8 @@ object fCupomParametros: TfCupomParametros
     Left = 0
     Top = 35
     Width = 1020
-    Height = 695
-    ActivePage = TabSheet4
+    Height = 694
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -90,7 +90,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1012
-        Height = 667
+        Height = 666
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -98,7 +98,7 @@ object fCupomParametros: TfCupomParametros
           Left = 4
           Top = 316
           Width = 841
-          Height = 102
+          Height = 111
           Caption = 'Estoque'
           TabOrder = 3
           object Label36: TLabel
@@ -164,6 +164,14 @@ object fCupomParametros: TfCupomParametros
             Height = 13
             Alignment = taRightJustify
             Caption = 'Local do Estoque:'
+          end
+          object Label85: TLabel
+            Left = 311
+            Top = 87
+            Width = 237
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Gravar entrada do Estoque na Troca de Produtos:'
           end
           object RxDBComboBox20: TRxDBComboBox
             Left = 198
@@ -268,6 +276,24 @@ object fCupomParametros: TfCupomParametros
             LookupSource = dmCupomFiscal.dsLocalEstoque
             TabOrder = 7
             OnEnter = RxDBLookupCombo4Enter
+          end
+          object RxDBComboBox48: TRxDBComboBox
+            Left = 551
+            Top = 80
+            Width = 82
+            Height = 21
+            Style = csDropDownList
+            DataField = 'GERAR_ESTOQUE_TROCA'
+            DataSource = dmCupomFiscal.dsCupomParametros
+            EnableValues = True
+            ItemHeight = 13
+            Items.Strings = (
+              'SIM'
+              'N'#195'O')
+            TabOrder = 8
+            Values.Strings = (
+              'S'
+              'N')
           end
         end
         object GroupBox6: TGroupBox
@@ -785,7 +811,7 @@ object fCupomParametros: TfCupomParametros
         end
         object GroupBox9: TGroupBox
           Left = 4
-          Top = 420
+          Top = 436
           Width = 421
           Height = 88
           Caption = ' Configura'#231#227'o NFCe '
@@ -838,7 +864,7 @@ object fCupomParametros: TfCupomParametros
         end
         object GroupBox10: TGroupBox
           Left = 426
-          Top = 420
+          Top = 436
           Width = 419
           Height = 88
           Caption = ' Configura'#231#227'o NFCe  Novo'
@@ -2128,7 +2154,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1012
-        Height = 667
+        Height = 666
         Align = alClient
         TabOrder = 0
         object Label15: TLabel
@@ -2284,6 +2310,7 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
+              Width = 64
               Visible = True
             end>
         end
