@@ -3784,18 +3784,19 @@ begin
   begin
     repeat
       vCpfOK := False;
+      if vDocumentoClienteVenda <> EmptyStr then
+       if Length(vDocumentoClienteVenda) = 14 then
+         vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11)
+       else
+         vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,14);
       if (not vCpfOK) then
         vDocumentoClienteVenda := InputBox('Documento Cliente!', 'Informar CPF/CNPJ no Cupom?', vDocumentoClienteVenda);
       if vDocumentoClienteVenda <> '' then
       begin
         if length(vDocumentoClienteVenda) = 11 then
         begin
-         if vDocumentoClienteVenda <> EmptyStr then
-           vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
-
           ACBrValidador.TipoDocto := TACBrValTipoDocto(docCPF);
           ACBrValidador.Documento := vDocumentoClienteVenda;
-
           if ACBrValidador.Validar then
           begin
             vCpfOK := True;
@@ -3808,9 +3809,8 @@ begin
         else
         if length(vDocumentoClienteVenda) = 14 then
         begin
-         if vDocumentoClienteVenda <> EmptyStr then
-           vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
-        
+          vDocumentoClienteVenda := Monta_Texto(vDocumentoClienteVenda,11);
+
           ACBrValidador.TipoDocto := TACBrValTipoDocto(docCNPJ);
           ACBrValidador.Documento := vDocumentoClienteVenda;
           if ACBrValidador.Validar then
@@ -4140,7 +4140,6 @@ begin
     sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.NUMCUPOM = ' + IntToStr(NumCupom);
     if trim(Serie) <> '' then
       sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.SERIE = ' + QuotedStr(Serie);
-    sdsTroca.ParamByName('DATA').AsDate := 0;
   end
   else
   begin
@@ -4153,10 +4152,11 @@ begin
     if trim(Nome) <> '' then
       sdsTroca.CommandText := sdsTroca.CommandText + ' AND I.NOME_PRODUTO LIKE ' + QuotedStr('%'+Nome+'%');
     if Data > 10 then
-      sdsTroca.ParamByName('DATA').AsDate := Data;
+      sdsTroca.CommandText := sdsTroca.CommandText + ' AND C.DTEMISSAO >= ' + QuotedStr(FormatDateTime('mm/dd/yyyy', Data));
   end;
   cdsTroca.Open;
-  cdsTroca.IndexFieldNames := 'DTEMISSAO;NOME_PRODUTO';
+  cdsTroca.IndexName := cdsTroca.IndexDefs[0].Name;
+  cdstroca.First;
 end;
 
 procedure TdmCupomFiscal.prc_Inserir_Troca;
@@ -4168,7 +4168,7 @@ begin
     cdsCupom_Troca.Close;
     sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := cdsCupomFiscalID.AsInteger;
     cdsCupom_Troca.Open;
-    vAux := dmDatabase.ProximaSequencia('CUPOMFISCAL',0);
+    vAux := dmDatabase.ProximaSequencia('CUPOMFISCAL_TROCA',0);
     vAux := vAux + 1;
   end
   else

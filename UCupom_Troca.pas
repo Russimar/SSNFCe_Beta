@@ -52,6 +52,8 @@ type
     procedure ceVlr_UnitarioExit(Sender: TObject);
     procedure ceVlr_TotalEnter(Sender: TObject);
     procedure ceVlr_TotalExit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     vID_Produto : Integer;
@@ -285,6 +287,8 @@ begin
       end;
     end;
   end;
+  if Key = VK_Escape then
+    Close;
 
 end;
 
@@ -317,9 +321,9 @@ begin
   ceVlr_Total.Value      := fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat;
   CurrencyEdit1.Value    := fDmCupomFiscal.cdsTrocaQTD.AsFloat;
   if StrToFloat(FormatFloat('0.000',CurrencyEdit1.Value)) <> 1 then
-    ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.000#',fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat / CurrencyEdit1.Value))
+    ceVlr_Unitario.Value := StrToFloatDef(FormatFloat('0.000#',fDmCupomFiscal.cdsTrocaVLR_TOTAL.AsFloat / CurrencyEdit1.Value),0)
   else
-    ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.000#',ceVlr_Total.Value));
+    ceVlr_Unitario.Value := StrToFloatDef(FormatFloat('0.000#',ceVlr_Total.Value),0);
   lblNome.Caption := fDmCupomFiscal.cdsTrocaNOME_PRODUTO.AsString;
 end;
 
@@ -472,6 +476,13 @@ procedure TfrmCupom_Troca.ceVlr_TotalExit(Sender: TObject);
 begin
   if ceVlr_Total.Value <> StrToFloat(FormatFloat('0.00',vVlr_TotalAnt)) then
     ceVlr_Unitario.Value := StrToFloat(FormatFloat('0.0000',ceVlr_Total.Value / CurrencyEdit1.Value));
+end;
+
+procedure TfrmCupom_Troca.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_Escape then
+    Close;
 end;
 
 end.

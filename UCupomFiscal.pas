@@ -487,7 +487,7 @@ end;
 
 procedure TfCupomFiscal.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
+  if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
   begin
     if fDmCupomFiscal.cdsFilialID.AsInteger <> vFilial_Loc then
       fDmCupomFiscal.cdsFilial.Locate('ID', vFilial_Loc, [loCaseInsensitive]);
@@ -498,7 +498,7 @@ if (Shift = [ssCtrl]) and (Key = 84) then //CTRL T
     frmCupom_Troca.vSerieCupom := vSerieCupom;
     frmCupom_Troca.ShowModal;
     FreeAndNil(frmCupom_Troca);
-  
+
     //vTroca := not(vTroca);
   end
   else
@@ -628,6 +628,7 @@ begin
         exit;
       fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
       fDmCupomFiscal.cdsCupomFiscal.Close;
+      fDmCupomFiscal.cdsCupom_Troca.Close;
       pnlDescricaoProduto.Text := '';
       pnlDescricaoProduto.Update;
       pnlCaixaLivre.Visible := True;

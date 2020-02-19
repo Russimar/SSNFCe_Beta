@@ -228,7 +228,9 @@ object DMCadFechamento: TDMCadFechamento
   object sdsTipoCobranca: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
-    CommandText = 'SELECT *'#13#10'FROM TIPOCOBRANCA'#13#10'WHERE MOSTRARNOCUPOM = '#39'S'#39#13#10
+    CommandText = 
+      'select *'#13#10'from TIPOCOBRANCA'#13#10'where MOSTRARNOCUPOM = '#39'S'#39' and'#13#10'   ' +
+      '   COALESCE(TROCA,'#39'N'#39') = '#39'N'#39
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
@@ -607,50 +609,51 @@ object DMCadFechamento: TDMCadFechamento
     NoMetadata = True
     GetMetadata = False
     CommandText = 
-      'SELECT SUM(FIN.VLR_ENTRADA) VLR_ENTRADA , SUM(FIN.VLR_SAIDA) VLR' +
-      '_SAIDA, FIN.ID_FORMA_PAGAMENTO, TC.NOME NOME_FORMA_PAGAMENTO, FI' +
-      'N.ID_CONTA'#13#10'FROM FINANCEIRO FIN'#13#10'LEFT JOIN TIPOCOBRANCA TC ON FI' +
-      'N.ID_FORMA_PAGAMENTO = TC.ID'#13#10'WHERE ID_MOVDUPLICATA = 0'#13#10'  AND (' +
-      '(FIN.ID_CONTA = :ID_CONTA) OR (FIN.ID_CONTA = :ID_CONTA_PER))'#13#10' ' +
-      ' AND FIN.FILIAL = :FILIAL'#13#10'  AND (FIN.DTMOVIMENTO = :DTMOVIMENTO' +
-      ' or  FIN.ID_FECHAMENTO = :FECHAMENTO)'#13#10'  AND FIN.ID_TERMINAL = :' +
-      'TERMINAL '#13#10'  AND (FIN.ID_FECHAMENTO = :FECHAMENTO'#13#10'  OR FIN.ID_F' +
-      'ECHAMENTO IS NULL)'#13#10'GROUP BY FIN.ID_FORMA_PAGAMENTO, TC.NOME, FI' +
-      'N.ID_CONTA'#13#10
+      'select sum(FIN.VLR_ENTRADA) VLR_ENTRADA, sum(FIN.VLR_SAIDA) VLR_' +
+      'SAIDA, FIN.ID_FORMA_PAGAMENTO,'#13#10'       TC.NOME NOME_FORMA_PAGAME' +
+      'NTO, FIN.ID_CONTA'#13#10'from FINANCEIRO FIN'#13#10'left join TIPOCOBRANCA T' +
+      'C on FIN.ID_FORMA_PAGAMENTO = TC.ID'#13#10'where ID_MOVDUPLICATA = 0 a' +
+      'nd'#13#10'      ((FIN.ID_CONTA = :ID_CONTA) or (FIN.ID_CONTA = :ID_CON' +
+      'TA_PER)) and'#13#10'      FIN.FILIAL = :FILIAL and'#13#10'      (FIN.DTMOVIM' +
+      'ENTO = :DTMOVIMENTO or FIN.ID_FECHAMENTO = :FECHAMENTO) and'#13#10'   ' +
+      '   FIN.ID_TERMINAL = :TERMINAL and'#13#10'      (FIN.ID_FECHAMENTO = :' +
+      'FECHAMENTO or FIN.ID_FECHAMENTO is null) and'#13#10'      coalesce(TC.' +
+      'TROCA, '#39'N'#39') = '#39'N'#39#13#10'group by FIN.ID_FORMA_PAGAMENTO, TC.NOME, FIN' +
+      '.ID_CONTA  '#13#10
     MaxBlobSize = -1
     Params = <
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'ID_CONTA'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'ID_CONTA_PER'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'FILIAL'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftDate
         Name = 'DTMOVIMENTO'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'FECHAMENTO'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'TERMINAL'
         ParamType = ptInput
       end
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'FECHAMENTO'
         ParamType = ptInput
       end>

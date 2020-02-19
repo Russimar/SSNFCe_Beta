@@ -584,6 +584,8 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomFiscalVLR_TROCA: TFloatField
       FieldName = 'VLR_TROCA'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
   end
   object dsCupomFiscal: TDataSource
@@ -1108,6 +1110,8 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupom_ItensQTD_TROCA: TFloatField
       FieldName = 'QTD_TROCA'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
   end
   object dsCupom_Itens: TDataSource
@@ -8032,21 +8036,9 @@ object dmCupomFiscal: TdmCupomFiscal
       'select C.ID, C.DTEMISSAO, C.CLIENTE_NOME, I.ITEM, I.ID_PRODUTO, ' +
       'I.REFERENCIA, I.NOME_PRODUTO, I.QTD, I.VLR_UNITARIO,'#13#10'       I.V' +
       'LR_TOTAL, I.VLR_DESCONTO, C.NUMCUPOM, C.SERIE'#13#10'from CUPOMFISCAL ' +
-      'C'#13#10'inner join CUPOMFISCAL_ITENS I on C.ID = I.ID'#13#10'where round((I' +
-      '.QTD - coalesce(I.QTD_TROCA, 0)), 4) > 0 and'#13#10'      (C.DTEMISSAO' +
-      ' >= :DATA or :DATA is null) '
+      'C'#13#10'inner join CUPOMFISCAL_ITENS I on C.ID = I.ID'#13#10'WHERE 0=0'
     MaxBlobSize = -1
-    Params = <
-      item
-        DataType = ftDate
-        Name = 'DATA'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftDate
-        Name = 'DATA'
-        ParamType = ptInput
-      end>
+    Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 817
     Top = 376
@@ -8102,9 +8094,17 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object cdsTroca: TClientDataSet
     Aggregates = <>
+    FieldDefs = <>
+    IndexDefs = <
+      item
+        Name = 'IndiceData'
+        Fields = 'DTEMISSAO'
+        Options = [ixDescending]
+      end>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTroca'
+    StoreDefs = True
     Left = 881
     Top = 376
     object cdsTrocaID: TIntegerField
@@ -8137,12 +8137,18 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsTrocaVLR_UNITARIO: TFloatField
       FieldName = 'VLR_UNITARIO'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsTrocaVLR_TOTAL: TFloatField
       FieldName = 'VLR_TOTAL'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsTrocaVLR_DESCONTO: TFloatField
       FieldName = 'VLR_DESCONTO'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsTrocaNUMCUPOM: TIntegerField
       FieldName = 'NUMCUPOM'

@@ -1,6 +1,6 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 249
-  Top = 90
+  Left = 277
+  Top = 57
   Width = 1131
   Height = 557
   BorderIcons = [biSystemMenu]
@@ -24,7 +24,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 1115
-    Height = 468
+    Height = 469
     Align = alClient
     BevelOuter = bvNone
     Color = 16645114
@@ -68,70 +68,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     StatusBar.GradientDirection = gdVertical
     Styler = AdvPanelStyler1
     FullHeight = 0
-    object Label15: TLabel
-      Left = 746
-      Top = 10
-      Width = 57
-      Height = 25
-      Alignment = taRightJustify
-      Caption = 'Total:'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -20
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label4: TLabel
-      Left = 744
-      Top = 167
-      Width = 99
-      Height = 25
-      Alignment = taRightJustify
-      Caption = 'Recebido:'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 7300393
-      Font.Height = -20
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label5: TLabel
-      Left = 746
-      Top = 247
-      Width = 62
-      Height = 25
-      Alignment = taRightJustify
-      Caption = 'Troco:'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -20
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label8: TLabel
-      Left = 744
-      Top = 89
-      Width = 101
-      Height = 25
-      Alignment = taRightJustify
-      Caption = 'Desconto:'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -20
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
     object Label1: TLabel
       Left = 324
       Top = 403
@@ -149,8 +85,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
     end
     object Label17: TLabel
-      Left = 776
-      Top = 349
+      Left = 56
+      Top = 405
       Width = 114
       Height = 23
       Alignment = taRightJustify
@@ -166,8 +102,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Visible = False
     end
     object Label10: TLabel
-      Left = 787
-      Top = 390
+      Left = 67
+      Top = 446
       Width = 58
       Height = 23
       Alignment = taRightJustify
@@ -199,98 +135,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentColor = False
       ParentFont = False
     end
-    object lblVlr_Troca: TLabel
-      Left = 26
-      Top = 373
-      Width = 133
-      Height = 25
-      Alignment = taRightJustify
-      Caption = 'Vlr. da Troca:'
-      Color = 16643051
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -20
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object edtTotal: TDBEdit
-      Left = 744
-      Top = 35
-      Width = 252
-      Height = 60
-      TabStop = False
-      BiDiMode = bdLeftToRight
-      Color = 12633514
-      DataField = 'VLR_TOTAL'
-      DataSource = dmCupomFiscal.dsCupomFiscal
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -43
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentBiDiMode = False
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 0
-    end
-    object edtVlrRecebido: TDBEdit
-      Left = 744
-      Top = 190
-      Width = 252
-      Height = 60
-      TabStop = False
-      Color = 12633514
-      DataField = 'VLR_RECEBIDO'
-      DataSource = dmCupomFiscal.dsCupomFiscal
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 7300393
-      Font.Height = -43
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
-    end
-    object edtTroco: TDBEdit
-      Left = 744
-      Top = 270
-      Width = 252
-      Height = 60
-      TabStop = False
-      Color = 12633514
-      Ctl3D = True
-      DataField = 'VLR_TROCO'
-      DataSource = dmCupomFiscal.dsCupomFiscal
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -43
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentCtl3D = False
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 2
-    end
-    object edtDesconto: TDBEdit
-      Left = 744
-      Top = 112
-      Width = 252
-      Height = 60
-      TabStop = False
-      Color = 12633514
-      DataField = 'VLR_DESCONTO'
-      DataSource = dmCupomFiscal.dsCupomFiscal
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -43
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 3
-    end
     object grCliente: TJvGroupBox
       Left = 13
       Top = 272
@@ -305,7 +149,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 0
       object btnCliente: TSpeedButton
         Left = 99
         Top = 16
@@ -383,7 +227,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Name = 'Verdana'
       Font.Style = [fsBold, fsItalic]
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 1
       UseDockManager = True
       Version = '2.0.1.0'
       AutoHideChildren = False
@@ -623,8 +467,8 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       end
     end
     object ceJuros: TCurrencyEdit
-      Left = 899
-      Top = 340
+      Left = 179
+      Top = 396
       Width = 96
       Height = 32
       AutoSize = False
@@ -636,13 +480,13 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = []
       ParentFont = False
       ReadOnly = True
-      TabOrder = 6
+      TabOrder = 2
       Visible = False
       OnExit = ceJurosExit
     end
     object cbNFCe: TComboBox
-      Left = 850
-      Top = 380
+      Left = 130
+      Top = 436
       Width = 145
       Height = 32
       Style = csDropDownList
@@ -655,7 +499,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ItemHeight = 24
       ItemIndex = 0
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 3
       Text = 'SIM'
       Visible = False
       OnKeyDown = cbNFCeKeyDown
@@ -664,12 +508,12 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         'N'#195'O')
     end
     object Edit1: TEdit
-      Left = 722
-      Top = 418
+      Left = 658
+      Top = 354
       Width = 57
       Height = 46
       TabStop = False
-      TabOrder = 8
+      TabOrder = 4
       Visible = False
     end
     object grVendedor: TJvGroupBox
@@ -686,7 +530,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 9
+      TabOrder = 5
       object btnVendedor: TSpeedButton
         Left = 99
         Top = 18
@@ -750,30 +594,443 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         TabOrder = 1
       end
     end
-    object dbedtVlr_Troca: TDBEdit
-      Left = 24
-      Top = 398
-      Width = 252
-      Height = 60
-      TabStop = False
-      Color = 12633514
-      Ctl3D = True
-      DataField = 'VLR_TROCA'
-      DataSource = dmCupomFiscal.dsCupomFiscal
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -43
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentCtl3D = False
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 10
+    object AdvPanel1: TAdvPanel
+      Left = 744
+      Top = 9
+      Width = 261
+      Height = 425
+      BevelOuter = bvNone
+      Color = 16645114
+      TabOrder = 6
+      UseDockManager = True
+      Version = '2.0.1.0'
+      AutoHideChildren = False
+      BorderColor = 16765615
+      Caption.Color = 16575452
+      Caption.ColorTo = 16571329
+      Caption.Font.Charset = DEFAULT_CHARSET
+      Caption.Font.Color = clBlack
+      Caption.Font.Height = -11
+      Caption.Font.Name = 'Verdana'
+      Caption.Font.Style = []
+      Caption.GradientDirection = gdVertical
+      Caption.Indent = 2
+      Caption.ShadeLight = 255
+      CollapsColor = clNone
+      CollapsDelay = 0
+      ColorTo = 16643051
+      HoverColor = clBlack
+      HoverFontColor = clBlack
+      ShadowColor = clBlack
+      ShadowOffset = 0
+      StatusBar.BorderColor = 13542013
+      StatusBar.BorderStyle = bsSingle
+      StatusBar.Font.Charset = DEFAULT_CHARSET
+      StatusBar.Font.Color = 7485192
+      StatusBar.Font.Height = -11
+      StatusBar.Font.Name = 'Tahoma'
+      StatusBar.Font.Style = []
+      StatusBar.Color = 16575452
+      StatusBar.ColorTo = 16571329
+      StatusBar.GradientDirection = gdVertical
+      Styler = AdvPanelStyler1
+      FullHeight = 0
+      object pnlTotal: TAdvPanel
+        Left = 0
+        Top = 0
+        Width = 261
+        Height = 84
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 16645114
+        TabOrder = 0
+        UseDockManager = True
+        Version = '2.0.1.0'
+        AutoHideChildren = False
+        BorderColor = 16765615
+        Caption.Color = 16575452
+        Caption.ColorTo = 16571329
+        Caption.Font.Charset = DEFAULT_CHARSET
+        Caption.Font.Color = clBlack
+        Caption.Font.Height = -11
+        Caption.Font.Name = 'Verdana'
+        Caption.Font.Style = []
+        Caption.GradientDirection = gdVertical
+        Caption.Indent = 2
+        Caption.ShadeLight = 255
+        CollapsColor = clNone
+        CollapsDelay = 0
+        ColorTo = 16643051
+        HoverColor = clBlack
+        HoverFontColor = clBlack
+        ShadowColor = clBlack
+        ShadowOffset = 0
+        StatusBar.BorderColor = 13542013
+        StatusBar.BorderStyle = bsSingle
+        StatusBar.Font.Charset = DEFAULT_CHARSET
+        StatusBar.Font.Color = 7485192
+        StatusBar.Font.Height = -11
+        StatusBar.Font.Name = 'Tahoma'
+        StatusBar.Font.Style = []
+        StatusBar.Color = 16575452
+        StatusBar.ColorTo = 16571329
+        StatusBar.GradientDirection = gdVertical
+        Styler = AdvPanelStyler1
+        FullHeight = 0
+        object Label15: TLabel
+          Left = 0
+          Top = 0
+          Width = 261
+          Height = 25
+          Align = alTop
+          Caption = 'Total:'
+          Color = 16643051
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -20
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtTotal: TDBEdit
+          Left = 0
+          Top = 25
+          Width = 262
+          Height = 60
+          TabStop = False
+          BiDiMode = bdLeftToRight
+          Color = 12633514
+          DataField = 'VLR_TOTAL'
+          DataSource = dmCupomFiscal.dsCupomFiscal
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -43
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentBiDiMode = False
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+      end
+      object pnlDesconto: TAdvPanel
+        Left = 0
+        Top = 84
+        Width = 261
+        Height = 84
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 16645114
+        TabOrder = 1
+        UseDockManager = True
+        Version = '2.0.1.0'
+        AutoHideChildren = False
+        BorderColor = 16765615
+        Caption.Color = 16575452
+        Caption.ColorTo = 16571329
+        Caption.Font.Charset = DEFAULT_CHARSET
+        Caption.Font.Color = clBlack
+        Caption.Font.Height = -11
+        Caption.Font.Name = 'Verdana'
+        Caption.Font.Style = []
+        Caption.GradientDirection = gdVertical
+        Caption.Indent = 2
+        Caption.ShadeLight = 255
+        CollapsColor = clNone
+        CollapsDelay = 0
+        ColorTo = 16643051
+        HoverColor = clBlack
+        HoverFontColor = clBlack
+        ShadowColor = clBlack
+        ShadowOffset = 0
+        StatusBar.BorderColor = 13542013
+        StatusBar.BorderStyle = bsSingle
+        StatusBar.Font.Charset = DEFAULT_CHARSET
+        StatusBar.Font.Color = 7485192
+        StatusBar.Font.Height = -11
+        StatusBar.Font.Name = 'Tahoma'
+        StatusBar.Font.Style = []
+        StatusBar.Color = 16575452
+        StatusBar.ColorTo = 16571329
+        StatusBar.GradientDirection = gdVertical
+        Styler = AdvPanelStyler1
+        FullHeight = 0
+        object Label8: TLabel
+          Left = 0
+          Top = 0
+          Width = 261
+          Height = 25
+          Align = alTop
+          Caption = 'Desconto:'
+          Color = 16643051
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -20
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtDesconto: TDBEdit
+          Left = 0
+          Top = 24
+          Width = 262
+          Height = 60
+          TabStop = False
+          Color = 12633514
+          DataField = 'VLR_DESCONTO'
+          DataSource = dmCupomFiscal.dsCupomFiscal
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -43
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+      end
+      object pnlTroca: TAdvPanel
+        Left = 0
+        Top = 168
+        Width = 261
+        Height = 84
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 16645114
+        TabOrder = 2
+        UseDockManager = True
+        Version = '2.0.1.0'
+        AutoHideChildren = False
+        BorderColor = 16765615
+        Caption.Color = 16575452
+        Caption.ColorTo = 16571329
+        Caption.Font.Charset = DEFAULT_CHARSET
+        Caption.Font.Color = clBlack
+        Caption.Font.Height = -11
+        Caption.Font.Name = 'Verdana'
+        Caption.Font.Style = []
+        Caption.GradientDirection = gdVertical
+        Caption.Indent = 2
+        Caption.ShadeLight = 255
+        CollapsColor = clNone
+        CollapsDelay = 0
+        ColorTo = 16643051
+        HoverColor = clBlack
+        HoverFontColor = clBlack
+        ShadowColor = clBlack
+        ShadowOffset = 0
+        StatusBar.BorderColor = 13542013
+        StatusBar.BorderStyle = bsSingle
+        StatusBar.Font.Charset = DEFAULT_CHARSET
+        StatusBar.Font.Color = 7485192
+        StatusBar.Font.Height = -11
+        StatusBar.Font.Name = 'Tahoma'
+        StatusBar.Font.Style = []
+        StatusBar.Color = 16575452
+        StatusBar.ColorTo = 16571329
+        StatusBar.GradientDirection = gdVertical
+        Styler = AdvPanelStyler1
+        FullHeight = 0
+        object lblVlr_Troca: TLabel
+          Left = 0
+          Top = 0
+          Width = 261
+          Height = 25
+          Align = alTop
+          Caption = 'Troca:'
+          Color = 16643051
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -20
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtVlr_Troca: TDBEdit
+          Left = -1
+          Top = 24
+          Width = 262
+          Height = 60
+          TabStop = False
+          Color = 12633514
+          Ctl3D = True
+          DataField = 'VLR_TROCA'
+          DataSource = dmCupomFiscal.dsCupomFiscal
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -43
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentCtl3D = False
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+      end
+      object pnlRecebido: TAdvPanel
+        Left = 0
+        Top = 252
+        Width = 261
+        Height = 84
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 16645114
+        TabOrder = 3
+        UseDockManager = True
+        Version = '2.0.1.0'
+        AutoHideChildren = False
+        BorderColor = 16765615
+        Caption.Color = 16575452
+        Caption.ColorTo = 16571329
+        Caption.Font.Charset = DEFAULT_CHARSET
+        Caption.Font.Color = clBlack
+        Caption.Font.Height = -11
+        Caption.Font.Name = 'Verdana'
+        Caption.Font.Style = []
+        Caption.GradientDirection = gdVertical
+        Caption.Indent = 2
+        Caption.ShadeLight = 255
+        CollapsColor = clNone
+        CollapsDelay = 0
+        ColorTo = 16643051
+        HoverColor = clBlack
+        HoverFontColor = clBlack
+        ShadowColor = clBlack
+        ShadowOffset = 0
+        StatusBar.BorderColor = 13542013
+        StatusBar.BorderStyle = bsSingle
+        StatusBar.Font.Charset = DEFAULT_CHARSET
+        StatusBar.Font.Color = 7485192
+        StatusBar.Font.Height = -11
+        StatusBar.Font.Name = 'Tahoma'
+        StatusBar.Font.Style = []
+        StatusBar.Color = 16575452
+        StatusBar.ColorTo = 16571329
+        StatusBar.GradientDirection = gdVertical
+        Styler = AdvPanelStyler1
+        FullHeight = 0
+        object lblRecebido: TLabel
+          Left = 0
+          Top = 0
+          Width = 261
+          Height = 25
+          Align = alTop
+          Caption = 'Recebido:'
+          Color = 16643051
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 7300393
+          Font.Height = -20
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtVlrRecebido: TDBEdit
+          Left = -1
+          Top = 24
+          Width = 262
+          Height = 60
+          TabStop = False
+          Color = 12633514
+          DataField = 'VLR_RECEBIDO'
+          DataSource = dmCupomFiscal.dsCupomFiscal
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 7300393
+          Font.Height = -43
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+      end
+      object pnlTroco: TAdvPanel
+        Left = 0
+        Top = 336
+        Width = 261
+        Height = 84
+        Align = alTop
+        BevelOuter = bvNone
+        Color = 16645114
+        TabOrder = 4
+        UseDockManager = True
+        Version = '2.0.1.0'
+        AutoHideChildren = False
+        BorderColor = 16765615
+        Caption.Color = 16575452
+        Caption.ColorTo = 16571329
+        Caption.Font.Charset = DEFAULT_CHARSET
+        Caption.Font.Color = clBlack
+        Caption.Font.Height = -11
+        Caption.Font.Name = 'Verdana'
+        Caption.Font.Style = []
+        Caption.GradientDirection = gdVertical
+        Caption.Indent = 2
+        Caption.ShadeLight = 255
+        CollapsColor = clNone
+        CollapsDelay = 0
+        ColorTo = 16643051
+        HoverColor = clBlack
+        HoverFontColor = clBlack
+        ShadowColor = clBlack
+        ShadowOffset = 0
+        StatusBar.BorderColor = 13542013
+        StatusBar.BorderStyle = bsSingle
+        StatusBar.Font.Charset = DEFAULT_CHARSET
+        StatusBar.Font.Color = 7485192
+        StatusBar.Font.Height = -11
+        StatusBar.Font.Name = 'Tahoma'
+        StatusBar.Font.Style = []
+        StatusBar.Color = 16575452
+        StatusBar.ColorTo = 16571329
+        StatusBar.GradientDirection = gdVertical
+        Styler = AdvPanelStyler1
+        FullHeight = 0
+        object Label5: TLabel
+          Left = 0
+          Top = 0
+          Width = 261
+          Height = 25
+          Align = alTop
+          Caption = 'Troco:'
+          Color = 16643051
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -20
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtTroco: TDBEdit
+          Left = 0
+          Top = 24
+          Width = 262
+          Height = 60
+          TabStop = False
+          Color = 12633514
+          Ctl3D = True
+          DataField = 'VLR_TROCO'
+          DataSource = dmCupomFiscal.dsCupomFiscal
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 3683329
+          Font.Height = -43
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentCtl3D = False
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 0
+        end
+      end
     end
   end
   object pnlBotton: TAdvPanel
     Left = 0
-    Top = 468
+    Top = 469
     Width = 1115
     Height = 50
     Align = alBottom

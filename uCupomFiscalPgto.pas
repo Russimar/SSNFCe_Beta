@@ -23,15 +23,7 @@ type
 type
   TfCupomFiscalPgto = class(TForm)
     pnlPrincipal: TAdvPanel;
-    Label15: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label8: TLabel;
     Label1: TLabel;
-    edtTotal: TDBEdit;
-    edtVlrRecebido: TDBEdit;
-    edtTroco: TDBEdit;
-    edtDesconto: TDBEdit;
     grCliente: TJvGroupBox;
     pnlBotton: TAdvPanel;
     btConfirmar: TNxButton;
@@ -66,8 +58,22 @@ type
     btnVendedor: TSpeedButton;
     edtCodigoVendedor: TDBEdit;
     edtNomeVendedor: TEdit;
+    AdvPanel1: TAdvPanel;
+    pnlTotal: TAdvPanel;
+    Label15: TLabel;
+    edtTotal: TDBEdit;
+    pnlDesconto: TAdvPanel;
+    Label8: TLabel;
+    edtDesconto: TDBEdit;
+    pnlTroca: TAdvPanel;
     lblVlr_Troca: TLabel;
-    dbedtVlr_Troca: TDBEdit;
+    edtVlr_Troca: TDBEdit;
+    pnlRecebido: TAdvPanel;
+    lblRecebido: TLabel;
+    edtVlrRecebido: TDBEdit;
+    pnlTroco: TAdvPanel;
+    Label5: TLabel;
+    edtTroco: TDBEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure comboCondicaoPgtoChange(Sender: TObject);
@@ -296,9 +302,7 @@ begin
   mPagamentosSelecionados.EmptyDataSet;
 
   //18/02/2020
-  lblVlr_Troca.Visible   := (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
-  dbedtVlr_Troca.Visible := (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
-  //************
+  pnlTroca.Visible   := (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0);
 
   if not fdmCupomFiscal.cdsTipoCobranca.Active then
     fDmCupomFiscal.cdsTipoCobranca.Open;
@@ -360,6 +364,7 @@ begin
   DrawControl(edtTroco);
   DrawControl(edtVlrRecebido);
   DrawControl(edtValorPagamento);
+  DrawControl(edtVlr_Troca);
   //Desabilita a barra de rolagem da grid
   ShowScrollBar(gridPagamentosDisponiveis.Handle, SB_VERT, False);
 
@@ -372,9 +377,15 @@ begin
       edtPagamento.Text      := fDmCupomFiscal.cdsTipoCobrancaID.AsString;
       edtValorPagamento.Text := FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat);
       edtValorPagamentoKeyDown(Sender, Enter, [ssAlt]);
+
+      if (edtValorPagamento.Text <> EmptyStr) and (fDmCupomFiscal.cdsCupomParametrosID_TIPOCOBRANCA_PADRAO.AsInteger > 0) then
+      begin
+        edtPagamento.Text := IntToStr(fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger);
+        edtPagamentoKeyDown(Sender, Enter, [ssAlt]);
+        EstadoFechVenda := InformandoValorRecebido;
+      end;
     end;
   end;
-  //************
 
 end;
 
@@ -422,7 +433,10 @@ begin
     else
     if edtPagamento.Focused then
       edtValorPagamento.SetFocus;
-  end;
+  end
+  else
+  if (Key = VK_Escape) then
+    Close;
 
   if ssCtrl in Shift then
   begin

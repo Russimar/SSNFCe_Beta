@@ -1,6 +1,6 @@
 object frmCupom_Troca: TfrmCupom_Troca
-  Left = 309
-  Top = 77
+  Left = 343
+  Top = 73
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'frmCupom_Troca'
@@ -16,6 +16,7 @@ object frmCupom_Troca: TfrmCupom_Troca
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -23,7 +24,7 @@ object frmCupom_Troca: TfrmCupom_Troca
     Left = 0
     Top = 0
     Width = 963
-    Height = 122
+    Height = 106
     Align = alTop
     UseDockManager = False
     ParentBackground = False
@@ -43,8 +44,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label2: TLabel
-      Left = 176
-      Top = 64
+      Left = 164
+      Top = 51
       Width = 64
       Height = 13
       Caption = 'N'#186' Cupom'
@@ -57,8 +58,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label3: TLabel
-      Left = 328
-      Top = 64
+      Left = 313
+      Top = 51
       Width = 34
       Height = 13
       Caption = 'S'#233'rie'
@@ -71,8 +72,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label4: TLabel
-      Left = 480
-      Top = 63
+      Left = 379
+      Top = 51
       Width = 34
       Height = 13
       Caption = 'Qtde.'
@@ -85,8 +86,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label5: TLabel
-      Left = 592
-      Top = 63
+      Left = 528
+      Top = 51
       Width = 78
       Height = 13
       Caption = 'Vlr. Unit'#225'rio'
@@ -99,8 +100,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label6: TLabel
-      Left = 733
-      Top = 63
+      Left = 676
+      Top = 51
       Width = 59
       Height = 13
       Caption = 'Vlr. Total'
@@ -113,8 +114,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object Label7: TLabel
-      Left = 24
-      Top = 63
+      Left = 16
+      Top = 51
       Width = 70
       Height = 13
       Caption = 'ID Produto'
@@ -129,7 +130,7 @@ object frmCupom_Troca: TfrmCupom_Troca
     object lblNome: TLabel
       Left = 222
       Top = 11
-      Width = 665
+      Width = 595
       Height = 18
       AutoSize = False
       Caption = '.'
@@ -142,8 +143,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       Transparent = True
     end
     object btnConfirmar: TNxButton
-      Left = 848
-      Top = 26
+      Left = 856
+      Top = 10
       Width = 75
       Caption = 'Confirmar'
       TabOrder = 1
@@ -169,8 +170,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       OnKeyDown = Edit1KeyDown
     end
     object ceNumCupom: TCurrencyEdit
-      Left = 165
-      Top = 86
+      Left = 164
+      Top = 66
       Width = 145
       Height = 31
       TabStop = False
@@ -193,8 +194,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       OnKeyDown = ceNumCupomKeyDown
     end
     object edtSerie: TEdit
-      Left = 311
-      Top = 85
+      Left = 313
+      Top = 65
       Width = 63
       Height = 32
       TabStop = False
@@ -213,8 +214,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       TabOrder = 3
     end
     object CurrencyEdit1: TCurrencyEdit
-      Left = 376
-      Top = 84
+      Left = 379
+      Top = 66
       Width = 145
       Height = 31
       AutoSize = False
@@ -235,8 +236,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       OnKeyDown = CurrencyEdit1KeyDown
     end
     object ceVlr_Unitario: TCurrencyEdit
-      Left = 522
-      Top = 84
+      Left = 528
+      Top = 66
       Width = 145
       Height = 31
       AutoSize = False
@@ -256,8 +257,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       OnKeyDown = ceVlr_UnitarioKeyDown
     end
     object ceVlr_Total: TCurrencyEdit
-      Left = 670
-      Top = 84
+      Left = 676
+      Top = 66
       Width = 145
       Height = 31
       AutoSize = False
@@ -278,7 +279,7 @@ object frmCupom_Troca: TfrmCupom_Troca
     end
     object ceID_Produto: TCurrencyEdit
       Left = 16
-      Top = 85
+      Top = 66
       Width = 145
       Height = 31
       TabStop = False
@@ -299,8 +300,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       TabOrder = 7
     end
     object btnExcluir: TNxButton
-      Left = 848
-      Top = 58
+      Left = 856
+      Top = 42
       Width = 75
       Caption = 'Excluir'
       Font.Charset = DEFAULT_CHARSET
@@ -313,8 +314,8 @@ object frmCupom_Troca: TfrmCupom_Troca
       OnClick = btnExcluirClick
     end
     object btnCancelar: TNxButton
-      Left = 848
-      Top = 90
+      Left = 856
+      Top = 74
       Width = 75
       Caption = 'Cancelar'
       Font.Charset = DEFAULT_CHARSET
@@ -329,9 +330,9 @@ object frmCupom_Troca: TfrmCupom_Troca
   end
   object SMDBGrid1: TSMDBGrid
     Left = 0
-    Top = 146
+    Top = 130
     Width = 963
-    Height = 378
+    Height = 394
     Align = alClient
     Ctl3D = False
     DataSource = dmCupomFiscal.dsCupom_Troca
@@ -392,7 +393,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Item'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -411,7 +411,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'N'#186' Cupom Troca'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -448,7 +447,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Item Troca'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -467,7 +465,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'ID Produto'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -485,7 +482,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Qtd'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -504,7 +500,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Vlr. Unit'#225'rio'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -522,7 +517,6 @@ object frmCupom_Troca: TfrmCupom_Troca
         Font.Name = 'Verdana'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Vlr. Total'
         Title.Color = 16757606
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -548,7 +542,7 @@ object frmCupom_Troca: TfrmCupom_Troca
   end
   object Panel1: TPanel
     Left = 0
-    Top = 122
+    Top = 106
     Width = 963
     Height = 24
     Align = alTop
