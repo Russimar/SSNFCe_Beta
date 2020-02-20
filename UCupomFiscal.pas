@@ -22,7 +22,8 @@ uses
   dxSkinOffice2007Black, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,ACBrDeviceSerial;
+  
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
@@ -1010,6 +1011,13 @@ begin
   vFilial := vFilial_Loc;
   if fDmCupomFiscal.cdsCupomFiscal.IsEmpty then
     Exit;
+  if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat)) then
+  begin
+    MessageDlg('*** Vlr da Troca maior que o valor do cupom!' + #13 + #13
+               + ' Vlr. Troca: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat) + #13
+               + ' Vlr. Total: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat), mtInformation, [mbOk], 0);
+    Exit;
+  end; 
 
   if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     fDmCupomFiscal.cdsCupomFiscal.Edit;
@@ -1056,24 +1064,13 @@ begin
             fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
             if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
               vVias := vVias - 1;
-            if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') then
+            if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') and (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) <> mrYes) then
+              vVias := 0;
+            for i := 1 to vVias do
             begin
-              if (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) = mrYes) then
-                for i := 1 to vVias do
-                begin
-                  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-                  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-                  fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
-                end;
-            end
-            else
-            begin
-              for i := 1 to vVias do
-              begin
-                fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-                fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-                fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
-              end;
+              fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+              fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+              fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
             end;
           end;
         end
@@ -2390,6 +2387,7 @@ begin
     fDmCupomFiscal.cdsCupom_Troca.Next;
   end;
   fDmCupomFiscal.cdsCupom_Troca.ApplyUpdates(0);
+  fDmCupomFiscal.cdsCupom_Troca.Close;
 
 end;
 

@@ -164,7 +164,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 60
+        Width = 59
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -426,7 +426,7 @@ object fCupomFiscal: TfCupomFiscal
         Width = 289
         Height = 17
         AutoSize = False
-        Caption = 'F4 - Consulta Produto'
+        Caption = 'F4 - Consulta Pre'#231'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11

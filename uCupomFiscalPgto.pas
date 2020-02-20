@@ -475,6 +475,9 @@ begin
     Exit;
   end;
   vExigeCliente := False;
+  //20/02/2020
+  fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger := 0;
+  //******************
   mPagamentosSelecionados.First;
   while not mPagamentosSelecionados.Eof do
   begin
@@ -504,6 +507,9 @@ begin
       ffrmCupomFiscalPgtoDet.fdmCupomFiscal := fDmCupomFiscal;
       ffrmCupomFiscalPgtoDet.vVlr_Recebido := mPagamentosSelecionadosValor.AsFloat;
       fDmCupomFiscal.vID_TipoCobranca := mPagamentosSelecionadosId.AsInteger;
+      //20/02/2020
+      fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger := mPagamentosSelecionadosId.AsInteger;
+      //*****************
       ffrmCupomFiscalPgtoDet.ShowModal;
       if ffrmCupomFiscalPgtoDet.ModalResult = mrCancel then
       begin
@@ -644,6 +650,8 @@ begin
 
   vIdCupom := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
   fdmCupomFiscal.cdsCupomFiscal.Close;
+  fDmCupomFiscal.cdsCupom_Troca.Close;
+
   fDmCupomFiscal.prcLocalizar(vIdCupom);
 
   //Atualiza os pedidos   02/05/2018
