@@ -204,6 +204,18 @@ type
     comboFormaPagtoPadrao: TRxDBLookupCombo;
     Label85: TLabel;
     RxDBComboBox48: TRxDBComboBox;
+    GroupBox11: TGroupBox;
+    lblSuperior: TLabel;
+    edtMSuperior: TEdit;
+    lblEsquerda: TLabel;
+    edtMEsquerda: TEdit;
+    Label88: TLabel;
+    lblDireita: TLabel;
+    edtMDireita: TEdit;
+    lblMInferior: TLabel;
+    edtMInferior: TEdit;
+    Label86: TLabel;
+    edtLarguraBobina: TEdit;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -258,6 +270,11 @@ begin
   Edit1.Text             := lerIni('IMPRESSORA','Porta');
   Edit2.Text             := lerIni('IMPRESSORA','Boud');
   edtSerieCupom.Text     := lerIni('IMPRESSORA','Serie');
+  edtMSuperior.Text      := lerIni('MARGEM', 'Superior');
+  edtMInferior.Text      := lerIni('MARGEM', 'Inferior');
+  edtMEsquerda.Text      := lerIni('MARGEM', 'Esquerda');
+  edtMDireita.Text       := lerIni('MARGEM', 'Direita');
+  edtLarguraBobina.Text  := lerIni('MARGEM', 'LarguraBobina');
 
   RxDBLookupCombo2.Value := lerIni('IMPRESSORA','Terminal');
   if lerIni('IMPRESSORA','IdEstoque') <> '' then
@@ -417,6 +434,13 @@ begin
     vFilial := 0;
 
   vTerminal := RxDBLookupCombo2.KeyValue;
+
+  gravarIni('MARGEM','Superior',edtMSuperior.Text);
+  gravarIni('MARGEM','Inferior',edtMInferior.Text);
+  gravarIni('MARGEM','Esquerda',edtMEsquerda.Text);
+  gravarIni('MARGEM','Direita',edtMDireita.Text);
+  gravarIni('MARGEM','LarguraBobina',edtLarguraBobina.Text);
+
 
 ////////////////////////////////
   gravarIni('BALANCA','Balanca',ComboBox1.Text);

@@ -793,6 +793,13 @@ begin
   fDMNFCe.ACBrNFeDANFeESCPOS.ViaConsumidor := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeItens := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.QuebraLinhaEmDetalhamentos := False;
+
+  fDMNFCe.ACBrNFeDANFeESCPOS.MargemSuperior := vMargemSuperior;
+  fDMNFCe.ACBrNFeDANFeESCPOS.MargemInferior := vMargemInferior;
+  fDMNFCe.ACBrNFeDANFeESCPOS.MargemDireita := vMargemDireita;
+  fDMNFCe.ACBrNFeDANFeESCPOS.MargemEsquerda := vMargemEsquerda;
+  fDMNFCe.ACBrNFeDANFeESCPOS.LarguraBobina := vLarguraBobina;
+
   if vModeloImpressora = 'DR700' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscDaruma;
   if vModeloImpressora = 'DR800' then

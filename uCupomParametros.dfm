@@ -1,8 +1,8 @@
 object fCupomParametros: TfCupomParametros
-  Left = 170
-  Top = 23
-  Width = 1036
-  Height = 768
+  Left = 24
+  Top = 0
+  Width = 983
+  Height = 621
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'fCupomParametros'
   Color = clBtnFace
@@ -20,10 +20,18 @@ object fCupomParametros: TfCupomParametros
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label88: TLabel
+    Left = 7
+    Top = 28
+    Width = 42
+    Height = 13
+    Alignment = taRightJustify
+    Caption = 'Superior:'
+  end
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 1020
+    Width = 967
     Height = 35
     Align = alTop
     Color = 8404992
@@ -79,8 +87,8 @@ object fCupomParametros: TfCupomParametros
   object PageControl1: TPageControl
     Left = 0
     Top = 35
-    Width = 1020
-    Height = 694
+    Width = 967
+    Height = 548
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
@@ -89,8 +97,8 @@ object fCupomParametros: TfCupomParametros
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1012
-        Height = 666
+        Width = 959
+        Height = 520
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -812,8 +820,8 @@ object fCupomParametros: TfCupomParametros
         object GroupBox9: TGroupBox
           Left = 4
           Top = 436
-          Width = 421
-          Height = 88
+          Width = 317
+          Height = 92
           Caption = ' Configura'#231#227'o NFCe '
           TabOrder = 4
           object Label71: TLabel
@@ -863,14 +871,14 @@ object fCupomParametros: TfCupomParametros
           end
         end
         object GroupBox10: TGroupBox
-          Left = 426
+          Left = 328
           Top = 436
-          Width = 419
-          Height = 88
+          Width = 241
+          Height = 92
           Caption = ' Configura'#231#227'o NFCe  Novo'
           TabOrder = 5
           object Label78: TLabel
-            Left = 34
+            Left = 4
             Top = 24
             Width = 82
             Height = 13
@@ -878,7 +886,7 @@ object fCupomParametros: TfCupomParametros
             Caption = 'Porta Impressora:'
           end
           object Label79: TLabel
-            Left = 82
+            Left = 52
             Top = 45
             Width = 34
             Height = 13
@@ -886,7 +894,7 @@ object fCupomParametros: TfCupomParametros
             Caption = 'Bound:'
           end
           object Label80: TLabel
-            Left = 62
+            Left = 32
             Top = 67
             Width = 54
             Height = 13
@@ -894,14 +902,14 @@ object fCupomParametros: TfCupomParametros
             Caption = 'Impressora:'
           end
           object edtBound: TEdit
-            Left = 120
+            Left = 90
             Top = 37
             Width = 88
             Height = 21
             TabOrder = 0
           end
           object comboPorta: TRzComboBox
-            Left = 120
+            Left = 90
             Top = 16
             Width = 145
             Height = 21
@@ -931,7 +939,7 @@ object fCupomParametros: TfCupomParametros
               'USB')
           end
           object comboImpressora: TRzComboBox
-            Left = 120
+            Left = 90
             Top = 59
             Width = 145
             Height = 21
@@ -954,6 +962,104 @@ object fCupomParametros: TfCupomParametros
               'COM8'
               'COM9'
               'USB')
+          end
+        end
+        object GroupBox11: TGroupBox
+          Left = 576
+          Top = 436
+          Width = 241
+          Height = 92
+          Caption = 'Margens'
+          TabOrder = 6
+          object lblSuperior: TLabel
+            Left = 9
+            Top = 25
+            Width = 42
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Superior:'
+          end
+          object lblEsquerda: TLabel
+            Left = 3
+            Top = 47
+            Width = 48
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Esquerda:'
+          end
+          object lblDireita: TLabel
+            Left = 134
+            Top = 47
+            Width = 33
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Direira:'
+          end
+          object lblMInferior: TLabel
+            Left = 132
+            Top = 25
+            Width = 35
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Inferior:'
+          end
+          object Label86: TLabel
+            Left = 92
+            Top = 69
+            Width = 75
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Largura Bobina:'
+          end
+          object edtMSuperior: TEdit
+            Left = 52
+            Top = 17
+            Width = 64
+            Height = 21
+            Hint = 'Padr'#227'o 0,8'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+          end
+          object edtMEsquerda: TEdit
+            Left = 52
+            Top = 39
+            Width = 64
+            Height = 21
+            Hint = 'Padr'#227'o 0,6'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+          end
+          object edtMDireita: TEdit
+            Left = 169
+            Top = 39
+            Width = 64
+            Height = 21
+            Hint = 'Padr'#227'o 0,51'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+          end
+          object edtMInferior: TEdit
+            Left = 169
+            Top = 17
+            Width = 64
+            Height = 21
+            Hint = 'Padr'#227'o 0,8'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+          end
+          object edtLarguraBobina: TEdit
+            Left = 169
+            Top = 61
+            Width = 64
+            Height = 21
+            Hint = 'Largura padr'#227'o: 290'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 4
           end
         end
       end
@@ -2153,8 +2259,8 @@ object fCupomParametros: TfCupomParametros
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 1012
-        Height = 666
+        Width = 959
+        Height = 520
         Align = alClient
         TabOrder = 0
         object Label15: TLabel
@@ -2279,15 +2385,15 @@ object fCupomParametros: TfCupomParametros
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 857
-        Height = 530
+        Width = 959
+        Height = 520
         Align = alClient
         TabOrder = 0
         object DBGrid1: TDBGrid
           Left = 1
           Top = 1
-          Width = 855
-          Height = 528
+          Width = 957
+          Height = 518
           Align = alClient
           DataSource = dmParametros.dsSequencial
           TabOrder = 0

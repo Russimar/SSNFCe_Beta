@@ -112,6 +112,11 @@ begin
       vModeloImpressora := ini.ReadString('ACBR2','modelo','');
       vPorta      := ini.ReadString('ACBR2','Porta','');
       vVelocidade := ini.ReadString('ACBR2','Boud','');
+      vMargemSuperior := StrToFloatDef(ini.ReadString('MARGEM','Superior',''),0);
+      vMargemInferior := StrToFloatDef(ini.ReadString('MARGEM','Inferior',''),0);
+      vMargemDireita  := StrToFloatDef(ini.ReadString('MARGEM','Direita',''),0);
+      vMargemEsquerda := StrToFloatDef(ini.ReadString('MARGEM','Esquerda',''),0);
+      vLarguraBobina  := StrToIntDef(ini.ReadString('MARGEM','LarguraBobina',''),0);
     end
     else
     begin

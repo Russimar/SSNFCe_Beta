@@ -8263,14 +8263,20 @@ object dmCupomFiscal: TdmCupomFiscal
     object cdsCupom_TrocaQTD: TFloatField
       DisplayLabel = 'Qtd'
       FieldName = 'QTD'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsCupom_TrocaVLR_UNITARIO: TFloatField
       DisplayLabel = 'Vlr. Unit'#225'rio'
       FieldName = 'VLR_UNITARIO'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsCupom_TrocaVLR_TOTAL: TFloatField
       DisplayLabel = 'Vlr. Total'
       FieldName = 'VLR_TOTAL'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsCupom_TrocaNUM_CUPOM_TROCA: TIntegerField
       DisplayLabel = 'N'#186' Cupom Troca'
