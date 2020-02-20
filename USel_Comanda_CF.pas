@@ -94,7 +94,8 @@ begin
   fDmCupomFiscal.mCupomID_CUPOM.AsInteger   := fDmCupomFiscal.cdsComandaRelID.AsInteger;
 //  fDmCupomFiscal.mCupomVLR_TOTAL.AsCurrency := fDmCupomFiscal.cdsComandaRelVLR_TOTAL.AsCurrency;
   fDmCupomFiscal.mCupom.Post;
-  fDmCupomFiscal.cdsCupom_Itens.First;
+
+  //fDmCupomFiscal.cdsCupom_Itens.First;
   while not fDmCupomFiscal.cdsComandaItem_Rel.Eof do
   begin
     fDmCupomFiscal.mCupomItens.Insert;
@@ -111,7 +112,8 @@ begin
   ceNumCartao.SetFocus;
 
   if vFilial <= 0 then
-    vFilial := fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
+    //vFilial := fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
+    vFilial := fDmCupomFiscal.cdsComandaRelFILIAL.AsInteger;
 end;
 
 procedure TfrmSel_Comanda_CF.Monta_sqlCupom_Cons(ID: Integer);
@@ -119,7 +121,7 @@ begin
   fDmCupomFiscal.cdsComandaRel.Close;
   fDmCupomFiscal.sdsComandaRel.CommandText := 'SELECT CF.ID, CF.NUMCUPOM, CF.DTEMISSAO, F.NOME_INTERNO FILIAL_NOME, F.ENDERECO || '', ''' +
                                               ' || F.NUM_END AS FILIAL_END, F.BAIRRO || '' - '' || F.CIDADE AS FILIAL_CIDADE_BAIRRO, ' +
-                                              '''('' || F.DDD1 || '')'' || F.FONE1 AS FILIAL_FONE, F.HOMEPAGE, F.EMAIL ' +
+                                              '''('' || F.DDD1 || '')'' || F.FONE1 AS FILIAL_FONE, F.HOMEPAGE, F.EMAIL, CF.FILIAL ' +
                                               'FROM CUPOMFISCAL CF ' +
                                               'INNER JOIN FILIAL F ON (CF.FILIAL = F.ID) ' +
                                               'WHERE NUM_CARTAO = ' + IntToStr(ID) +

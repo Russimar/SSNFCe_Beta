@@ -50,6 +50,7 @@ type
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     chkNFCE: TCheckBox;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    btnImpCarne: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -60,6 +61,7 @@ type
       Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure btnImpCarneClick(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr : TfNFCE_ACBR;
@@ -301,6 +303,33 @@ begin
   ffrmConsCupomItens.fDMCupomFiscal := fDmCupomFiscal;
   ffrmConsCupomItens.ShowModal;
   FreeAndNil(ffrmConsCupomItens);
+
+end;
+
+procedure TfrmConsCupom.btnImpCarneClick(Sender: TObject);
+var
+  vArq: String;
+begin
+  if not(fDmCupomFiscal.cdsCupom_Cons.Active) or (fDmCupomFiscal.cdsCupom_Cons.IsEmpty) then
+    Exit;
+  fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger <= 0 then
+    exit;
+  fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
+  if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString <> 'S' then
+    exit;
+  if fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString <> '' then
+    vArq := fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString
+  else
+    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\CarnePgto1.fr3';
+  if FileExists(vArq) then
+    fDmCupomFiscal.frxReport1.Report.LoadFromFile(vArq)
+  else
+  begin
+    ShowMessage('Relatório não localizado! ' + vArq);
+    Exit;
+  end;
+  fDmCupomFiscal.frxReport1.ShowReport;
 
 end;
 

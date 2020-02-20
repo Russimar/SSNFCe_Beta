@@ -111,7 +111,8 @@ uses
   USel_Troca in 'USel_Troca.pas' {frmSel_Troca},
   UCupom_Troca in 'UCupom_Troca.pas' {frmCupom_Troca},
   UDMConsCupom in 'UDMConsCupom.pas' {DMConsCupom: TDataModule},
-  uConsTrocas in 'uConsTrocas.pas' {frmConsTrocas};
+  uConsTrocas in 'uConsTrocas.pas' {frmConsTrocas},
+  uConsComanda in 'uConsComanda.pas' {frmConsComanda};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 

@@ -422,7 +422,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel3: TGradientLabel
         Left = 8
-        Top = 86
+        Top = 104
         Width = 289
         Height = 17
         AutoSize = False
@@ -446,7 +446,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel4: TGradientLabel
         Left = 8
-        Top = 121
+        Top = 139
         Width = 289
         Height = 17
         AutoSize = False
@@ -470,7 +470,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel5: TGradientLabel
         Left = 8
-        Top = 139
+        Top = 157
         Width = 289
         Height = 17
         AutoSize = False
@@ -494,7 +494,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel6: TGradientLabel
         Left = 8
-        Top = 157
+        Top = 175
         Width = 289
         Height = 17
         AutoSize = False
@@ -518,7 +518,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel7: TGradientLabel
         Left = 8
-        Top = 104
+        Top = 122
         Width = 289
         Height = 17
         AutoSize = False
@@ -542,7 +542,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel8: TGradientLabel
         Left = 8
-        Top = 68
+        Top = 86
         Width = 289
         Height = 17
         AutoSize = False
@@ -571,6 +571,30 @@ object fCupomFiscal: TfCupomFiscal
         Height = 17
         AutoSize = False
         Caption = 'CTRL + T = Troca'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        GradientDirection = gdLeftToRight
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+        Version = '1.1.1.0'
+      end
+      object GradientLabel10: TGradientLabel
+        Left = 9
+        Top = 68
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'CTRL + M = Consulta Comandas'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -4454,12 +4478,12 @@ object fCupomFiscal: TfCupomFiscal
   end
   object cxLookAndFeelController1: TcxLookAndFeelController
     SkinName = 'Office2007Blue'
-    Left = 921
-    Top = 144
+    Left = 953
+    Top = 240
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 952
-    Top = 144
+    Left = 984
+    Top = 240
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svFont]
@@ -4472,7 +4496,7 @@ object fCupomFiscal: TfCupomFiscal
   end
   object ACBrValidador: TACBrValidador
     IgnorarChar = './-'
-    Left = 984
-    Top = 144
+    Left = 1016
+    Top = 240
   end
 end

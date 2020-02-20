@@ -22,7 +22,8 @@ uses
   dxSkinOffice2007Black, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,ACBrDeviceSerial;
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,ACBrDeviceSerial,
+  uConsComanda;
   
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
@@ -94,6 +95,7 @@ type
     GradientLabel7: TGradientLabel;
     GradientLabel8: TGradientLabel;
     GradientLabel9: TGradientLabel;
+    GradientLabel10: TGradientLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -166,6 +168,7 @@ type
     function fnc_Aplicar_Desconto : Boolean;
 
     procedure prc_Gravar_Estoque_Troca;
+    procedure prc_Limpa_Variaveis_Encerramento;
 
   public
     { Public declarations }
@@ -198,6 +201,8 @@ type
     procedure prc_InformaCliente;
     procedure prc_ConsPreco;
     procedure prc_Move_Itens;
+    procedure prc_Form_Cartao;
+
     function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
     function fnc_Validacao_OK: Boolean;
     //procedure prc_Busca_IBPT;
@@ -213,7 +218,7 @@ uses
   uCupomCliente, uCalculo_CupomFiscal, Math, USenha, uUtilCupom, UConsPreco,
   USel_Sacola_CF, USel_Pedido_CF, DmdDatabase, uMenu, UCupomFiscalCli,
   USel_Comanda_CF, uCupomFiscalParcela, uSel_CorTamanho, uBalanca,
-  uGrava_Erro, USel_Troca, UCupom_Troca;
+  uGrava_Erro, USel_Troca, UCupom_Troca, uCartao;
 
 {$R *.dfm}
 
@@ -534,6 +539,8 @@ begin
 end;
 
 procedure TfCupomFiscal.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  ffrmConsComanda: TfrmConsComanda;
 begin
   if not (Panel4.Enabled) then
     Exit;
@@ -614,10 +621,13 @@ begin
     end;
   end;
 
-  if (Key = Vk_F12) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+  if (Key = Vk_F12) then
   begin
     if btComanda.Visible then
+    begin
       btComandaClick(Sender);
+      pnlCaixaLivre.Visible := False;
+    end;
   end;
 
   //Cancela lançamento de itens do cupom
@@ -682,6 +692,14 @@ begin
       end;
     end;
 
+  end;
+
+  if (Shift = [ssCtrl]) and (Key = 77) then //CTRL  M
+  begin
+    ffrmConsComanda := TfrmConsComanda.Create(nil);
+    ffrmConsComanda.fDmCupomFiscal := fDmCupomFiscal;
+    ffrmConsComanda.ShowModal;
+    FreeAndNil(ffrmConsComanda);
   end;
 
   if (Shift = [ssCtrl]) and (Key = 87) then
@@ -1007,6 +1025,7 @@ var
   i: Byte;
   vVias: Byte;
   ffCupomFiscalPgto: TfCupomFiscalPgto;
+  vArq : String;
 begin
   vFilial := vFilial_Loc;
   if fDmCupomFiscal.cdsCupomFiscal.IsEmpty then
@@ -1085,6 +1104,7 @@ begin
     fDmCupomFiscal.cdsCupomFiscal.Post;
     fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
   end;
+
   try
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') then
     begin
@@ -1111,16 +1131,32 @@ begin
     else
       prc_Controle_Gravar_Diversos(False, True);}
     //******************
+
+    if (fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger > 0) and  (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
+    begin
+      if (fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S') and (MessageDlg('Deseja imprimir carnê de pagamento?',mtConfirmation,[mbYes,mbNo],0) = mrYes) then
+      begin
+        if fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString <> '' then
+          vArq := fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString
+        else
+          vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\CarnePgto1.fr3';
+
+        if FileExists(vArq) then
+        begin
+          fDmCupomFiscal.frxReport1.Report.LoadFromFile(vArq);
+          if fDmCupomFiscal.cdsCupomParametrosUSA_PREVIEW_CARNE.AsString = 'S' then
+            fDmCupomFiscal.frxReport1.ShowReport
+          else
+            fDmCupomFiscal.frxReport1.Print;
+        end
+        else
+          ShowMessage('Relatório não localizado! ' + vArq);
+      end;
+    end;
+
     if fDmCupomFiscal.cdsCupomFiscal.Active then
       fDmCupomFiscal.cdsCupomFiscal.Close;
-    vDocumentoClienteVenda := '';
-    vCpfOK := False;
-    pnlDescricaoProduto.Text := '';
-    pnlDescricaoProduto.Update;
-    pnlCaixaLivre.Visible := True;
-    Edit1.SelectAll;
-    Edit1.Clear;
-    Edit1.SetFocus;
+    prc_Limpa_Variaveis_Encerramento;
   end;
 end;
 
@@ -1286,12 +1322,22 @@ end;
 
 procedure TfCupomFiscal.btComandaClick(Sender: TObject);
 begin
-  if fDmCupomFiscal.cdsCupom_Itens.IsEmpty then
+  if not(fDmCupomFiscal.cdsCupomFiscal.Active) or ((fDmCupomFiscal.cdsCupom_Itens.IsEmpty) and (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) <= 0)) then
+  begin
+    prc_Form_Cartao;
+    exit;
+  end;
+
+  if (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
   begin
     ShowMessage('Para gravação da comanda é preciso ter produtos incluídos!');
     Exit;
   end;
-
+  if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > 0 then
+  begin
+    ShowMessage('Para gravação da comanda não pode ter valor de troca!');
+    Exit;
+  end;
   fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'COM';
   FinalizaParcial('COM');
 end;
@@ -1386,6 +1432,12 @@ begin
       6:
         fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
     end;
+
+  //20/02/2020
+  fDmCupomFiscal.cdsCupomFiscal.Close;
+  prc_Limpa_Variaveis_Encerramento;
+  pnlCaixaLivre.Visible := True;
+  //******************
 
 //  if fDmCupomFiscal.cdsCupomFiscal.State in [dsBrowse] then
 //  begin
@@ -1718,7 +1770,10 @@ begin
 
   fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
 
-  fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID,vSerieCupom);
+  if (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S') and not(vCopiandoComanda) then
+    prc_Form_Cartao
+  else
+    fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID,vSerieCupom);
 
 end;
 
@@ -2389,6 +2444,42 @@ begin
   fDmCupomFiscal.cdsCupom_Troca.ApplyUpdates(0);
   fDmCupomFiscal.cdsCupom_Troca.Close;
 
+end;
+
+procedure TfCupomFiscal.prc_Limpa_Variaveis_Encerramento;
+begin
+  vDocumentoClienteVenda := '';
+  vCpfOK := False;
+  pnlDescricaoProduto.Text := '';
+  pnlDescricaoProduto.Update;
+  pnlCaixaLivre.Visible := True;
+  Edit1.SelectAll;
+  Edit1.Clear;
+  Edit1.SetFocus;
+end;
+
+procedure TfCupomFiscal.prc_Form_Cartao;
+var
+  vID : Integer;
+begin
+  if fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S' then
+  begin
+    fDmCupomFiscal.vNumCartao := 0;
+    fCartao := TfCartao.Create(Self);
+    fCartao.fDmCupomFiscal := fDmCupomFiscal;
+    fCartao.ShowModal;
+    vID := fDmCupomFiscal.fnc_Existe_Cartao_Pendente(fDmCupomFiscal.vNumCartao);
+    if vID <= 0 then
+    begin
+      fDmCupomFiscal.prcInserir(0,fDmCupomFiscal.vClienteID,vSerieCupom);
+      fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.vNumCartao;
+    end
+    else
+    begin
+      fDmCupomFiscal.prcLocalizar(VID);
+      fDmCupomFiscal.cdsCupomFiscal.Edit;
+    end;
+  end
 end;
 
 end.

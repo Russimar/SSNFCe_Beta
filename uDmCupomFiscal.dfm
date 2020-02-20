@@ -3884,9 +3884,9 @@ object dmCupomFiscal: TdmCupomFiscal
       'SELECT CF.ID, CF.NUMCUPOM, CF.DTEMISSAO, F.NOME_INTERNO FILIAL_N' +
       'OME, F.ENDERECO || '#39', '#39' || F.NUM_END AS FILIAL_END, F.BAIRRO || ' +
       #39' - '#39' || F.CIDADE AS FILIAL_CIDADE_BAIRRO, '#39'('#39' || F.DDD1 || '#39')'#39' ' +
-      '|| F.FONE1 AS FILIAL_FONE, F.HOMEPAGE, F.EMAIL'#13#10'FROM CUPOMFISCAL' +
-      ' CF'#13#10'INNER JOIN FILIAL F ON (CF.FILIAL = F.ID)'#13#10'WHERE CF.ID = :I' +
-      'D'
+      '|| F.FONE1 AS FILIAL_FONE, F.HOMEPAGE, F.EMAIL, CF.FILIAL'#13#10'FROM ' +
+      'CUPOMFISCAL CF'#13#10'INNER JOIN FILIAL F ON (CF.FILIAL = F.ID)'#13#10'WHERE' +
+      ' CF.ID = :ID'
     MaxBlobSize = -1
     Params = <
       item
@@ -3942,6 +3942,9 @@ object dmCupomFiscal: TdmCupomFiscal
     object cdsComandaRelFILIAL_CIDADE_BAIRRO: TStringField
       FieldName = 'FILIAL_CIDADE_BAIRRO'
       Size = 73
+    end
+    object cdsComandaRelFILIAL: TIntegerField
+      FieldName = 'FILIAL'
     end
   end
   object dsComandaRel: TDataSource

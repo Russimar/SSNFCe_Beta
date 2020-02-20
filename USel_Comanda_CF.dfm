@@ -262,7 +262,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
     Left = 0
     Top = 211
     Width = 687
-    Height = 331
+    Height = 330
     TabStop = False
     Align = alClient
     DataSource = dmCupomFiscal.dsmCupomItens
@@ -357,7 +357,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
   end
   object Panel4: TPanel
     Left = 0
-    Top = 542
+    Top = 541
     Width = 687
     Height = 41
     Align = alBottom

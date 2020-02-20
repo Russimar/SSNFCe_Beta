@@ -136,6 +136,12 @@ ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
 C:\Program Files (x86)\Developer Express Inc\Library\Delphi7\dcldxPScxScheduler3LnkD7.bpl=ExpressPrinting System ReportLink for ExpressScheduler 3 by Developer Express Inc.
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_NFe.bpl=ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_NFCeECFVirtual.bpl=ACBr - Implementação ECF Virtual NFCe. Permite usar ACBrECF para emitir NFCe como se fosse um ECF
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_NFeDanfeESCPOS.bpl=ACBr - DANFe para NFC-e Impressora Serial - (http://www.projetoacbr.com.br/)
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_MDFe.bpl=ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_NFeDanfeRL.bpl=ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)
+C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_MDFeDamdfeRL.bpl=ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

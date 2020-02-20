@@ -1809,6 +1809,7 @@ type
     qProdUNIDADE: TStringField;
     sdsCupom_ItensQTD_TROCA: TFloatField;
     cdsCupom_ItensQTD_TROCA: TFloatField;
+    cdsComandaRelFILIAL: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1937,6 +1938,9 @@ type
     procedure prc_Inserir_FormaPagto;
     procedure prc_Consultar_Troca(NumCupom, ID_Produto : Integer ; Serie,Referencia,Nome : String ; Data : TDateTime );
     procedure prc_Inserir_Troca;
+
+    function fnc_Existe_Cartao_Pendente(Num_Cartao : Integer) : Integer;
+
   end;
 
   //Funções Balança Urano
@@ -4260,6 +4264,26 @@ begin
   qProd.ParamByName('ID').AsInteger := cdsCupom_TrocaID_PRODUTO.AsInteger;
   qProd.Open;
   cdsCupom_TrocaclNome_Produto.AsString := qProdNOME.AsString;
+end;
+
+function TdmCupomFiscal.fnc_Existe_Cartao_Pendente(
+  Num_Cartao: Integer): Integer;
+var
+  sds: TSQLDataSet;
+begin
+  Result := 0;
+  sds := TSQLDataSet.Create(nil);
+  try
+    sds.SQLConnection := dmDatabase.scoDados;
+    sds.NoMetadata    := True;
+    sds.GetMetadata   := False;
+    sds.CommandText   := 'select C.ID from cupomfiscal C WHERE NUM_CARTAO = :NUM_CARTAO AND ID_TIPOCOBRANCA IS NULL ';
+    SDS.ParamByName('NUM_CARTAO').AsInteger := Num_Cartao;
+    sds.Open;
+    Result := sds.FieldByName('ID').AsInteger;
+  finally
+    FreeAndNil(sds);
+  end;
 end;
 
 end.
