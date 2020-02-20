@@ -32,6 +32,8 @@ type
       Shift: TShiftState);
     procedure SMDBGrid1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
 
@@ -92,6 +94,13 @@ procedure TfrmSel_Troca.SMDBGrid1KeyDown(Sender: TObject; var Key: Word;
 begin
   if Key = vk_Return then
     SMDBGrid1DblClick(Sender);
+end;
+
+procedure TfrmSel_Troca.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_Escape then
+    Close;
 end;
 
 end.

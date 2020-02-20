@@ -274,6 +274,7 @@ begin
     end
     else
     begin
+      fDmCupomFiscal.vID_Troca := 0;
       frmSel_Troca := TfrmSel_Troca.Create(Self);
       frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
       frmSel_Troca.CurrencyEdit1.AsInteger := vID_Produto;
@@ -297,6 +298,7 @@ procedure TfrmCupom_Troca.ceNumCupomKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = Vk_F2) or ((ceNumCupom.AsInteger = 0) and (Key = VK_RETURN))  then
   begin
+    fDmCupomFiscal.vID_Troca := 0;
     frmSel_Troca := TfrmSel_Troca.Create(Self);
     frmSel_Troca.fDmCupomFiscal := fDmCupomFiscal;
     frmSel_Troca.CurrencyEdit1.AsInteger := vID_Produto;

@@ -1,11 +1,11 @@
 object frmSel_Troca: TfrmSel_Troca
-  Left = 167
-  Top = 98
+  Left = 158
+  Top = 101
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Seleciona o Cupom de Troca'
   ClientHeight = 524
-  ClientWidth = 1022
+  ClientWidth = 1146
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +16,14 @@ object frmSel_Troca: TfrmSel_Troca
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1022
+    Width = 1146
     Height = 103
     Align = alTop
     Color = 16764315
@@ -252,7 +253,7 @@ object frmSel_Troca: TfrmSel_Troca
   object SMDBGrid1: TSMDBGrid
     Left = 0
     Top = 103
-    Width = 1022
+    Width = 1146
     Height = 394
     Align = alClient
     Ctl3D = False
@@ -393,7 +394,7 @@ object frmSel_Troca: TfrmSel_Troca
   object Panel2: TPanel
     Left = 0
     Top = 497
-    Width = 1022
+    Width = 1146
     Height = 27
     Align = alBottom
     TabOrder = 2
