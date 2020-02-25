@@ -1,7 +1,7 @@
 object frmSel_Comanda_CF: TfrmSel_Comanda_CF
-  Left = 289
-  Top = 15
-  Width = 703
+  Left = 367
+  Top = 31
+  Width = 864
   Height = 621
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'frmSel_Comanda_CF'
@@ -20,7 +20,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 687
+    Width = 848
     Height = 34
     Align = alTop
     Color = clSilver
@@ -196,20 +196,20 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
       OnClick = btnCancelarClick
     end
   end
-  object SMDBGrid1: TSMDBGrid
+  object gridComanda: TSMDBGrid
     Left = 0
     Top = 34
-    Width = 687
-    Height = 127
+    Width = 848
+    Height = 223
     TabStop = False
     Align = alTop
-    DataSource = dmCupomFiscal.dsmCupom
+    DataSource = dmCupomFiscal.dsComandaRel
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -229,10 +229,10 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
     GridStyle.EvenColor = clWindow
     TitleHeight.PixelCount = 24
     FooterColor = clBtnFace
-    ExOptions = [eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
+    ExOptions = [eoCheckBoxSelect, eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
     RegistryKey = 'Software\Scalabium'
     RegistrySection = 'SMDBGrid'
-    WidthOfIndicator = 11
+    WidthOfIndicator = 23
     DefaultRowHeight = 20
     ScrollBars = ssHorizontal
     ColCount = 4
@@ -240,32 +240,36 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
     Columns = <
       item
         Expanded = False
-        FieldName = 'CARTAO'
-        Title.Caption = 'CART'#195'O'
-        Width = 100
+        FieldName = 'NUM_CARTAO'
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 83
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DTEMISSAO'
+        ReadOnly = True
+        Title.Alignment = taCenter
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_TOTAL'
-        Width = 100
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ID_CUPOM'
-        Width = 100
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 106
         Visible = True
       end>
   end
-  object SMDBGrid2: TSMDBGrid
+  object gridItens: TSMDBGrid
     Left = 0
-    Top = 211
-    Width = 687
-    Height = 330
+    Top = 307
+    Width = 848
+    Height = 235
     TabStop = False
     Align = alClient
-    DataSource = dmCupomFiscal.dsmCupomItens
+    DataSource = dmCupomFiscal.dsComandaItem_Rel
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -302,40 +306,48 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
     Columns = <
       item
         Expanded = False
-        FieldName = 'CARTAO'
-        Title.Caption = 'CART'#195'O'
-        Width = 60
+        FieldName = 'ID_PRODUTO'
+        ReadOnly = True
+        Title.Alignment = taCenter
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'NOME_PRODUTO'
-        Width = 350
+        FieldName = 'PRODUTO_NOME'
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 393
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'QTD'
-        Width = 55
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 64
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'VLR_UNIT'
-        Width = 90
+        FieldName = 'VLR_UNITARIO'
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VLR_TOTAL'
-        Width = 90
+        ReadOnly = True
+        Title.Alignment = taCenter
+        Width = 64
         Visible = True
       end>
   end
   object Panel3: TPanel
     Left = 0
-    Top = 161
-    Width = 687
+    Top = 257
+    Width = 848
     Height = 50
     Align = alTop
     Color = clSilver
@@ -357,13 +369,13 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
   end
   object Panel4: TPanel
     Left = 0
-    Top = 541
-    Width = 687
+    Top = 542
+    Width = 848
     Height = 41
     Align = alBottom
     TabOrder = 4
     object brCancelar: TNxButton
-      Left = 343
+      Left = 406
       Top = 5
       Width = 187
       Height = 30
@@ -381,7 +393,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
       OnClick = brCancelarClick
     end
     object NxButton1: TNxButton
-      Left = 156
+      Left = 219
       Top = 5
       Width = 187
       Height = 30

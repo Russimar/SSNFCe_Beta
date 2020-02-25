@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 62
-  Top = 24
+  Left = 15
+  Top = 11
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsNone
   Caption = 'Emiss'#227'o Cupom Fiscal'
@@ -164,7 +164,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 59
+        Width = 60
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -854,56 +854,65 @@ object fCupomFiscal: TfCupomFiscal
       Height = 29
       Align = alTop
       TabOrder = 1
-      object btnCopiarSacola: TBitBtn
-        Left = 6
-        Top = 2
-        Width = 111
-        Height = 25
-        Caption = 'Copiar Sacola'
+      object btnCopiarComanda: TNxButton
+        Left = 266
+        Top = 1
+        Width = 134
+        Height = 27
+        Align = alRight
+        Caption = 'Copiar Comanda'
+        EnableDblClick = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
+        Font.Color = clGreen
+        Font.Height = -15
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        GlyphSpacing = 5
         ParentFont = False
         TabOrder = 0
         TabStop = False
-        Visible = False
-        OnClick = btnCopiarSacolaClick
+        Transparent = True
+        OnClick = btnCopiarComandaClick
       end
-      object btnCopiarPedido: TBitBtn
-        Left = 120
-        Top = 2
-        Width = 111
-        Height = 25
+      object btnCopiarPedido: TNxButton
+        Left = 131
+        Top = 1
+        Width = 135
+        Height = 27
+        Align = alClient
         Caption = 'Copiar Pedido'
+        EnableDblClick = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
+        Font.Color = clGreen
+        Font.Height = -15
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        GlyphSpacing = 5
         ParentFont = False
         TabOrder = 1
         TabStop = False
-        Visible = False
+        Transparent = True
         OnClick = btnCopiarPedidoClick
       end
-      object btnCopiarComanda: TBitBtn
-        Left = 234
-        Top = 2
-        Width = 111
-        Height = 25
-        Caption = 'Copiar Comanda'
+      object btnCopiarSacola: TNxButton
+        Left = 1
+        Top = 1
+        Width = 130
+        Height = 27
+        Align = alLeft
+        Caption = 'Copiar Sacola'
+        EnableDblClick = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
+        Font.Color = clGreen
+        Font.Height = -15
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        GlyphSpacing = 5
         ParentFont = False
         TabOrder = 2
         TabStop = False
-        Visible = False
-        OnClick = btnCopiarComandaClick
+        Transparent = True
+        OnClick = btnCopiarSacolaClick
       end
     end
     object Panel7: TPanel
@@ -957,7 +966,7 @@ object fCupomFiscal: TfCupomFiscal
     object PnlParcial: TPanel
       Left = 0
       Top = 329
-      Width = 401
+      Width = 400
       Height = 70
       Align = alTop
       Color = 5585152
@@ -973,7 +982,7 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 3
       object btComanda: TNxButton
-        Left = 270
+        Left = 269
         Top = 1
         Width = 130
         Height = 68
@@ -995,7 +1004,7 @@ object fCupomFiscal: TfCupomFiscal
       object btPedido: TNxButton
         Left = 131
         Top = 1
-        Width = 139
+        Width = 138
         Height = 68
         Align = alClient
         Caption = 'F9 Pedido'

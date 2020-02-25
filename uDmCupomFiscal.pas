@@ -508,7 +508,6 @@ type
     cdsComandaRelHOMEPAGE: TStringField;
     cdsComandaRelEMAIL: TStringField;
     sdsComandaItem_Rel: TSQLDataSet;
-    dspComandaItem_Rel: TDataSetProvider;
     cdsComandaItem_Rel: TClientDataSet;
     dsComandaItem_Rel: TDataSource;
     cdsComandaItem_RelQTD: TFloatField;
@@ -1810,6 +1809,11 @@ type
     sdsCupom_ItensQTD_TROCA: TFloatField;
     cdsCupom_ItensQTD_TROCA: TFloatField;
     cdsComandaRelFILIAL: TIntegerField;
+    cdsComandaRelVLR_TOTAL: TFloatField;
+    cdsComandaRelNUM_CARTAO: TSmallintField;
+    dsComandaRelMestre: TDataSource;
+    cdsComandaRelsdsComandaItem_Rel: TDataSetField;
+    spAtualizaComanda: TSQLStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1938,6 +1942,7 @@ type
     procedure prc_Inserir_FormaPagto;
     procedure prc_Consultar_Troca(NumCupom, ID_Produto : Integer ; Serie,Referencia,Nome : String ; Data : TDateTime );
     procedure prc_Inserir_Troca;
+    procedure prc_Atualiza_Comanda(ID_Cupom : Integer);
 
     function fnc_Existe_Cartao_Pendente(Num_Cartao : Integer) : Integer;
 
@@ -4277,13 +4282,19 @@ begin
     sds.SQLConnection := dmDatabase.scoDados;
     sds.NoMetadata    := True;
     sds.GetMetadata   := False;
-    sds.CommandText   := 'select C.ID from cupomfiscal C WHERE NUM_CARTAO = :NUM_CARTAO AND ID_TIPOCOBRANCA IS NULL ';
+    sds.CommandText   := 'select C.ID from cupomfiscal C WHERE NUM_CARTAO = :NUM_CARTAO AND COALESCE(COPIADO,' + QuotedStr('N') + ') = ' + QuotedStr('N');
     SDS.ParamByName('NUM_CARTAO').AsInteger := Num_Cartao;
     sds.Open;
     Result := sds.FieldByName('ID').AsInteger;
   finally
     FreeAndNil(sds);
   end;
+end;
+
+procedure TdmCupomFiscal.prc_Atualiza_Comanda(ID_Cupom: Integer);
+begin
+  spAtualizaComanda.Params[0].Value := ID_Cupom;
+  spAtualizaComanda.ExecProc;
 end;
 
 end.

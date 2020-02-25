@@ -225,6 +225,21 @@ object fNFCE_ACBR: TfNFCE_ACBR
             TabOrder = 2
             OnClick = btImprimirClick
           end
+          object btnInutilizar: TButton
+            Left = 806
+            Top = 14
+            Width = 89
+            Height = 50
+            Caption = 'Inutilizar'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 3
+            OnClick = btnInutilizarClick
+          end
         end
         object GroupBox2: TGroupBox
           Left = 0

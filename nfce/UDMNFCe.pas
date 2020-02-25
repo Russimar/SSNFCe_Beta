@@ -710,6 +710,38 @@ type
     qFilial_CertificadoINTERVALOTENTATIVAS: TIntegerField;
     qFilial_CertificadoSENHA: TStringField;
     ACBrNFeDANFeRL: TACBrNFeDANFeRL;
+    sdsNFe_Inutilizacao: TSQLDataSet;
+    sdsNFe_InutilizacaoID: TIntegerField;
+    sdsNFe_InutilizacaoFILIAL: TIntegerField;
+    sdsNFe_InutilizacaoNUMPROTOCOLO: TStringField;
+    sdsNFe_InutilizacaoDATA: TDateField;
+    sdsNFe_InutilizacaoHORA: TTimeField;
+    sdsNFe_InutilizacaoMOTIVO: TStringField;
+    sdsNFe_InutilizacaoNUMNOTA_INI: TIntegerField;
+    sdsNFe_InutilizacaoNUMNOTA_FIN: TIntegerField;
+    sdsNFe_InutilizacaoUSUARIO: TStringField;
+    sdsNFe_InutilizacaoDTUSUARIO: TDateField;
+    sdsNFe_InutilizacaoHRUSUARIO: TTimeField;
+    sdsNFe_InutilizacaoMODELO: TStringField;
+    sdsNFe_InutilizacaoSERIE: TStringField;
+    sdsNFe_InutilizacaoANO: TIntegerField;
+    dspNFe_Inutilizacao: TDataSetProvider;
+    cdsNFe_Inutilizacao: TClientDataSet;
+    cdsNFe_InutilizacaoID: TIntegerField;
+    cdsNFe_InutilizacaoFILIAL: TIntegerField;
+    cdsNFe_InutilizacaoNUMPROTOCOLO: TStringField;
+    cdsNFe_InutilizacaoSERIE: TStringField;
+    cdsNFe_InutilizacaoNUMNOTA_INI: TIntegerField;
+    cdsNFe_InutilizacaoNUMNOTA_FIN: TIntegerField;
+    cdsNFe_InutilizacaoDATA: TDateField;
+    cdsNFe_InutilizacaoHORA: TTimeField;
+    cdsNFe_InutilizacaoMOTIVO: TStringField;
+    cdsNFe_InutilizacaoUSUARIO: TStringField;
+    cdsNFe_InutilizacaoDTUSUARIO: TDateField;
+    cdsNFe_InutilizacaoHRUSUARIO: TTimeField;
+    cdsNFe_InutilizacaoMODELO: TStringField;
+    cdsNFe_InutilizacaoANO: TIntegerField;
+    dsNFe_Inutilizacao: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure mItensNFeBeforePost(DataSet: TDataSet);
     procedure mDadosAdicionaisNFeBeforePost(DataSet: TDataSet);
@@ -722,6 +754,7 @@ type
     { Public declarations }
     vMsgErro: String;
     ctCommand: String;
+    ctInutilizacao : String;
     ctqProduto_Forn : String;
     vDialogoImpressora: Boolean;
     ctNFe_Log: String;
@@ -734,6 +767,10 @@ type
     procedure prc_Inserir;
     procedure prc_Gravar;
     procedure prc_Excluir;
+
+    procedure prc_Inserir_Inutilizacao;
+    procedure prc_Gravar_Inutilizacao;
+    procedure prc_Localizar_Inutilizacao(ID : Integer);
 
     procedure Posiciona_CidadeUF(CodCidade, IDPais: Integer);
     procedure Posiciona_Operacao_Nota(ID: Integer);
@@ -802,6 +839,7 @@ procedure TDMNFCe.DataModuleCreate(Sender: TObject);
 begin
   ctCommand := sdsNFe_Email.CommandText;
   ctNFe_Log := sdsNFe_Log.CommandText;
+  ctInutilizacao := sdsNFe_Inutilizacao.CommandText;
   ctqProduto_Forn := qProduto_Forn.SQL.Text;
 
   dmDatabase_NFeBD := TdmDatabase_NFeBD.Create(Self);
@@ -942,6 +980,34 @@ begin
   qFilial_NFCe.ParamByName('ID').AsInteger := ID;
   qFilial_NFCe.Open;
 
+end;
+
+procedure TDMNFCe.prc_Gravar_Inutilizacao;
+begin
+//
+end;
+
+procedure TDMNFCe.prc_Inserir_Inutilizacao;
+var
+  vAux : Integer;
+begin
+  if not cdsNFe_Inutilizacao.Active then
+    prc_Localizar_Inutilizacao(-1);
+  vAux := dmDatabase.ProximaSequencia('NFE_INUTILIZACAO',0);
+
+  cdsNFe_Inutilizacao.Insert;
+  cdsNFe_InutilizacaoID.AsInteger := vAux + 1;
+
+end;
+
+procedure TDMNFCe.prc_Localizar_Inutilizacao(ID: Integer);
+begin
+  cdsNFe_Inutilizacao.Close;
+  sdsNFe_Inutilizacao.CommandText := ctInutilizacao;
+  if ID <> 0 then
+    sdsNFe_Inutilizacao.CommandText := sdsNFe_Inutilizacao.CommandText
+                         + ' WHERE ID = ' + IntToStr(ID);
+  cdsNFe_Inutilizacao.Open;
 end;
 
 end.

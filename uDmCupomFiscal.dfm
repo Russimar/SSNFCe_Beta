@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 29
-  Top = 59
+  Left = 65530
+  Top = 8
   Height = 744
   Width = 1382
   object sdsCupomFiscal: TSQLDataSet
@@ -3881,12 +3881,12 @@ object dmCupomFiscal: TdmCupomFiscal
     NoMetadata = True
     GetMetadata = False
     CommandText = 
-      'SELECT CF.ID, CF.NUMCUPOM, CF.DTEMISSAO, F.NOME_INTERNO FILIAL_N' +
-      'OME, F.ENDERECO || '#39', '#39' || F.NUM_END AS FILIAL_END, F.BAIRRO || ' +
-      #39' - '#39' || F.CIDADE AS FILIAL_CIDADE_BAIRRO, '#39'('#39' || F.DDD1 || '#39')'#39' ' +
-      '|| F.FONE1 AS FILIAL_FONE, F.HOMEPAGE, F.EMAIL, CF.FILIAL'#13#10'FROM ' +
-      'CUPOMFISCAL CF'#13#10'INNER JOIN FILIAL F ON (CF.FILIAL = F.ID)'#13#10'WHERE' +
-      ' CF.ID = :ID'
+      'SELECT CF.ID, CF.NUMCUPOM, CF.DTEMISSAO, CF.VLR_TOTAL, CF.NUM_CA' +
+      'RTAO, F.NOME_INTERNO FILIAL_NOME, F.ENDERECO || '#39', '#39' || F.NUM_EN' +
+      'D AS FILIAL_END, F.BAIRRO || '#39' - '#39' || F.CIDADE AS FILIAL_CIDADE_' +
+      'BAIRRO, '#39'('#39' || F.DDD1 || '#39')'#39' || F.FONE1 AS FILIAL_FONE, F.HOMEPA' +
+      'GE, F.EMAIL, CF.FILIAL'#13#10'FROM CUPOMFISCAL CF'#13#10'INNER JOIN FILIAL F' +
+      ' ON (CF.FILIAL = F.ID)'#13#10'WHERE CF.ID = :ID'
     MaxBlobSize = -1
     Params = <
       item
@@ -3914,37 +3914,58 @@ object dmCupomFiscal: TdmCupomFiscal
       Required = True
     end
     object cdsComandaRelNUMCUPOM: TIntegerField
+      DisplayLabel = 'N'#186' Cupom'
       FieldName = 'NUMCUPOM'
     end
     object cdsComandaRelDTEMISSAO: TDateField
+      DisplayLabel = 'Emiss'#227'o'
       FieldName = 'DTEMISSAO'
     end
+    object cdsComandaRelVLR_TOTAL: TFloatField
+      DisplayLabel = 'Vlr Total'
+      FieldName = 'VLR_TOTAL'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
+    end
+    object cdsComandaRelNUM_CARTAO: TSmallintField
+      DisplayLabel = 'N'#186' Cart'#227'o'
+      FieldName = 'NUM_CARTAO'
+    end
     object cdsComandaRelFILIAL_NOME: TStringField
+      DisplayLabel = 'Nome Filial'
       FieldName = 'FILIAL_NOME'
       Size = 60
     end
     object cdsComandaRelFILIAL_END: TStringField
+      DisplayLabel = 'Endere'#231'o Filial'
       FieldName = 'FILIAL_END'
       Size = 77
     end
     object cdsComandaRelFILIAL_FONE: TStringField
+      DisplayLabel = 'Fone Filial'
       FieldName = 'FILIAL_FONE'
       Size = 28
     end
     object cdsComandaRelHOMEPAGE: TStringField
+      DisplayLabel = 'Home Page'
       FieldName = 'HOMEPAGE'
       Size = 250
     end
     object cdsComandaRelEMAIL: TStringField
+      DisplayLabel = 'Email'
       FieldName = 'EMAIL'
       Size = 40
     end
     object cdsComandaRelFILIAL_CIDADE_BAIRRO: TStringField
+      DisplayLabel = 'Cidade/Bairro Filial'
       FieldName = 'FILIAL_CIDADE_BAIRRO'
       Size = 73
     end
     object cdsComandaRelFILIAL: TIntegerField
       FieldName = 'FILIAL'
+    end
+    object cdsComandaRelsdsComandaItem_Rel: TDataSetField
+      FieldName = 'sdsComandaItem_Rel'
     end
   end
   object dsComandaRel: TDataSource
@@ -3960,44 +3981,51 @@ object dmCupomFiscal: TdmCupomFiscal
       '_NOME, CFI.VLR_TOTAL'#13#10'FROM CUPOMFISCAL_ITENS CFI'#13#10'INNER JOIN PRO' +
       'DUTO P ON (CFI.ID_PRODUTO = P.ID)'#13#10'WHERE CFI.ID = :ID'#13#10' AND CANC' +
       'ELADO = '#39'N'#39
+    DataSource = dsComandaRelMestre
     MaxBlobSize = -1
     Params = <
       item
         DataType = ftInteger
         Name = 'ID'
         ParamType = ptInput
+        Size = 4
       end>
     SQLConnection = dmDatabase.scoDados
     Left = 385
     Top = 352
   end
-  object dspComandaItem_Rel: TDataSetProvider
-    DataSet = sdsComandaItem_Rel
-    Left = 417
-    Top = 352
-  end
   object cdsComandaItem_Rel: TClientDataSet
     Aggregates = <>
+    DataSetField = cdsComandaRelsdsComandaItem_Rel
     Params = <>
-    ProviderName = 'dspComandaItem_Rel'
     Left = 448
     Top = 352
-    object cdsComandaItem_RelQTD: TFloatField
-      FieldName = 'QTD'
+    object cdsComandaItem_RelID_PRODUTO: TIntegerField
+      DisplayLabel = 'Cod.Produto'
+      FieldName = 'ID_PRODUTO'
     end
     object cdsComandaItem_RelPRODUTO_NOME: TStringField
+      DisplayLabel = 'Nome Produto'
       FieldName = 'PRODUTO_NOME'
       Size = 100
     end
-    object cdsComandaItem_RelVLR_TOTAL: TFloatField
-      FieldName = 'VLR_TOTAL'
-      DisplayFormat = '0.00'
-    end
-    object cdsComandaItem_RelID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
+    object cdsComandaItem_RelQTD: TFloatField
+      DisplayLabel = 'Qtde'
+      FieldName = 'QTD'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object cdsComandaItem_RelVLR_UNITARIO: TFloatField
+      DisplayLabel = 'Vlr Unit'#225'rio'
       FieldName = 'VLR_UNITARIO'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
+    end
+    object cdsComandaItem_RelVLR_TOTAL: TFloatField
+      DisplayLabel = 'Vlr Total'
+      FieldName = 'VLR_TOTAL'
+      DisplayFormat = ',0,00'
+      EditFormat = ',0.00'
     end
   end
   object dsComandaItem_Rel: TDataSource
@@ -4046,28 +4074,38 @@ object dmCupomFiscal: TdmCupomFiscal
       4F54414C08000400000000000A49445F50524F4455544F040001000000000006
       43415254414F04000100000000000000}
     object mCupomItensNOME_PRODUTO: TStringField
+      DisplayLabel = 'Nome Produto'
       DisplayWidth = 48
       FieldName = 'NOME_PRODUTO'
       Size = 40
     end
     object mCupomItensQTD: TFloatField
+      DisplayLabel = 'Qtde'
       DisplayWidth = 12
       FieldName = 'QTD'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object mCupomItensVLR_UNIT: TFloatField
+      DisplayLabel = 'Vlr Unit'#225'rio'
       DisplayWidth = 16
       FieldName = 'VLR_UNIT'
-      DisplayFormat = '0.00'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object mCupomItensVLR_TOTAL: TFloatField
+      DisplayLabel = 'Vlr Total'
       DisplayWidth = 18
       FieldName = 'VLR_TOTAL'
-      DisplayFormat = '0.00'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
     object mCupomItensID_PRODUTO: TIntegerField
+      DisplayLabel = 'ID Produto'
       FieldName = 'ID_PRODUTO'
     end
     object mCupomItensCARTAO: TIntegerField
+      DisplayLabel = 'Cart'#227'o'
       FieldName = 'CARTAO'
     end
   end
@@ -4088,14 +4126,18 @@ object dmCupomFiscal: TdmCupomFiscal
       54414F04000100000000000849445F4355504F4D040001000000000009564C52
       5F544F54414C08000400000000000000}
     object mCupomCARTAO: TIntegerField
+      DisplayLabel = 'Cart'#227'o'
       FieldName = 'CARTAO'
     end
     object mCupomID_CUPOM: TIntegerField
+      DisplayLabel = 'ID Cupom'
       FieldName = 'ID_CUPOM'
     end
     object mCupomVLR_TOTAL: TFloatField
+      DisplayLabel = 'Valor Total'
       FieldName = 'VLR_TOTAL'
-      DisplayFormat = '0.00'
+      DisplayFormat = ',0.00'
+      EditFormat = ',0.00'
     end
   end
   object dsmCupom: TDataSource
@@ -8497,5 +8539,23 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'UNIDADE'
       Size = 6
     end
+  end
+  object dsComandaRelMestre: TDataSource
+    DataSet = sdsComandaRel
+    Left = 504
+    Top = 328
+  end
+  object spAtualizaComanda: TSQLStoredProc
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_CUPOM'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    StoredProcName = 'PRC_ATUALIZA_COMANDA'
+    Left = 816
+    Top = 480
   end
 end

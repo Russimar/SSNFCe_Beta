@@ -13,17 +13,10 @@ uses
   cxCustomData, cxGraphics, cxFilter, cxData, uTipoDescontoItem,
   cxDataStorage, cxEdit, cxDBData, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGrid, ACBrValidador, JvScrollBox, dxSkinsCore,
-  dxSkinBlue, dxSkinMoneyTwins, dxSkinOffice2007Blue, dxSkinSeven,
-  dxSkinscxPCPainter, cxLookAndFeels, dxGDIPlusClasses, GradientLabel,
-  dxSkinBlack, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
-  dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
-  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin,
-  dxSkinOffice2007Black, dxSkinOffice2007Green, dxSkinOffice2007Pink,
-  dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp, dxSkinSilver,
-  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,ACBrDeviceSerial,
-  uConsComanda;
+  cxGridDBTableView, cxGrid, ACBrValidador, JvScrollBox, 
+  uConsComanda, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
+  dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
+  dxGDIPlusClasses, GradientLabel;
   
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
@@ -35,9 +28,6 @@ type
     Panel4: TPanel;
     SMDBGrid2: TSMDBGrid;
     pnlCopiar: TPanel;
-    btnCopiarSacola: TBitBtn;
-    btnCopiarPedido: TBitBtn;
-    btnCopiarComanda: TBitBtn;
     ACBrBAL1: TACBrBAL;
     AdvPanelStyler1: TAdvPanelStyler;
     pnlProduto: TAdvPanel;
@@ -96,6 +86,9 @@ type
     GradientLabel8: TGradientLabel;
     GradientLabel9: TGradientLabel;
     GradientLabel10: TGradientLabel;
+    btnCopiarComanda: TNxButton;
+    btnCopiarPedido: TNxButton;
+    btnCopiarSacola: TNxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -110,12 +103,10 @@ type
     procedure btFinalizarClick(Sender: TObject);
     procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit1Enter(Sender: TObject);
-    procedure btnCopiarSacolaClick(Sender: TObject);
     procedure btnCopiarPedidoClick(Sender: TObject);
     procedure btComandaClick(Sender: TObject);
     procedure btOrcamentoClick(Sender: TObject);
     procedure btPedidoClick(Sender: TObject);
-    procedure btnCopiarComandaClick(Sender: TObject);
     procedure SMDBGrid2DblClick(Sender: TObject);
     procedure CurrencyEdit1Enter(Sender: TObject);
     procedure DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -127,10 +118,11 @@ type
       Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure btnCopiarComandaClick(Sender: TObject);
+    procedure btnCopiarSacolaClick(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
-    fDmCupomFiscal: TDmCupomFiscal;
     fNFCE_ACBr: TfNFCE_ACBR;
     ffrmConsCupom: TfrmConsCupom;
     ffrmConsultaRapidaCupom : TfrmConsultaRapidaProduto;
@@ -196,6 +188,8 @@ type
     vVlrItem : Double;
     vTipoDescItem : String;
     TipoDescFech : String;
+    fDmCupomFiscal: TDmCupomFiscal;
+    
     procedure Excluir_Estoque(Filial, NumMov: Integer);
     procedure prc_ConfirmaItem;
     procedure prc_InformaCliente;
@@ -626,7 +620,7 @@ begin
     if btComanda.Visible then
     begin
       btComandaClick(Sender);
-      pnlCaixaLivre.Visible := False;
+//      pnlCaixaLivre.Visible := False;
     end;
   end;
 
@@ -1125,6 +1119,18 @@ begin
       prc_Gravar_Estoque_Troca;
     end;
 
+    // dá baixa na comanda
+    fDmCupomFiscal.mCupom.Active := True;
+    if not fDmCupomFiscal.mCupom.IsEmpty then
+    begin
+      fDmCupomFiscal.mCupom.First;
+      while not fDmCupomFiscal.mCupom.Eof do
+      begin
+        fDmCupomFiscal.prc_Atualiza_Comanda(fDmCupomFiscal.mCupomID_CUPOM.AsInteger);
+        fDmCupomFiscal.mCupom.Next
+      end;
+    end;
+    fDmCupomFiscal.mCupom.Active := False;
     {else
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
       prc_Controle_Gravar_Diversos(False, False)
@@ -1292,18 +1298,6 @@ begin
   Edit1.SelectAll;
 end;
 
-procedure TfCupomFiscal.btnCopiarSacolaClick(Sender: TObject);
-var
-  ffrmSel_Sacola_CF: TfrmSel_Sacola_CF;
-begin
-  ffrmSel_Sacola_CF := TfrmSel_Sacola_CF.Create(self);
-
-  ffrmSel_Sacola_CF.fDMCupomFiscal := fDMCupomFiscal;
-  ffrmSel_Sacola_CF.ffCupomFiscal2 := fCupomFiscal;
-  ffrmSel_Sacola_CF.ShowModal;
-  FreeAndNil(ffrmSel_Sacola_CF);
-end;
-
 procedure TfCupomFiscal.btnCopiarPedidoClick(Sender: TObject);
 var
   ffrmSel_Pedido_CF: TfrmSel_Pedido_CF;
@@ -1325,6 +1319,7 @@ begin
   if not(fDmCupomFiscal.cdsCupomFiscal.Active) or ((fDmCupomFiscal.cdsCupom_Itens.IsEmpty) and (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) <= 0)) then
   begin
     prc_Form_Cartao;
+    Edit1.SetFocus;
     exit;
   end;
 
@@ -1437,6 +1432,7 @@ begin
   fDmCupomFiscal.cdsCupomFiscal.Close;
   prc_Limpa_Variaveis_Encerramento;
   pnlCaixaLivre.Visible := True;
+  pnlCaixaLivre.Update;
   //******************
 
 //  if fDmCupomFiscal.cdsCupomFiscal.State in [dsBrowse] then
@@ -1502,14 +1498,6 @@ begin
     if Edit1.TabOrder = 0 then
       CurrencyEdit1.SetFocus;
   end;
-end;
-procedure TfCupomFiscal.btnCopiarComandaClick(Sender: TObject);
-begin
-  frmSel_Comanda_CF := TfrmSel_Comanda_CF.Create(Self);
-  frmSel_Comanda_CF.WindowState := wsMaximized;
-  frmSel_Comanda_CF.fDmCupomFiscal := fDmCupomFiscal;
-  frmSel_Comanda_CF.ShowModal;
-  vCopiandoComanda := False;
 end;
 
 procedure TfCupomFiscal.SMDBGrid2DblClick(Sender: TObject);
@@ -2473,13 +2461,36 @@ begin
     begin
       fDmCupomFiscal.prcInserir(0,fDmCupomFiscal.vClienteID,vSerieCupom);
       fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.vNumCartao;
+      pnlCaixaLivre.Visible := False;
     end
     else
     begin
       fDmCupomFiscal.prcLocalizar(VID);
       fDmCupomFiscal.cdsCupomFiscal.Edit;
+      pnlCaixaLivre.Visible := False;
     end;
   end
+end;
+
+procedure TfCupomFiscal.btnCopiarComandaClick(Sender: TObject);
+begin
+  frmSel_Comanda_CF := TfrmSel_Comanda_CF.Create(Self);
+  frmSel_Comanda_CF.WindowState := wsMaximized;
+  frmSel_Comanda_CF.fDmCupomFiscal := fDmCupomFiscal;
+  frmSel_Comanda_CF.ShowModal;
+  vCopiandoComanda := False;
+end;
+
+procedure TfCupomFiscal.btnCopiarSacolaClick(Sender: TObject);
+var
+  ffrmSel_Sacola_CF: TfrmSel_Sacola_CF;
+begin
+  ffrmSel_Sacola_CF := TfrmSel_Sacola_CF.Create(self);
+
+  ffrmSel_Sacola_CF.fDMCupomFiscal := fDMCupomFiscal;
+  ffrmSel_Sacola_CF.ffCupomFiscal2 := fCupomFiscal;
+  ffrmSel_Sacola_CF.ShowModal;
+  FreeAndNil(ffrmSel_Sacola_CF);
 end;
 
 end.

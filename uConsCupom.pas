@@ -11,7 +11,12 @@ uses
   cxGraphics, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
   cxLookAndFeels, cxGrid, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGridLevel, cxClasses, cxControls, cxGridCustomView,
-  AdvPanel;
+  AdvPanel, dxSkinBlack, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinOffice2007Black,
+  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  dxSkinPumpkin, dxSkinSharp, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
 
 type
   TfrmConsCupom = class(TForm)
@@ -51,27 +56,26 @@ type
     chkNFCE: TCheckBox;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     btnImpCarne: TNxButton;
+    btnExcluir: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnReimprimirClick(Sender: TObject);
     procedure GridCupomDblClick(Sender: TObject);
-    procedure cxGrid1DBTableView1CellDblClick(
-      Sender: TcxCustomGridTableView;
-      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
-      AShift: TShiftState; var AHandled: Boolean);
+    procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
     procedure btnImpCarneClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
-    fNFCE_ACBr : TfNFCE_ACBR;
+    fNFCE_ACBr: TfNFCE_ACBR;
     procedure prc_Consultar;
   public
     { Public declarations }
     fDmCupomFiscal: TDmCupomFiscal;
-    ffrmConsCupomItens : TfrmConsCupomItens;
-    vCancelar : Boolean;
-    vExcluir : Boolean;
+    ffrmConsCupomItens: TfrmConsCupomItens;
+    vCancelar: Boolean;
+    vExcluir: Boolean;
   end;
 
 var
@@ -109,13 +113,13 @@ end;
 procedure TfrmConsCupom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Close;
-  FreeAndNil(fNFCE_ACBr);  
+  FreeAndNil(fNFCE_ACBr);
 end;
 
 procedure TfrmConsCupom.btnEnviarClick(Sender: TObject);
 var
-  NumCupom : String;
-  i, Selecionado : integer;
+  NumCupom: string;
+  i, Selecionado: integer;
 begin
   if vCancelar then
   begin
@@ -125,24 +129,23 @@ begin
       exit;
     end;
     NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
-    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
     fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
     fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
-    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
     fDmCupomFiscal.cdsCupomFiscal.Close;
     try
       fNFCE_ACBr.btCancelarClick(Sender);
     except
-      on E : Exception do
+      on E: Exception do
       begin
         ShowMessage('Erro: ' + e.Message);
       end;
     end;
     btnConsultarClick(Sender);
   end
-  else
-  if vExcluir then
+  else if vExcluir then
   begin
     if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
     begin
@@ -156,16 +159,16 @@ begin
     end;
 
     NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
-    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
     fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
     fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
-    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
     fDmCupomFiscal.cdsCupomFiscal.Close;
     try
       fNFCE_ACBr.btCancelarClick(Sender);
     except
-      on E : Exception do
+      on E: Exception do
       begin
         ShowMessage('Erro: ' + e.Message);
       end;
@@ -182,29 +185,29 @@ begin
         exit;
       end;
       NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
-      if MessageDlg('Tem certeza que deseja reenviar o Cupom Selecionado? ' ,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+      if MessageDlg('Tem certeza que deseja reenviar o Cupom Selecionado? ', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         Exit;
       fDmCupomFiscal.cdsCupom_Cons.DisableControls;
       fDmCupomFiscal.cdsCupom_Cons.First;
       //não trocar o indice 0 na grid
 
-      for i:=0 to cxGrid1DBTableView1.Controller.SelectedRowCount - 1 do
+      for i := 0 to cxGrid1DBTableView1.Controller.SelectedRowCount - 1 do
       begin
-          fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-          fNFCE_ACBr.vID_Cupom_Novo := cxGrid1DBTableView1.Controller.SelectedRows[i].Values[0];
-          fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
-          fNFCE_ACBr.chkGravarXml.Checked := True;
-          fNFCE_ACBr.Reenviar := True;
-          fDmCupomFiscal.cdsCupomFiscal.Close;
-          try
-            fNFCE_ACBr.btEnviarNovoClick(Sender);
-          except
-            on E : Exception do
-            begin
-              ShowMessage('Erro: ' + e.Message);
-            end;
+        fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+        fNFCE_ACBr.vID_Cupom_Novo := cxGrid1DBTableView1.Controller.SelectedRows[i].Values[0];
+        fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
+        fNFCE_ACBr.chkGravarXml.Checked := True;
+        fNFCE_ACBr.Reenviar := True;
+        fDmCupomFiscal.cdsCupomFiscal.Close;
+        try
+          fNFCE_ACBr.btEnviarNovoClick(Sender);
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Erro: ' + e.Message);
           end;
-          fNFCE_ACBr.Reenviar := False;
+        end;
+        fNFCE_ACBr.Reenviar := False;
       end;
 
 //      while not fDmCupomFiscal.cdsCupom_Cons.Eof do
@@ -272,7 +275,7 @@ begin
   try
     fNFCE_ACBr.btImprimirClick(Sender);
   except
-    on E : Exception do
+    on E: Exception do
     begin
       ShowMessage('Erro: ' + e.Message);
     end;
@@ -291,10 +294,7 @@ begin
   FreeAndNil(ffrmConsCupomItens);
 end;
 
-procedure TfrmConsCupom.cxGrid1DBTableView1CellDblClick(
-  Sender: TcxCustomGridTableView;
-  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
-  AShift: TShiftState; var AHandled: Boolean);
+procedure TfrmConsCupom.cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
 begin
   if fDmCupomFiscal.cdsCupom_Cons.IsEmpty then
     Exit;
@@ -308,9 +308,9 @@ end;
 
 procedure TfrmConsCupom.btnImpCarneClick(Sender: TObject);
 var
-  vArq: String;
+  vArq: string;
 begin
-  if not(fDmCupomFiscal.cdsCupom_Cons.Active) or (fDmCupomFiscal.cdsCupom_Cons.IsEmpty) then
+  if not (fDmCupomFiscal.cdsCupom_Cons.Active) or (fDmCupomFiscal.cdsCupom_Cons.IsEmpty) then
     Exit;
   fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
   if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger <= 0 then
@@ -331,6 +331,37 @@ begin
   end;
   fDmCupomFiscal.frxReport1.ShowReport;
 
+end;
+
+procedure TfrmConsCupom.btnExcluirClick(Sender: TObject);
+var
+  NumCupom: String;
+begin
+  if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr then
+  begin
+    MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
+    exit;
+  end;
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
+
+  if MessageDlg('Tem certeza que deseja Excluir o Cupom Nº: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    Exit;
+
+  if (NumCupom <> EmptyStr) then
+  begin
+    if MessageDlg('Deseja inutilizar a No: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      try
+        fNFCE_ACBr.prc_Inutilizar_Cupom(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+      except
+        on E: Exception do
+         ShowMessage('Não foi possível inutilizar a numeração do cupom ' + #10#13 + E.Message);
+      end;
+    end;
+  end;
+  fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  btnConsultarClick(Sender);
 end;
 
 end.

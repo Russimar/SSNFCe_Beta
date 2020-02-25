@@ -3839,4 +3839,151 @@ object DMNFCe: TDMNFCe
     Left = 648
     Top = 120
   end
+  object sdsNFe_Inutilizacao: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT *'#13#10'FROM NFE_INUTILIZACAO'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 448
+    Top = 296
+    object sdsNFe_InutilizacaoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsNFe_InutilizacaoFILIAL: TIntegerField
+      FieldName = 'FILIAL'
+    end
+    object sdsNFe_InutilizacaoNUMPROTOCOLO: TStringField
+      FieldName = 'NUMPROTOCOLO'
+      Size = 44
+    end
+    object sdsNFe_InutilizacaoDATA: TDateField
+      FieldName = 'DATA'
+    end
+    object sdsNFe_InutilizacaoHORA: TTimeField
+      FieldName = 'HORA'
+    end
+    object sdsNFe_InutilizacaoMOTIVO: TStringField
+      FieldName = 'MOTIVO'
+      Size = 200
+    end
+    object sdsNFe_InutilizacaoNUMNOTA_INI: TIntegerField
+      FieldName = 'NUMNOTA_INI'
+    end
+    object sdsNFe_InutilizacaoNUMNOTA_FIN: TIntegerField
+      FieldName = 'NUMNOTA_FIN'
+    end
+    object sdsNFe_InutilizacaoUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Size = 15
+    end
+    object sdsNFe_InutilizacaoDTUSUARIO: TDateField
+      FieldName = 'DTUSUARIO'
+    end
+    object sdsNFe_InutilizacaoHRUSUARIO: TTimeField
+      FieldName = 'HRUSUARIO'
+    end
+    object sdsNFe_InutilizacaoMODELO: TStringField
+      FieldName = 'MODELO'
+      Size = 2
+    end
+    object sdsNFe_InutilizacaoSERIE: TStringField
+      FieldName = 'SERIE'
+      Size = 3
+    end
+    object sdsNFe_InutilizacaoANO: TIntegerField
+      FieldName = 'ANO'
+    end
+  end
+  object dspNFe_Inutilizacao: TDataSetProvider
+    DataSet = sdsNFe_Inutilizacao
+    Left = 480
+    Top = 296
+  end
+  object cdsNFe_Inutilizacao: TClientDataSet
+    Aggregates = <>
+    IndexFieldNames = 'ID'
+    Params = <>
+    ProviderName = 'dspNFe_Inutilizacao'
+    Left = 512
+    Top = 296
+    object cdsNFe_InutilizacaoID: TIntegerField
+      Alignment = taCenter
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsNFe_InutilizacaoFILIAL: TIntegerField
+      Alignment = taCenter
+      DisplayLabel = 'Filial'
+      FieldName = 'FILIAL'
+    end
+    object cdsNFe_InutilizacaoNUMPROTOCOLO: TStringField
+      DisplayLabel = 'N'#186' Protocolo'
+      FieldName = 'NUMPROTOCOLO'
+      Size = 44
+    end
+    object cdsNFe_InutilizacaoSERIE: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'S'#233'rie'
+      FieldName = 'SERIE'
+      Size = 3
+    end
+    object cdsNFe_InutilizacaoNUMNOTA_INI: TIntegerField
+      Alignment = taCenter
+      DisplayLabel = 'N'#186' Nota Inicial'
+      FieldName = 'NUMNOTA_INI'
+    end
+    object cdsNFe_InutilizacaoNUMNOTA_FIN: TIntegerField
+      Alignment = taCenter
+      DisplayLabel = 'N'#186' Nota Final'
+      FieldName = 'NUMNOTA_FIN'
+    end
+    object cdsNFe_InutilizacaoDATA: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Data'
+      FieldName = 'DATA'
+    end
+    object cdsNFe_InutilizacaoHORA: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Hora'
+      FieldName = 'HORA'
+    end
+    object cdsNFe_InutilizacaoMOTIVO: TStringField
+      DisplayLabel = 'Motivo'
+      FieldName = 'MOTIVO'
+      Size = 200
+    end
+    object cdsNFe_InutilizacaoUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Size = 15
+    end
+    object cdsNFe_InutilizacaoDTUSUARIO: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Dt. Cadastro'
+      FieldName = 'DTUSUARIO'
+    end
+    object cdsNFe_InutilizacaoHRUSUARIO: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Hr. Cadastro'
+      FieldName = 'HRUSUARIO'
+    end
+    object cdsNFe_InutilizacaoMODELO: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Modelo'
+      FieldName = 'MODELO'
+      Size = 2
+    end
+    object cdsNFe_InutilizacaoANO: TIntegerField
+      Alignment = taCenter
+      DisplayLabel = 'Ano'
+      FieldName = 'ANO'
+    end
+  end
+  object dsNFe_Inutilizacao: TDataSource
+    DataSet = cdsNFe_Inutilizacao
+    Left = 544
+    Top = 296
+  end
 end

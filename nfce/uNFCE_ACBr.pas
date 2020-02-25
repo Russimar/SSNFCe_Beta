@@ -40,6 +40,7 @@ type
     GroupBox3: TGroupBox;
     btImpresaoPreVenda: TButton;
     mmPreVenda: TMemo;
+    btnInutilizar: TButton;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -50,6 +51,7 @@ type
     function fnc_ReenviarCupom(Chave : string) : Boolean;
     procedure btImpresaoPreVendaClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnInutilizarClick(Sender: TObject);
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -66,6 +68,7 @@ type
     function fnc_Buscar_Finalidade: Integer;
     procedure prc_Reimprimir(ID : integer);
     procedure prc_Impressao_PreVenda(ID : Integer);
+    procedure prc_Inutilizar_Cupom(ID : Integer);
 
     { Public declarations }
   end;
@@ -1202,6 +1205,80 @@ end;
 procedure TfNFCE_ACBR.FormShow(Sender: TObject);
 begin
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+end;
+
+procedure TfNFCE_ACBR.btnInutilizarClick(Sender: TObject);
+begin
+  prc_Inutilizar_Cupom(0);
+end;
+
+procedure TfNFCE_ACBR.prc_Inutilizar_Cupom(ID: Integer);
+var
+  vJustificativa : String;
+  vSerie : Integer;
+  vFilialInutiliza : Integer;
+  vNumInicial : Integer;
+  vNumFinal : Integer;
+  vAno : Integer;
+  vModelo : Integer;
+begin
+  if not(InputQuery('WebServices Inutilização ', 'Justificativa', vJustificativa)) then
+    exit;
+  fdmCupomFiscal.prcLocalizar(ID);
+  vAno := StrToInt(FormatDateTime('yyyy', now));
+  vFilialInutiliza := StrToInt(SQLLocate('CupomFiscal','ID','FILIAL',IntToStr(ID)));
+  vSerie := StrToInt(SQLLocate('CupomFiscal','ID','Serie',IntToStr(ID)));
+  vNumInicial := StrToInt(SQLLocate('CupomFiscal','ID','NUMCUPOM',IntToStr(ID)));
+  vNumFinal := StrToInt(SQLLocate('CupomFiscal','ID','NUMCUPOM',IntToStr(ID)));
+  vModelo := 65;
+  Inicia_NFe;
+  fDMNFCe.ACBrNFe.WebServices.Inutiliza(Monta_Texto(fDMNFCe.qFilialCNPJ_CPF.AsString, 14),
+                                        vJustificativa,
+                                        vAno,
+                                        vModelo,
+                                        vSerie,
+                                        vNumInicial,
+                                        vNumFinal);
+
+  with fDMNFCe do
+  begin
+    if ACBrNFe.WebServices.Inutilizacao.cStat = 102 then
+    begin
+      prc_Inserir_Inutilizacao;
+      cdsNFe_InutilizacaoANO.AsInteger := vAno;
+      cdsNFe_InutilizacaoDATA.AsDateTime := Date;
+      cdsNFe_InutilizacaoFILIAL.AsInteger := vFilialInutiliza;
+      cdsNFe_InutilizacaoMODELO.AsString := IntToStr(vModelo);
+      cdsNFe_InutilizacaoMOTIVO.AsString := vJustificativa;
+      cdsNFe_InutilizacaoNUMNOTA_INI.AsInteger := vNumInicial;
+      cdsNFe_InutilizacaoNUMNOTA_FIN.AsInteger := vNumFinal;
+      cdsNFe_InutilizacaoNUMPROTOCOLO.AsString := ACBrNFe.WebServices.Inutilizacao.Protocolo;
+      cdsNFe_InutilizacaoSERIE.AsString := IntToStr(vSerie);
+      prc_Gravar_Inutilizacao;
+    end;
+  end;
+
+  
+//  MemoResp.Lines.Text :=  ACBrNFe1.WebServices.Inutilizacao.RetWS;
+//  memoRespWS.Lines.Text :=  ACBrNFe1.WebServices.Inutilizacao.RetornoWS;
+//  LoadXML(ACBrNFe1.WebServices.Inutilizacao.RetornoWS, WBResposta);
+//
+//  MemoDados.Lines.Add('');
+//  MemoDados.Lines.Add('Inutilização');
+//  MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNFe1.WebServices.Inutilizacao.tpAmb));
+//  MemoDados.Lines.Add('verAplic: ' + ACBrNFe1.WebServices.Inutilizacao.verAplic);
+//  MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.cStat));
+//  MemoDados.Lines.Add('xMotivo: ' + ACBrNFe1.WebServices.Inutilizacao.xMotivo);
+//  MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.cUF));
+//  MemoDados.Lines.Add('Ano: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.Ano));
+//  MemoDados.Lines.Add('CNPJ: ' + ACBrNFe1.WebServices.Inutilizacao.CNPJ);
+//  MemoDados.Lines.Add('Modelo: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.Modelo));
+//  MemoDados.Lines.Add('Serie: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.Serie));
+//  MemoDados.Lines.Add('NumeroInicial: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.NumeroInicial));
+//  MemoDados.Lines.Add('NumeroInicial: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.NumeroFinal));
+//  MemoDados.Lines.Add('dhRecbto: ' + DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.dhRecbto));
+//  MemoDados.Lines.Add('Protocolo: ' + ACBrNFe1.WebServices.Inutilizacao.Protocolo);
+
 end;
 
 end.
