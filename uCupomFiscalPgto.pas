@@ -615,6 +615,8 @@ begin
     end;
     vIdCupom := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
 
+    fDmCupomFiscal.cdsCupomFiscalCOPIADO.AsString := 'S';
+
     if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
       fDmCupomFiscal.cdsCupomFiscal.Post;
 

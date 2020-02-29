@@ -100,24 +100,17 @@ begin
       if gridComanda.SelectedRows.CurrentRowSelected then
       begin
         fDmCupomFiscal.mCupom.Insert;
-        fDmCupomFiscal.mCupomID_CUPOM.AsInteger :=
-          fDmCupomFiscal.cdsComandaRelID.AsInteger;
+        fDmCupomFiscal.mCupomID_CUPOM.AsInteger := fDmCupomFiscal.cdsComandaRelID.AsInteger;
         fDmCupomFiscal.mCupom.Post;
         while not fDmCupomFiscal.cdsComandaItem_Rel.Eof do
         begin
           fDmCupomFiscal.mCupomItens.Insert;
-          fDmCupomFiscal.mCupomItensID_PRODUTO.AsInteger :=
-            fDmCupomFiscal.cdsComandaItem_RelID_PRODUTO.AsInteger;
-          fDmCupomFiscal.mCupomItensCARTAO.AsInteger :=
-            fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger;
-          fDmCupomFiscal.mCupomItensNOME_PRODUTO.AsString :=
-            fDmCupomFiscal.cdsComandaItem_RelPRODUTO_NOME.AsString;
-          fDmCupomFiscal.mCupomItensQTD.AsFloat :=
-            fDmCupomFiscal.cdsComandaItem_RelQTD.AsFloat;
-          fDmCupomFiscal.mCupomItensVLR_UNIT.AsFloat :=
-            fDmCupomFiscal.cdsComandaItem_RelVLR_UNITARIO.AsCurrency;
-          fDmCupomFiscal.mCupomItensVLR_TOTAL.AsFloat :=
-            fDmCupomFiscal.cdsComandaItem_RelVLR_TOTAL.AsCurrency;
+          fDmCupomFiscal.mCupomItensID_PRODUTO.AsInteger := fDmCupomFiscal.cdsComandaItem_RelID_PRODUTO.AsInteger;
+          fDmCupomFiscal.mCupomItensCARTAO.AsInteger := fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger;
+          fDmCupomFiscal.mCupomItensNOME_PRODUTO.AsString := fDmCupomFiscal.cdsComandaItem_RelPRODUTO_NOME.AsString;
+          fDmCupomFiscal.mCupomItensQTD.AsFloat := fDmCupomFiscal.cdsComandaItem_RelQTD.AsFloat;
+          fDmCupomFiscal.mCupomItensVLR_UNIT.AsFloat := fDmCupomFiscal.cdsComandaItem_RelVLR_UNITARIO.AsCurrency;
+          fDmCupomFiscal.mCupomItensVLR_TOTAL.AsFloat := fDmCupomFiscal.cdsComandaItem_RelVLR_TOTAL.AsCurrency;
           fDmCupomFiscal.mCupomItens.Post;
           fDmCupomFiscal.cdsComandaItem_Rel.Next;
         end;
@@ -170,7 +163,8 @@ begin
     'FROM CUPOMFISCAL CF ' +
     'INNER JOIN FILIAL F ON (CF.FILIAL = F.ID) ' +
     ' WHERE COALESCE(COPIADO,' + QuotedStr('N') + ') = ' + QuotedStr('N') +
-    ' AND CF.NUM_CARTAO > 0 ';
+    ' AND CF.NUM_CARTAO > 0  ' +
+    ' AND CF.TIPO = ' + QuotedStr('COM');
   if ID > 0 then
     fDmCupomFiscal.sdsComandaRel.CommandText :=
       fDmCupomFiscal.sdsComandaRel.CommandText + ' AND CF.NUM_CARTAO = ' +
@@ -183,9 +177,10 @@ begin
     fDmCupomFiscal.sdsComandaRel.CommandText + ' ORDER BY CF.NUM_CARTAO';
   fDmCupomFiscal.cdsComandaRel.Open;
 
-  fDmCupomFiscal.cdsComandaItem_Rel.Close;
+  //fDmCupomFiscal.cdsComandaItem_Rel.Close;
   //  fDmCupomFiscal.sdsComandaItem_Rel.ParamByName('ID').AsInteger := fDmCupomFiscal.CdsComandaRelID.AsInteger;
-  fDmCupomFiscal.cdsComandaItem_Rel.Open;
+  //fDmCupomFiscal.cdsComandaItem_Rel.Open;
+
 
 end;
 
@@ -197,6 +192,8 @@ begin
   begin
     fDmCupomFiscal.mCupom.CreateDataSet;
     fDmCupomFiscal.mCupomItens.CreateDataSet;
+    if not fDmCupomFiscal.mCupomItens.Active then
+      fDmCupomFiscal.mCupomItens.Active := True;
     fDmCupomFiscal.mCupomItens.IndexFieldNames := 'CARTAO';
   end;
   Monta_sqlCupom_Cons(0);

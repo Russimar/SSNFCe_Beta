@@ -1814,6 +1814,8 @@ type
     dsComandaRelMestre: TDataSource;
     cdsComandaRelsdsComandaItem_Rel: TDataSetField;
     spAtualizaComanda: TSQLStoredProc;
+    sdsCupomFiscalCOPIADO: TStringField;
+    cdsCupomFiscalCOPIADO: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1844,6 +1846,7 @@ type
     ctConsCupom : String;
     ctPedido, ctDuplicata: String;
     ctTotais: string;
+    ctComandaRel: String;
     vPgtoEditado: Boolean;
     vSacolaSelecionada: Boolean;
     vVlrEntrada, vSomaParcelas, vSomaOriginal: Currency;
@@ -2106,6 +2109,7 @@ begin
   ctTotais      := sdsTotais.CommandText;
   ctConsCupom   := sdsCupom_Cons.CommandText;
   ctTroca       := sdsTroca.CommandText;
+  ctComandaRel  := sdsComandaRel.CommandText;
 
   cdsFilial.Open;
   cdsTipoCobranca.Open;
@@ -3763,10 +3767,28 @@ begin
 end;
 
 procedure TdmCupomFiscal.prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
+var
+  sds: TSQLDataSet;
 begin
-  sds_prc_Exluir_Cupom.Close;
-  sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
-  sds_prc_Exluir_Cupom.ExecSQL;
+  sds := TSQLDataSet.Create(nil);
+  try
+    sds.SQLConnection := dmDatabase.scoDados;
+    sds.NoMetadata    := True;
+    sds.GetMetadata   := False;
+    sds.CommandText   := 'select count(1) CONTADOR from cupomfiscal c where c.numcupom > 0 and c.ID = :ID ';
+    sds.ParamByName('ID').AsInteger := ID_Cupom;
+    sds.Open;
+    if sds.FieldByName('CONTADOR').AsInteger > 0 then
+      cdsCupomFiscal.CancelUpdates
+    else
+    begin
+      sds_prc_Exluir_Cupom.Close;
+      sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
+      sds_prc_Exluir_Cupom.ExecSQL;
+    end
+  finally
+    FreeAndNil(sds);
+  end;
 end;
 
 function TdmCupomFiscal.lerIni(Tabela, Campo: String): String;
@@ -4282,7 +4304,8 @@ begin
     sds.SQLConnection := dmDatabase.scoDados;
     sds.NoMetadata    := True;
     sds.GetMetadata   := False;
-    sds.CommandText   := 'select C.ID from cupomfiscal C WHERE NUM_CARTAO = :NUM_CARTAO AND COALESCE(COPIADO,' + QuotedStr('N') + ') = ' + QuotedStr('N');
+    sds.CommandText   := 'select C.ID from cupomfiscal C WHERE NUM_CARTAO = :NUM_CARTAO AND COALESCE(COPIADO,' + QuotedStr('N') + ') = ' + QuotedStr('N')
+                       + ' AND C.TIPO = ' + QuotedStr('COM');
     SDS.ParamByName('NUM_CARTAO').AsInteger := Num_Cartao;
     sds.Open;
     Result := sds.FieldByName('ID').AsInteger;

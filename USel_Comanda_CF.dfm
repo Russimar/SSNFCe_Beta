@@ -266,7 +266,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
     Left = 0
     Top = 307
     Width = 848
-    Height = 235
+    Height = 234
     TabStop = False
     Align = alClient
     DataSource = dmCupomFiscal.dsComandaItem_Rel
@@ -324,7 +324,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'QTD'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end
       item
@@ -332,7 +331,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'VLR_UNITARIO'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end
       item
@@ -340,7 +338,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'VLR_TOTAL'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end>
   end
@@ -369,7 +366,7 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
   end
   object Panel4: TPanel
     Left = 0
-    Top = 542
+    Top = 541
     Width = 848
     Height = 41
     Align = alBottom

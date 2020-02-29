@@ -283,6 +283,11 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupomFiscalVLR_TROCA: TFloatField
       FieldName = 'VLR_TROCA'
     end
+    object sdsCupomFiscalCOPIADO: TStringField
+      FieldName = 'COPIADO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomFiscal: TDataSetProvider
     DataSet = sdsCupomFiscal
@@ -586,6 +591,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'VLR_TROCA'
       DisplayFormat = ',0.00'
       EditFormat = ',0.00'
+    end
+    object cdsCupomFiscalCOPIADO: TStringField
+      FieldName = 'COPIADO'
+      FixedChar = True
+      Size = 1
     end
   end
   object dsCupomFiscal: TDataSource

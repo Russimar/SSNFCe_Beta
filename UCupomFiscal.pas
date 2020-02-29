@@ -16,8 +16,8 @@ uses
   cxGridDBTableView, cxGrid, ACBrValidador, JvScrollBox, 
   uConsComanda, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
   dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
-  dxGDIPlusClasses, GradientLabel;
-  
+  dxGDIPlusClasses, GradientLabel, ACBrDeviceSerial;
+
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
@@ -138,13 +138,14 @@ type
     vAplicarDescontoItem : Boolean;
     Cont : Integer;
     vTroca : Boolean;
+    vExiste_Comanda : Boolean;
 
     procedure Limpa_Campos;
     function posicionaProduto: Boolean;
     procedure prc_Calcular_Tributos_Transparencia;
     function prc_Calcular_Media_Tributos: Currency;
     procedure prc_Calcular_IPI;
-    procedure prc_ImprimeComanda;
+    procedure prc_ImprimeComanda(ID_Cupom : Integer);
     procedure prc_EnterCodigo(ConsultaAutomatica : Boolean = False);
     function fnc_VerficaFracionado(vUnidade: string): Boolean;
     procedure FinalizaParcial(vTipo: string);
@@ -1418,7 +1419,7 @@ begin
   if (vTipo = 'COM') then
   begin
     if (fDmCupomFiscal.cdsCupomParametrosUSA_COMANDA.AsString = 'S') then
-      prc_ImprimeComanda;
+      prc_ImprimeComanda(fDmCupomFiscal.vID_Cupom_Pos);
   end
   else if MessageDLg('Deseja imprimir?', mtConfirmation, [mbyes, mbNo], 0) = mrYes then
     case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
@@ -1443,14 +1444,15 @@ begin
 //  end;
 end;
 
-procedure TfCupomFiscal.prc_ImprimeComanda;
+procedure TfCupomFiscal.prc_ImprimeComanda(ID_Cupom : Integer);
 begin
   fDmCupomFiscal.cdsComandaRel.Close;
-  fDmCupomFiscal.sdsComandaRel.ParamByName('ID').AsInteger := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fDmCupomFiscal.sdsComandaRel.CommandText := fDmCupomFiscal.ctComandaRel;
+  fDmCupomFiscal.sdsComandaRel.ParamByName('ID').AsInteger := ID_Cupom;
   fDmCupomFiscal.cdsComandaRel.Open;
 
   fDmCupomFiscal.cdsComandaItem_Rel.Close;
-  fDmCupomFiscal.sdsComandaItem_Rel.ParamByName('ID').AsInteger := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  //fDmCupomFiscal.sdsComandaItem_Rel.ParamByName('ID').AsInteger := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
   fDmCupomFiscal.cdsComandaItem_Rel.Open;
 
   fComandaR := TfComandaR.Create(Self);
@@ -1669,6 +1671,7 @@ begin
        // configura porta de comunicação
     ACBrBAL1.Modelo := TACBrBALModelo(2);
     ACBrBAL1.Device.HandShake := TACBrHandShake(0);
+    ACBrBAL1.Device.HandShake := TACBrHandShake(0);
     ACBrBAL1.Device.Parity := TACBrSerialParity(0);
     ACBrBAL1.Device.Stop := TACBrSerialStop(0);
     ACBrBAL1.Device.Data := StrToInt('8');
@@ -1752,6 +1755,7 @@ end;
 procedure TfCupomFiscal.prc_Inserir;
 begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
+  vExiste_Comanda := False;
 
   fDmCupomFiscal.cdsFilial.IndexFieldNames := 'ID';
   fDmCupomFiscal.cdsFilial.FindKey([vFilial_Loc]);
@@ -2450,6 +2454,7 @@ procedure TfCupomFiscal.prc_Form_Cartao;
 var
   vID : Integer;
 begin
+  vExiste_Comanda := False;
   if fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S' then
   begin
     fDmCupomFiscal.vNumCartao := 0;
@@ -2468,6 +2473,7 @@ begin
       fDmCupomFiscal.prcLocalizar(VID);
       fDmCupomFiscal.cdsCupomFiscal.Edit;
       pnlCaixaLivre.Visible := False;
+      vExiste_Comanda       := True;
     end;
   end
 end;
