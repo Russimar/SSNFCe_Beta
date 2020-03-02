@@ -6,34 +6,43 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
     Dialogs, Grids, DBGrids, SMDBGrid, ExtCtrls,
   NxCollection, StdCtrls, Mask, ToolEdit, CurrEdit, DBCtrls, uDmCupomFiscal,
-    RxLookup, rsDBUtils, dbXPress, SqlExpr, DB;
+    RxLookup, rsDBUtils, dbXPress, SqlExpr, DB, Buttons, RzPanel, RXCtrls,
+  RzButton;
 
 type
   TfrmSel_Comanda_CF = class(TForm)
     Panel1: TPanel;
-    gridComanda: TSMDBGrid;
     gridItens: TSMDBGrid;
     ceNumCartao: TCurrencyEdit;
     Label4: TLabel;
-    btnInserir: TNxButton;
     Panel3: TPanel;
-    Panel4: TPanel;
-    brCancelar: TNxButton;
-    NxButton1: TNxButton;
-    btnCancelar: TNxButton;
     Label7: TLabel;
+    Panel2: TPanel;
+    gbxVendedor: TRzGroupBox;
+    SMDBGrid2: TSMDBGrid;
+    Panel5: TPanel;
+    btnExcluir: TNxButton;
+    NxButton1: TNxButton;
+    RxLabel1: TRxLabel;
+    Panel4: TPanel;
+    gridComanda: TSMDBGrid;
+    btnInserir: TRzBitBtn;
+    Label1: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure brCancelarClick(Sender: TObject);
     procedure ceNumCartaoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure btnCancelarClick(Sender: TObject);
-    procedure btnInserirClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure NxButton1Click(Sender: TObject);
+    procedure gridComandaDblClick(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
+    procedure SMDBGrid2DblClick(Sender: TObject);
   private
     { Private declarations }
     ctCupomFiscal: string;
+    vVlr_Selecionado : Real;
     procedure Monta_sqlCupom_Cons(ID: Integer);
+    procedure prc_Inserir_mCupom;
 
   public
     { Public declarations }
@@ -59,98 +68,31 @@ begin
   Action := caFree;
 end;
 
-procedure TfrmSel_Comanda_CF.brCancelarClick(Sender: TObject);
-begin
-  Close;
-end;
-
 procedure TfrmSel_Comanda_CF.ceNumCartaoKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
+    Monta_sqlCupom_Cons(ceNumCartao.AsInteger);
     if ceNumCartao.AsInteger > 0 then
     begin
-      Monta_sqlCupom_Cons(ceNumCartao.AsInteger);
       if fdmCupomFiscal.cdsComandaRel.IsEmpty then
         ShowMessage('Comanda não localizada!')
       else
-        btnInserirClick(Sender);
-      ceNumCartao.SelectAll;
+        prc_Inserir_mCupom;
+      ceNumCartao.Clear;
     end;
   end;
 end;
 
-procedure TfrmSel_Comanda_CF.btnCancelarClick(Sender: TObject);
+procedure TfrmSel_Comanda_CF.btnExcluirClick(Sender: TObject);
 begin
-  if MessageDlg('Deseja realmente excluir este cartão da conta?', mtConfirmation,
-    [mbOk, mbNo], 0) = mrOk then
+  if MessageDlg('Deseja realmente excluir este cartão  ' + fDmCupomFiscal.mCupomCARTAO.AsString + '  da conta ', mtConfirmation,[mbOk, mbNo], 0) = mrOk then
+  begin
+    vVlr_Selecionado := StrToFloat(FormatFloat('0.00',vVlr_Selecionado - fDmCupomFiscal.mCupomVLR_TOTAL.AsFloat));
     fDmCupomFiscal.mCupom.Delete;
-end;
-
-procedure TfrmSel_Comanda_CF.btnInserirClick(Sender: TObject);
-begin
-  fDmCupomFiscal.mCupom.EmptyDataSet;
-  fDmCupomFiscal.mCupomItens.EmptyDataSet;
-  fDmCupomFiscal.cdsComandaRel.DisableControls;
-  fDmCupomFiscal.cdsComandaRel.First;
-  try
-    while not fDmCupomFiscal.cdsComandaRel.Eof do
-    begin
-      if gridComanda.SelectedRows.CurrentRowSelected then
-      begin
-        fDmCupomFiscal.mCupom.Insert;
-        fDmCupomFiscal.mCupomID_CUPOM.AsInteger := fDmCupomFiscal.cdsComandaRelID.AsInteger;
-        fDmCupomFiscal.mCupom.Post;
-        while not fDmCupomFiscal.cdsComandaItem_Rel.Eof do
-        begin
-          fDmCupomFiscal.mCupomItens.Insert;
-          fDmCupomFiscal.mCupomItensID_PRODUTO.AsInteger := fDmCupomFiscal.cdsComandaItem_RelID_PRODUTO.AsInteger;
-          fDmCupomFiscal.mCupomItensCARTAO.AsInteger := fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger;
-          fDmCupomFiscal.mCupomItensNOME_PRODUTO.AsString := fDmCupomFiscal.cdsComandaItem_RelPRODUTO_NOME.AsString;
-          fDmCupomFiscal.mCupomItensQTD.AsFloat := fDmCupomFiscal.cdsComandaItem_RelQTD.AsFloat;
-          fDmCupomFiscal.mCupomItensVLR_UNIT.AsFloat := fDmCupomFiscal.cdsComandaItem_RelVLR_UNITARIO.AsCurrency;
-          fDmCupomFiscal.mCupomItensVLR_TOTAL.AsFloat := fDmCupomFiscal.cdsComandaItem_RelVLR_TOTAL.AsCurrency;
-          fDmCupomFiscal.mCupomItens.Post;
-          fDmCupomFiscal.cdsComandaItem_Rel.Next;
-        end;
-      end;
-      fDmCupomFiscal.cdsComandaRel.Next;
-    end;
-
-  finally
-    fDmCupomFiscal.cdsComandaRel.EnableControls;
   end;
-
-
-  //
-  //  Monta_sqlCupom_Cons(ceNumCartao.AsInteger);
-  //
-  //  fDmCupomFiscal.mCupom.Insert;
-  //  fDmCupomFiscal.mCupomCARTAO.AsInteger     := ceNumCartao.AsInteger;
-  //  fDmCupomFiscal.mCupomID_CUPOM.AsInteger   := fDmCupomFiscal.cdsComandaRelID.AsInteger;
-  ////  fDmCupomFiscal.mCupomVLR_TOTAL.AsCurrency := fDmCupomFiscal.cdsComandaRelVLR_TOTAL.AsCurrency;
-  //  fDmCupomFiscal.mCupom.Post;
-  //
-  //  //fDmCupomFiscal.cdsCupom_Itens.First;
-  //  while not fDmCupomFiscal.cdsComandaItem_Rel.Eof do
-  //  begin
-  //    fDmCupomFiscal.mCupomItens.Insert;
-  //    fDmCupomFiscal.mCupomItensID_PRODUTO.AsInteger := fDmCupomFiscal.cdsComandaItem_RelID_PRODUTO.AsInteger;
-  //    fDmCupomFiscal.mCupomItensCARTAO.AsInteger     := ceNumCartao.AsInteger;
-  //    fDmCupomFiscal.mCupomItensNOME_PRODUTO.AsString := fDmCupomFiscal.cdsComandaItem_RelPRODUTO_NOME.AsString;
-  //    fDmCupomFiscal.mCupomItensQTD.AsFloat       := fDmCupomFiscal.cdsComandaItem_RelQTD.AsFloat;
-  //    fDmCupomFiscal.mCupomItensVLR_UNIT.AsFloat  := fDmCupomFiscal.cdsComandaItem_RelVLR_UNITARIO.AsCurrency;
-  //    fDmCupomFiscal.mCupomItensVLR_TOTAL.AsFloat := fDmCupomFiscal.cdsComandaItem_RelVLR_TOTAL.AsCurrency;
-  //    fDmCupomFiscal.mCupomItens.Post;
-  //    fDmCupomFiscal.cdsComandaItem_Rel.Next;
-  //  end;
-  //  ceNumCartao.Clear;
-  //  ceNumCartao.SetFocus;
-  //
-  //  if vFilial <= 0 then
-  //    //vFilial := fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
-  //    vFilial := fDmCupomFiscal.cdsComandaRelFILIAL.AsInteger;
+  RxLabel1.Caption := 'Vlr. Selecionado: ' + FormatFloat('###,###,##0.00',vVlr_Selecionado);
 end;
 
 procedure TfrmSel_Comanda_CF.Monta_sqlCupom_Cons(ID: Integer);
@@ -171,8 +113,7 @@ begin
       IntToStr(ID)
   else
     fDmCupomFiscal.sdsComandaRel.CommandText :=
-      fDmCupomFiscal.sdsComandaRel.CommandText + ' AND CF.DTEMISSAO = ' +
-      QuotedStr(FormatDateTime('mm/dd/yyyy', Date));
+      fDmCupomFiscal.sdsComandaRel.CommandText + ' AND CF.DTEMISSAO = ' + QuotedStr(FormatDateTime('mm/dd/yyyy', Date - 2));
   fDmCupomFiscal.sdsComandaRel.CommandText :=
     fDmCupomFiscal.sdsComandaRel.CommandText + ' ORDER BY CF.NUM_CARTAO';
   fDmCupomFiscal.cdsComandaRel.Open;
@@ -197,15 +138,17 @@ begin
     fDmCupomFiscal.mCupomItens.IndexFieldNames := 'CARTAO';
   end;
   Monta_sqlCupom_Cons(0);
-
+  fDmCupomFiscal.mCupom.EmptyDataSet;
+  fDmCupomFiscal.mCupomItens.EmptyDataSet;
+  vVlr_Selecionado := 0;
 end;
 
 procedure TfrmSel_Comanda_CF.NxButton1Click(Sender: TObject);
 begin
-  fCupomFiscal.vCopiandoComanda := True;
   fDmCupomFiscal.mCupomItens.First;
   while not fDmCupomFiscal.mCupomItens.Eof do
   begin
+    fCupomFiscal.vCopiandoComanda := True;
     fCupomFiscal.Edit1.Text := fDmCupomFiscal.mCupomItensID_PRODUTO.AsString;
     fCupomFiscal.Edit1Exit(Sender);
     fCupomFiscal.CurrencyEdit1.Value := fDmCupomFiscal.mCupomItensQTD.AsFloat;
@@ -215,6 +158,8 @@ begin
     fDmCupomFiscal.mCupomItens.Next;
     //    fDmCupomFiscal.mCupomItens.Delete;
   end;
+
+  fCupomFiscal.vCopiandoComanda := False;
 
   //  while not fDmCupomFiscal.mCupom.IsEmpty do
   //  begin
@@ -229,6 +174,63 @@ begin
   //    fDmCupomFiscal.mCupom.Delete;
   //  end;
   Close;
+end;
+
+procedure TfrmSel_Comanda_CF.gridComandaDblClick(Sender: TObject);
+begin
+  if fDmCupomFiscal.cdsComandaRel.IsEmpty then
+    exit;
+  prc_Inserir_mCupom;
+end;
+
+procedure TfrmSel_Comanda_CF.prc_Inserir_mCupom;
+begin
+  if fDmCupomFiscal.mCupom.Locate('CARTAO',fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger,[loCaseInsensitive]) then
+    exit;
+  fDmCupomFiscal.mCupom.Insert;
+  fDmCupomFiscal.mCupomID_CUPOM.AsInteger := fDmCupomFiscal.cdsComandaRelID.AsInteger;
+  fDmCupomFiscal.mCupomCARTAO.AsInteger   := fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger;
+  fDmCupomFiscal.mCupomVLR_TOTAL.AsFloat  := StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsComandaRelVLR_TOTAL.AsFloat));
+  fDmCupomFiscal.mCupom.Post;
+  fDmCupomFiscal.cdsComandaItem_Rel.First;
+  while not fDmCupomFiscal.cdsComandaItem_Rel.Eof do
+  begin
+    fDmCupomFiscal.mCupomItens.Insert;
+    fDmCupomFiscal.mCupomItensID_PRODUTO.AsInteger  := fDmCupomFiscal.cdsComandaItem_RelID_PRODUTO.AsInteger;
+    fDmCupomFiscal.mCupomItensCARTAO.AsInteger      := fDmCupomFiscal.cdsComandaRelNUM_CARTAO.AsInteger;
+    fDmCupomFiscal.mCupomItensNOME_PRODUTO.AsString := fDmCupomFiscal.cdsComandaItem_RelPRODUTO_NOME.AsString;
+    fDmCupomFiscal.mCupomItensQTD.AsFloat           := fDmCupomFiscal.cdsComandaItem_RelQTD.AsFloat;
+    fDmCupomFiscal.mCupomItensVLR_UNIT.AsFloat      := fDmCupomFiscal.cdsComandaItem_RelVLR_UNITARIO.AsCurrency;
+    fDmCupomFiscal.mCupomItensVLR_TOTAL.AsFloat     := fDmCupomFiscal.cdsComandaItem_RelVLR_TOTAL.AsCurrency;
+    fDmCupomFiscal.mCupomItensID_CUPOM.AsInteger    := fDmCupomFiscal.cdsComandaRelID.AsInteger;
+    fDmCupomFiscal.mCupomItensItem.AsInteger        := fDmCupomFiscal.cdsComandaItem_RelITEM.AsInteger;
+    fDmCupomFiscal.mCupomItens.Post;
+    fDmCupomFiscal.cdsComandaItem_Rel.Next;
+  end;
+  vVlr_Selecionado := StrToFloat(FormatFloat('0.00',vVlr_Selecionado + fDmCupomFiscal.mCupomVLR_TOTAL.AsFloat));
+  RxLabel1.Caption := 'Vlr. Selecionado: ' + FormatFloat('###,###,##0.00',vVlr_Selecionado);
+end;
+
+procedure TfrmSel_Comanda_CF.btnInserirClick(Sender: TObject);
+begin
+  fDmCupomFiscal.cdsComandaRel.DisableControls;
+  fDmCupomFiscal.cdsComandaRel.First;
+  try
+    while not fDmCupomFiscal.cdsComandaRel.Eof do
+    begin
+      if gridComanda.SelectedRows.CurrentRowSelected then
+        prc_Inserir_mCupom;
+      fDmCupomFiscal.cdsComandaRel.Next;
+    end;
+
+  finally
+    fDmCupomFiscal.cdsComandaRel.EnableControls;
+  end;
+end;
+
+procedure TfrmSel_Comanda_CF.SMDBGrid2DblClick(Sender: TObject);
+begin
+  btnExcluirClick(Sender);
 end;
 
 end.

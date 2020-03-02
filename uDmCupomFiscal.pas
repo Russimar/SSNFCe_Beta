@@ -1816,6 +1816,13 @@ type
     spAtualizaComanda: TSQLStoredProc;
     sdsCupomFiscalCOPIADO: TStringField;
     cdsCupomFiscalCOPIADO: TStringField;
+    mCupomItensItem: TIntegerField;
+    cdsComandaItem_RelITEM: TIntegerField;
+    sdsCupom_ItensID_COMANDA: TIntegerField;
+    sdsCupom_ItensITEM_COMANDA: TIntegerField;
+    cdsCupom_ItensID_COMANDA: TIntegerField;
+    cdsCupom_ItensITEM_COMANDA: TIntegerField;
+    mCupomItensID_CUPOM: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);

@@ -459,18 +459,19 @@ begin
     Edit1.Text := fDmCupomFiscal.cdsCupomParametrosPRODUTO_PADRAO.AsString;
     prc_EnterCodigo;
   end;
-  vCalcula_IPI := True;
-  vPedidoSelecionado := False;
+  vCalcula_IPI         := True;
+  vPedidoSelecionado   := False;
   vAplicarDescontoItem := False;
-  vUnidade := '';
-  vPerc_Ipi := 0;
-  vNome_Complementar := '';
-  vID_Pedido := 0;
-  vItem_Pedido := 0;
-  vNumero_OC := '';
-  vNumero_OS := '';
-  vItem_Cliente := 0;
-  vNum_Pedido := 0;
+  vUnidade             := '';
+  vPerc_Ipi            := 0;
+  vNome_Complementar   := '';
+  vID_Pedido           := 0;
+  vItem_Pedido         := 0;
+  vNumero_OC           := '';
+  vNumero_OS           := '';
+  vItem_Cliente        := 0;
+  vNum_Pedido          := 0;
+  vCopiandoComanda     := False;
 end;
 
 procedure TfCupomFiscal.SMDBGrid1GetCellParams(Sender: TObject; Field: TField; AFont: TFont; var Background: TColor; Highlight: Boolean);
@@ -641,6 +642,7 @@ begin
       vDocumentoClienteVenda := '';
       vCpfOK := False;
       Limpa_Campos;
+      Edit1.Setfocus;
     end;
   end;
 
@@ -1120,8 +1122,10 @@ begin
       prc_Gravar_Estoque_Troca;
     end;
 
-    // dá baixa na comanda
-    fDmCupomFiscal.mCupom.Active := True;
+    //02/03/2020  Foi incluido essa linha para alterar a baixa da comanda, onde vai fazer na procedure.
+    fDmCupomFiscal.prc_Atualiza_Comanda(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+    // dá baixa na comanda     //02/03/2020 foi alterada para a linha acima
+    {fDmCupomFiscal.mCupom.Active := True;
     if not fDmCupomFiscal.mCupom.IsEmpty then
     begin
       fDmCupomFiscal.mCupom.First;
@@ -1131,7 +1135,8 @@ begin
         fDmCupomFiscal.mCupom.Next
       end;
     end;
-    fDmCupomFiscal.mCupom.Active := False;
+    fDmCupomFiscal.mCupom.Active := False;}
+
     {else
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
       prc_Controle_Gravar_Diversos(False, False)
@@ -2088,8 +2093,8 @@ begin
     Exit;
   end;
 
-  //Controle do estoque  11/05/2015
-  if (fDmCupomFiscal.cdsParametrosCONTROLAR_ESTOQUE_SAIDA.AsString = 'S') then
+  //Controle do estoque  11/05/2015       //02/03/2020 foi colocado o vCopiandoComanda
+  if (fDmCupomFiscal.cdsParametrosCONTROLAR_ESTOQUE_SAIDA.AsString = 'S') and not(vCopiandoComanda) then
   begin
     if not fnc_Estoque_OK(fDmCupomFiscal.cdsProdutoID.AsInteger, 0, '', CurrencyEdit1.Value) then
       Exit;
@@ -2210,6 +2215,12 @@ begin
       fDmCupomFiscal.cdsCupom_ItensNUMERO_OS.AsString := vNumero_OS;
       fDmCupomFiscal.cdsCupom_ItensITEM_CLIENTE.AsInteger := vItem_Cliente;
       fDmCupomFiscal.cdsCupom_ItensNUM_PEDIDO.AsInteger := vNum_Pedido;
+    end;
+
+    if vCopiandoComanda then
+    begin
+      fDmCupomFiscal.cdsCupom_ItensID_COMANDA.AsInteger   := fDmCupomFiscal.mCupomItensID_CUPOM.AsInteger;
+      fDmCupomFiscal.cdsCupom_ItensITEM_COMANDA.AsInteger := fDmCupomFiscal.mCupomItensItem.AsInteger;
     end;
 
     pnlDescricaoProduto.Text := fDmCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString;
@@ -2481,7 +2492,7 @@ end;
 procedure TfCupomFiscal.btnCopiarComandaClick(Sender: TObject);
 begin
   frmSel_Comanda_CF := TfrmSel_Comanda_CF.Create(Self);
-  frmSel_Comanda_CF.WindowState := wsMaximized;
+  //frmSel_Comanda_CF.WindowState := wsMaximized;
   frmSel_Comanda_CF.fDmCupomFiscal := fDmCupomFiscal;
   frmSel_Comanda_CF.ShowModal;
   vCopiandoComanda := False;

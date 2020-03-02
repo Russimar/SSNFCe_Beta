@@ -863,6 +863,12 @@ object dmCupomFiscal: TdmCupomFiscal
     object sdsCupom_ItensQTD_TROCA: TFloatField
       FieldName = 'QTD_TROCA'
     end
+    object sdsCupom_ItensID_COMANDA: TIntegerField
+      FieldName = 'ID_COMANDA'
+    end
+    object sdsCupom_ItensITEM_COMANDA: TIntegerField
+      FieldName = 'ITEM_COMANDA'
+    end
   end
   object cdsCupom_Itens: TClientDataSet
     Aggregates = <>
@@ -1122,6 +1128,12 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'QTD_TROCA'
       DisplayFormat = ',0.00'
       EditFormat = ',0.00'
+    end
+    object cdsCupom_ItensID_COMANDA: TIntegerField
+      FieldName = 'ID_COMANDA'
+    end
+    object cdsCupom_ItensITEM_COMANDA: TIntegerField
+      FieldName = 'ITEM_COMANDA'
     end
   end
   object dsCupom_Itens: TDataSource
@@ -3987,10 +3999,10 @@ object dmCupomFiscal: TdmCupomFiscal
     NoMetadata = True
     GetMetadata = False
     CommandText = 
-      'SELECT CFI.QTD, CFI.ID_PRODUTO, CFI.VLR_UNITARIO, P.NOME PRODUTO' +
-      '_NOME, CFI.VLR_TOTAL'#13#10'FROM CUPOMFISCAL_ITENS CFI'#13#10'INNER JOIN PRO' +
-      'DUTO P ON (CFI.ID_PRODUTO = P.ID)'#13#10'WHERE CFI.ID = :ID'#13#10' AND CANC' +
-      'ELADO = '#39'N'#39
+      'SELECT CFI.QTD, CFI.ID_PRODUTO, CFI.VLR_UNITARIO, P.NOME , cfi.i' +
+      'tem,'#13#10'P.NOME PRODUTO_NOME, CFI.VLR_TOTAL'#13#10'FROM CUPOMFISCAL_ITENS' +
+      ' CFI'#13#10'INNER JOIN PRODUTO P ON (CFI.ID_PRODUTO = P.ID)'#13#10'WHERE CFI' +
+      '.ID = :ID'#13#10' AND CANCELADO = '#39'N'#39#13#10
     DataSource = dsComandaRelMestre
     MaxBlobSize = -1
     Params = <
@@ -4037,6 +4049,10 @@ object dmCupomFiscal: TdmCupomFiscal
       DisplayFormat = ',0,00'
       EditFormat = ',0.00'
     end
+    object cdsComandaItem_RelITEM: TIntegerField
+      FieldName = 'ITEM'
+      Required = True
+    end
   end
   object dsComandaItem_Rel: TDataSource
     DataSet = cdsComandaItem_Rel
@@ -4071,6 +4087,14 @@ object dmCupomFiscal: TdmCupomFiscal
       item
         Name = 'CARTAO'
         DataType = ftInteger
+      end
+      item
+        Name = 'Item'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ID_CUPOM'
+        DataType = ftInteger
       end>
     IndexDefs = <>
     Params = <>
@@ -4078,11 +4102,12 @@ object dmCupomFiscal: TdmCupomFiscal
     Left = 1000
     Top = 80
     Data = {
-      8C0000009619E0BD0100000018000000060000000000030000008C000C4E4F4D
+      AA0000009619E0BD010000001800000008000000000003000000AA000C4E4F4D
       455F50524F4455544F0100490000000100055749445448020002002800035154
       44080004000000000008564C525F554E4954080004000000000009564C525F54
       4F54414C08000400000000000A49445F50524F4455544F040001000000000006
-      43415254414F04000100000000000000}
+      43415254414F0400010000000000044974656D04000100000000000849445F43
+      55504F4D04000100000000000000}
     object mCupomItensNOME_PRODUTO: TStringField
       DisplayLabel = 'Nome Produto'
       DisplayWidth = 48
@@ -4118,6 +4143,12 @@ object dmCupomFiscal: TdmCupomFiscal
       DisplayLabel = 'Cart'#227'o'
       FieldName = 'CARTAO'
     end
+    object mCupomItensItem: TIntegerField
+      FieldName = 'Item'
+    end
+    object mCupomItensID_CUPOM: TIntegerField
+      FieldName = 'ID_CUPOM'
+    end
   end
   object dsmCupomItens: TDataSource
     DataSet = mCupomItens
@@ -4146,7 +4177,7 @@ object dmCupomFiscal: TdmCupomFiscal
     object mCupomVLR_TOTAL: TFloatField
       DisplayLabel = 'Valor Total'
       FieldName = 'VLR_TOTAL'
-      DisplayFormat = ',0.00'
+      DisplayFormat = '0.00'
       EditFormat = ',0.00'
     end
   end
