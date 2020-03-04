@@ -587,8 +587,8 @@ begin
 
   try
     vGeraNFCe := False;
-    if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') and
-      (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
+    if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') then// and
+//      (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
       vGeraNFCe := cbNFCe.ItemIndex = 0;
 
     if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') and ((fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger <= 0) or
