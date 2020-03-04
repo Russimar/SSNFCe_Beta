@@ -116,7 +116,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = []
       ParentColor = False
       ParentFont = False
-      Visible = False
     end
     object DBText1: TDBText
       Left = 504
@@ -497,11 +496,10 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ItemHeight = 24
-      ItemIndex = 0
+      ItemIndex = 1
       ParentFont = False
       TabOrder = 3
-      Text = 'SIM'
-      Visible = False
+      Text = 'N'#195'O'
       OnKeyDown = cbNFCeKeyDown
       Items.Strings = (
         'SIM'
