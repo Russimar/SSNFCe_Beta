@@ -57,6 +57,7 @@ type
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     btnImpCarne: TNxButton;
     btnExcluir: TNxButton;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -337,7 +338,7 @@ procedure TfrmConsCupom.btnExcluirClick(Sender: TObject);
 var
   NumCupom: String;
 begin
-  if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr then
+  if (trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr) or (trim(fDMCupomFiscal.cdsCupom_ConsNFECHAVEACESSO.AsString) <> EmptyStr) then
   begin
     MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
     exit;
@@ -348,7 +349,7 @@ begin
   if MessageDlg('Tem certeza que deseja Excluir o Cupom Nº: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     Exit;
 
-  if (NumCupom <> EmptyStr) then
+  if (NumCupom <> EmptyStr) and (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString = 'NFC') then
   begin
     if MessageDlg('Deseja inutilizar a No: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
@@ -360,7 +361,7 @@ begin
       end;
     end;
   end;
-  fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupom_ConsID.AsInteger,'S');
   btnConsultarClick(Sender);
 end;
 

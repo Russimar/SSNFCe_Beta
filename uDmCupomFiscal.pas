@@ -1899,7 +1899,7 @@ type
     procedure Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;vQtdParc: Word);
     procedure prcInserir(vId, vClienteId: Integer ; Serie : String);
     procedure prcExcluir;
-    procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
+    procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer ; Excluir : String = 'N');
     procedure prc_Gravar_Estoque_Movimento(ID_Cupom : Integer; Tipo : string);
     procedure prcNumNaoFiscal;
     procedure prcLocalizar(vId: Integer);
@@ -3773,7 +3773,7 @@ begin
   cdsPessoa.Open;
 end;
 
-procedure TdmCupomFiscal.prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
+procedure TdmCupomFiscal.prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer ; Excluir : String = 'N');
 var
   sds: TSQLDataSet;
 begin
@@ -3785,14 +3785,16 @@ begin
     sds.CommandText   := 'select count(1) CONTADOR from cupomfiscal c where c.numcupom > 0 and c.ID = :ID ';
     sds.ParamByName('ID').AsInteger := ID_Cupom;
     sds.Open;
-    if sds.FieldByName('CONTADOR').AsInteger > 0 then
-      cdsCupomFiscal.CancelUpdates
-    else
+    if (sds.FieldByName('CONTADOR').AsInteger <= 0) or (Excluir = 'S') then
     begin
       sds_prc_Exluir_Cupom.Close;
       sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
       sds_prc_Exluir_Cupom.ExecSQL;
     end
+    else
+    if cdsCupomFiscal.Active then
+    //if sds.FieldByName('CONTADOR').AsInteger > 0 then
+      cdsCupomFiscal.CancelUpdates
   finally
     FreeAndNil(sds);
   end;

@@ -22,14 +22,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 1071
-    Height = 486
+    Height = 485
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 90
       Width = 1069
-      Height = 395
+      Height = 394
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -53,6 +53,10 @@ object frmConsCupom: TfrmConsCupom
           DataBinding.FieldName = 'ID'
           Visible = False
           Options.Editing = False
+        end
+        object cxGrid1DBTableView1Column2: TcxGridDBColumn
+          DataBinding.FieldName = 'TIPO'
+          Width = 43
         end
         object cxGrid1DBTableView1DTEMISSAO: TcxGridDBColumn
           DataBinding.FieldName = 'DTEMISSAO'
@@ -518,14 +522,12 @@ object frmConsCupom: TfrmConsCupom
         Width = 113
         Height = 17
         Caption = 'Somente NFCe'
-        Checked = True
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
-        State = cbChecked
         TabOrder = 8
       end
       object btnImpCarne: TNxButton
