@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 65530
-  Top = 8
+  Left = 18
+  Top = 32
   Height = 744
   Width = 1382
   object sdsCupomFiscal: TSQLDataSet
@@ -2882,6 +2882,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField
+      FieldName = 'MOSTRAR_TELA_FECHAMENTO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3199,6 +3204,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomParametrosGERAR_ESTOQUE_TROCA: TStringField
       FieldName = 'GERAR_ESTOQUE_TROCA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField
+      FieldName = 'MOSTRAR_TELA_FECHAMENTO'
       FixedChar = True
       Size = 1
     end
@@ -8598,5 +8608,51 @@ object dmCupomFiscal: TdmCupomFiscal
     StoredProcName = 'PRC_ATUALIZA_COMANDA'
     Left = 816
     Top = 480
+  end
+  object frxCupom_Cons: TfrxDBDataset
+    UserName = 'frxCupom_Cons'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'ID=ID'
+      'NUMCUPOM=NUMCUPOM'
+      'DTEMISSAO=DTEMISSAO'
+      'VLR_TOTAL=VLR_TOTAL'
+      'CANCELADO=CANCELADO'
+      'FILIAL=FILIAL'
+      'CPF=CPF'
+      'ID_TIPOCOBRANCA=ID_TIPOCOBRANCA'
+      'NUM_CARTAO=NUM_CARTAO'
+      'TIPO=TIPO'
+      'NFEAMBIENTE=NFEAMBIENTE'
+      'NFECHAVEACESSO=NFECHAVEACESSO'
+      'NFEPROTOCOLO=NFEPROTOCOLO'
+      'NFEVERSAO=NFEVERSAO'
+      'NFERECIBO=NFERECIBO'
+      'TIPO_ATENDIMENTO=TIPO_ATENDIMENTO'
+      'TIPO_IMPRESSAO_NFCE=TIPO_IMPRESSAO_NFCE'
+      'TIPO_ENVIONFE=TIPO_ENVIONFE'
+      'NFEPROTOCOLO_CANCELADA=NFEPROTOCOLO_CANCELADA'
+      'NFEFINALIDADE=NFEFINALIDADE'
+      'NFEDENEGADA=NFEDENEGADA'
+      'SERIE=SERIE'
+      'DINHEIRO=DINHEIRO'
+      'NOME_TIPOCOBRANCA=NOME_TIPOCOBRANCA'
+      'QTD_PESSOA=QTD_PESSOA'
+      'ID_FECHAMENTO=ID_FECHAMENTO'
+      'DTFECHAMENTO=DTFECHAMENTO'
+      'CLIENTE_NOME=CLIENTE_NOME'
+      'CLIENTE_FONE=CLIENTE_FONE'
+      'CLIENTE_ENDERECO=CLIENTE_ENDERECO'
+      'CLIENTE_OBS=CLIENTE_OBS'
+      'HREMISSAO=HREMISSAO'
+      'VENDEDOR=VENDEDOR'
+      'ESTOQUE_OK=ESTOQUE_OK'
+      'FINANCEIRO_OK=FINANCEIRO_OK'
+      'DTORIGINAL=DTORIGINAL'
+      'VLR_TROCA=VLR_TROCA')
+    DataSource = dsCupom_Cons
+    BCDToCurrency = False
+    Left = 824
+    Top = 568
   end
 end

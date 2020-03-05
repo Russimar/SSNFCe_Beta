@@ -1,8 +1,8 @@
 object fCupomParametros: TfCupomParametros
-  Left = 24
-  Top = 0
+  Left = 103
+  Top = 26
   Width = 983
-  Height = 621
+  Height = 671
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'fCupomParametros'
   Color = clBtnFace
@@ -88,8 +88,8 @@ object fCupomParametros: TfCupomParametros
     Left = 0
     Top = 35
     Width = 967
-    Height = 548
-    ActivePage = TabSheet1
+    Height = 597
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -98,7 +98,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 959
-        Height = 520
+        Height = 569
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -1071,7 +1071,7 @@ object fCupomParametros: TfCupomParametros
         Left = 16
         Top = 0
         Width = 801
-        Height = 236
+        Height = 257
         Caption = 'Financeiro'
         Enabled = False
         TabOrder = 0
@@ -1613,10 +1613,22 @@ object fCupomParametros: TfCupomParametros
           TabOrder = 3
           OnEnter = RxDBLookupCombo4Enter
         end
+        object DBCheckBox1: TDBCheckBox
+          Left = 248
+          Top = 232
+          Width = 305
+          Height = 17
+          Caption = 'Mostrar a tela do Caixa depois de confirmar a contagem'
+          DataField = 'MOSTRAR_TELA_FECHAMENTO'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          TabOrder = 22
+          ValueChecked = 'S'
+          ValueUnchecked = 'N'
+        end
       end
       object GroupBox2: TGroupBox
         Left = 16
-        Top = 235
+        Top = 259
         Width = 465
         Height = 214
         Caption = 'Usabilidade'
@@ -1828,7 +1840,7 @@ object fCupomParametros: TfCupomParametros
       end
       object GroupBox3: TGroupBox
         Left = 16
-        Top = 448
+        Top = 472
         Width = 802
         Height = 82
         Caption = 'Restaurante'
@@ -1995,7 +2007,7 @@ object fCupomParametros: TfCupomParametros
       end
       object GroupBox5: TGroupBox
         Left = 486
-        Top = 235
+        Top = 259
         Width = 331
         Height = 214
         Caption = 'Varejo'
@@ -2260,7 +2272,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 959
-        Height = 520
+        Height = 569
         Align = alClient
         TabOrder = 0
         object Label15: TLabel
@@ -2416,7 +2428,6 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
-              Width = 64
               Visible = True
             end>
         end

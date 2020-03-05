@@ -1823,6 +1823,9 @@ type
     cdsCupom_ItensID_COMANDA: TIntegerField;
     cdsCupom_ItensITEM_COMANDA: TIntegerField;
     mCupomItensID_CUPOM: TIntegerField;
+    sdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField;
+    cdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField;
+    frxCupom_Cons: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -3743,6 +3746,7 @@ begin
   cdsCupomFiscalESTOQUE_OK.AsString    := 'N';
   cdsCupomFiscalFINANCEIRO_OK.AsString := 'N';
   cdsCupomFiscalDTORIGINAL.AsDateTime  := Date;
+  cdsCupomFiscalNFEDENEGADA.AsString   := 'N';
   vSomaOriginal := 0;
 end;
 

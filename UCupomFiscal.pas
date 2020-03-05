@@ -1075,6 +1075,7 @@ begin
             vVias := fDmCupomFiscal.cdsCupomParametrosVIAS_CUPOM.AsInteger;
             if vVias <= 0 then
               vVias := 1;
+              //arrumar aqui devido o tipo de cobrança    Cleomar    05/03/2020
             fDmCupomFiscal.cdsTipoCobranca.Close;
             fDmCupomFiscal.cdsTipoCobranca.Open;
             fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
@@ -1965,7 +1966,7 @@ begin
                                                    0,
                                                    0,0,0,0,
                                                    fDMCupomFiscal.cdsCupom_ItensCANCELADO.AsString,
-                                                   '',
+                                                   fDmCupomFiscal.cdsCupomFiscalNFEDENEGADA.AsString,
                                                    fDMCupomFiscal.cdsCupom_ItensUNIDADE.AsString,
                                                    '',
                                                    fDMCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString,

@@ -16,7 +16,8 @@ uses
   dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinOffice2007Black,
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
   dxSkinPumpkin, dxSkinSharp, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
-  dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
+  dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
+  Menus;
 
 type
   TfrmConsCupom = class(TForm)
@@ -55,18 +56,23 @@ type
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     chkNFCE: TCheckBox;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
-    btnImpCarne: TNxButton;
     btnExcluir: TNxButton;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
+    PopupMenu1: TPopupMenu;
+    ImprimirCupom1: TMenuItem;
+    ImprimirCarne1: TMenuItem;
+    ImprimiraConsulta1: TMenuItem;
+    cxGrid1DBTableView1Column3: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnEnviarClick(Sender: TObject);
-    procedure btnReimprimirClick(Sender: TObject);
     procedure GridCupomDblClick(Sender: TObject);
     procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
-    procedure btnImpCarneClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure ImprimirCupom1Click(Sender: TObject);
+    procedure ImprimirCarne1Click(Sender: TObject);
+    procedure ImprimiraConsulta1Click(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
@@ -90,6 +96,9 @@ implementation
 procedure TfrmConsCupom.FormShow(Sender: TObject);
 begin
   fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
+  if not Assigned(fDmCupomFiscal) then
+    fDmCupomFiscal := TDmCupomFiscal.Create(Self);
+
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 
   fDmCupomFiscal.cdsTerminal.Open;
@@ -113,7 +122,9 @@ end;
 
 procedure TfrmConsCupom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Close;
+  if fDmCupomFiscal.Owner.ClassName  = Self.ClassName then
+    FreeAndNil(fDmCupomFiscal);
+  Action := Cafree;
   FreeAndNil(fNFCE_ACBr);
 end;
 
@@ -268,22 +279,6 @@ begin
   fDmCupomFiscal.cdsCupom_Cons.Open;
 end;
 
-procedure TfrmConsCupom.btnReimprimirClick(Sender: TObject);
-begin
-  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
-  fDmCupomFiscal.cdsCupomFiscal.Close;
-  try
-    fNFCE_ACBr.btImprimirClick(Sender);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Erro: ' + e.Message);
-    end;
-  end;
-  fDmCupomFiscal.cdsCupomFiscal.Close;
-end;
-
 procedure TfrmConsCupom.GridCupomDblClick(Sender: TObject);
 begin
   if fDmCupomFiscal.cdsCupom_Cons.IsEmpty then
@@ -304,33 +299,6 @@ begin
   ffrmConsCupomItens.fDMCupomFiscal := fDmCupomFiscal;
   ffrmConsCupomItens.ShowModal;
   FreeAndNil(ffrmConsCupomItens);
-
-end;
-
-procedure TfrmConsCupom.btnImpCarneClick(Sender: TObject);
-var
-  vArq: string;
-begin
-  if not (fDmCupomFiscal.cdsCupom_Cons.Active) or (fDmCupomFiscal.cdsCupom_Cons.IsEmpty) then
-    Exit;
-  fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
-  if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger <= 0 then
-    exit;
-  fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
-  if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString <> 'S' then
-    exit;
-  if fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString <> '' then
-    vArq := fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString
-  else
-    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\CarnePgto1.fr3';
-  if FileExists(vArq) then
-    fDmCupomFiscal.frxReport1.Report.LoadFromFile(vArq)
-  else
-  begin
-    ShowMessage('Relatório não localizado! ' + vArq);
-    Exit;
-  end;
-  fDmCupomFiscal.frxReport1.ShowReport;
 
 end;
 
@@ -363,6 +331,64 @@ begin
   end;
   fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupom_ConsID.AsInteger,'S');
   btnConsultarClick(Sender);
+end;
+
+procedure TfrmConsCupom.ImprimirCupom1Click(Sender: TObject);
+begin
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fDmCupomFiscal.cdsCupomFiscal.Close;
+  try
+    fNFCE_ACBr.btImprimirClick(Sender);
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Erro: ' + e.Message);
+    end;
+  end;
+  fDmCupomFiscal.cdsCupomFiscal.Close;
+end;
+
+procedure TfrmConsCupom.ImprimirCarne1Click(Sender: TObject);
+var
+  vArq: string;
+begin
+  if not (fDmCupomFiscal.cdsCupom_Cons.Active) or (fDmCupomFiscal.cdsCupom_Cons.IsEmpty) then
+    Exit;
+  fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  if fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger <= 0 then
+    exit;
+  fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
+  if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString <> 'S' then
+    exit;
+  if fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString <> '' then
+    vArq := fDmCupomFiscal.cdsCupomParametrosCARNE_RELATORIO.AsString
+  else
+    vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\CarnePgto1.fr3';
+  if FileExists(vArq) then
+    fDmCupomFiscal.frxReport1.Report.LoadFromFile(vArq)
+  else
+  begin
+    ShowMessage('Relatório não localizado! ' + vArq);
+    Exit;
+  end;
+  fDmCupomFiscal.frxReport1.ShowReport;
+end;
+
+procedure TfrmConsCupom.ImprimiraConsulta1Click(Sender: TObject);
+var
+  vArq : String;
+begin
+  fDmCupomFiscal.cdsCupom_Cons.IndexFieldNames := 'TIPO;SERIE;NUMCUPOM';
+  vArq := ExtractFilePath(Application.ExeName) + 'Relatorios\Cupom_Cons.fr3';
+  if FileExists(vArq) then
+  begin
+    fDmCupomFiscal.frxReport1.Report.LoadFromFile(vArq);
+    fDmCupomFiscal.frxReport1.Variables['ImpData'] := QuotedStr('Inicio: ' + dtInicial.Text + ' a ' + dtFinal.Text);
+    fDmCupomFiscal.frxReport1.ShowReport;
+  end
+  else
+    ShowMessage('Relatório não localizado! ' + vArq);
 end;
 
 end.
