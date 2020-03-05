@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, ACBrBase, ACBrECF, StrUtils, ACBrGAV, iniFiles, Messages,
-  Printers;
+  Printers, ACBrPosPrinter;
 
 type
   TdmParametros = class(TDataModule)
@@ -77,6 +77,7 @@ type
     cdsCupomParametrosGERAR_CRECEBER: TStringField;
     sdsCupomParametrosSOLICITA_CPF: TStringField;
     cdsCupomParametrosSOLICITA_CPF: TStringField;
+    ACBrPosPrinter1: TACBrPosPrinter;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

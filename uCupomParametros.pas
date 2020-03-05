@@ -235,6 +235,7 @@ type
     fDmCupomFiscal: TDmCupomFiscal;
     procedure prcHabilita;
     procedure gravarIni(Tabela, Campo, Valor: String);
+    procedure prc_Carrega_Impressora;
     function lerIni(Tabela, Campo: String): String;
   public
     fDmParametros: TDmParametros;
@@ -247,6 +248,9 @@ var
   fCupomParametros: TfCupomParametros;
 
 implementation
+
+uses
+  Printers;
 
 {$R *.dfm}
 
@@ -311,6 +315,8 @@ begin
   comboPorta.Text             := lerIni('ACBR2','Porta');
   comboImpressora.Text        := lerIni('ACBR2','Modelo');
   edtBound.Text               := lerIni('ACBR2','Boud');
+
+  prc_Carrega_Impressora;
 
 end;
 
@@ -544,6 +550,36 @@ end;
 procedure TfCupomParametros.BitBtn1Click(Sender: TObject);
 begin
   ShowMessage('Campo *Senha* da tabela *Pessoa_Fisica*!');
+end;
+
+procedure TfCupomParametros.prc_Carrega_Impressora;
+var
+  K: Integer;
+begin
+  comboPorta.Items.Clear;
+  fDmParametros.ACBrPosPrinter1.Device.AcharPortasSeriais(comboPorta.Items );
+
+  {$IfDef MSWINDOWS}
+   fDmParametros.ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters;
+   for K := 0 to fDmParametros.ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
+     comboPorta.Items.Add('USB:'+fDmParametros.ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[K].DeviceName);
+  {$EndIf}
+
+  For K := 0 to Printer.Printers.Count-1 do
+    comboPorta.Items.Add('RAW:'+Printer.Printers[K]);
+
+  comboPorta.Items.Add('LPT1') ;
+  comboPorta.Items.Add('\\localhost\Epson') ;
+  comboPorta.Items.Add('c:\temp\ecf.txt') ;
+  comboPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  {$IfNDef MSWINDOWS}
+   comboPorta.Items.Add('/dev/ttyS0') ;
+   comboPorta.Items.Add('/dev/ttyS1') ;
+   comboPorta.Items.Add('/dev/ttyUSB0') ;
+   comboPorta.Items.Add('/dev/ttyUSB1') ;
+   comboPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 end;
 
 end.
