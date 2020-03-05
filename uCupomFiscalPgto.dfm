@@ -86,7 +86,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     end
     object Label17: TLabel
       Left = 56
-      Top = 405
+      Top = 421
       Width = 114
       Height = 23
       Alignment = taRightJustify
@@ -100,22 +100,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentColor = False
       ParentFont = False
       Visible = False
-    end
-    object Label10: TLabel
-      Left = 67
-      Top = 446
-      Width = 58
-      Height = 23
-      Alignment = taRightJustify
-      Caption = 'NFCe:'
-      Color = clGradientActiveCaption
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -19
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
     end
     object DBText1: TDBText
       Left = 504
@@ -134,9 +118,26 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentColor = False
       ParentFont = False
     end
+    object Label10: TLabel
+      Left = 20
+      Top = 240
+      Width = 113
+      Height = 23
+      Alignment = taRightJustify
+      Caption = 'NFCe  (F9):'
+      Color = clGradientActiveCaption
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -19
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+      Visible = False
+    end
     object grCliente: TJvGroupBox
       Left = 13
-      Top = 272
+      Top = 288
       Width = 609
       Height = 47
       Caption = 'Cliente'
@@ -344,6 +345,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Width = 278
         Height = 207
         TabStop = False
+        Color = clSilver
         DataSource = dmCupomFiscal.dsTipoCobranca
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -467,7 +469,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     end
     object ceJuros: TCurrencyEdit
       Left = 179
-      Top = 396
+      Top = 412
       Width = 96
       Height = 32
       AutoSize = False
@@ -483,40 +485,18 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Visible = False
       OnExit = ceJurosExit
     end
-    object cbNFCe: TComboBox
-      Left = 130
-      Top = 436
-      Width = 145
-      Height = 32
-      Style = csDropDownList
-      DropDownCount = 2
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -19
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemHeight = 24
-      ItemIndex = 1
-      ParentFont = False
-      TabOrder = 3
-      Text = 'N'#195'O'
-      OnKeyDown = cbNFCeKeyDown
-      Items.Strings = (
-        'SIM'
-        'N'#195'O')
-    end
     object Edit1: TEdit
       Left = 658
       Top = 354
       Width = 57
       Height = 46
       TabStop = False
-      TabOrder = 4
+      TabOrder = 3
       Visible = False
     end
     object grVendedor: TJvGroupBox
       Left = 13
-      Top = 324
+      Top = 340
       Width = 609
       Height = 48
       Caption = 'Vendedor'
@@ -528,7 +508,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 4
       object btnVendedor: TSpeedButton
         Left = 99
         Top = 18
@@ -599,7 +579,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Height = 425
       BevelOuter = bvNone
       Color = 16645114
-      TabOrder = 6
+      TabOrder = 5
       UseDockManager = True
       Version = '2.0.1.0'
       AutoHideChildren = False
@@ -1024,6 +1004,30 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           TabOrder = 0
         end
       end
+    end
+    object cbNFCe: TComboBox
+      Left = 138
+      Top = 231
+      Width = 87
+      Height = 32
+      Style = csDropDownList
+      Color = clSilver
+      DropDownCount = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 3683329
+      Font.Height = -19
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ItemHeight = 24
+      ItemIndex = 0
+      ParentFont = False
+      TabOrder = 6
+      Text = 'SIM'
+      Visible = False
+      OnKeyDown = cbNFCeKeyDown
+      Items.Strings = (
+        'SIM'
+        'N'#195'O')
     end
   end
   object pnlBotton: TAdvPanel

@@ -44,8 +44,6 @@ type
     mPagamentosSelecionadosId: TIntegerField;
     ceJuros: TCurrencyEdit;
     Label17: TLabel;
-    Label10: TLabel;
-    cbNFCe: TComboBox;
     Edit1: TEdit;
     DBText1: TDBText;
     edtCodigoCliente: TDBEdit;
@@ -74,6 +72,8 @@ type
     pnlTroco: TAdvPanel;
     Label5: TLabel;
     edtTroco: TDBEdit;
+    Label10: TLabel;
+    cbNFCe: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure comboCondicaoPgtoChange(Sender: TObject);
@@ -133,6 +133,9 @@ type
     function fnc_valor_recebido: Real;
     procedure prc_Limpa_Campo_Cliente;
     procedure prc_Recalcular_Pagamentos;
+
+    function fnc_Verifica_Cobranca : String;
+        
   public
     { Public declarations }
     vSenhaVendedor: string;
@@ -426,6 +429,11 @@ begin
     prc_InformaVendedor
   else if (Key = Vk_F8) then
     btGavetaClick(Sender)
+  else if (Key = Vk_F9) and (cbNFCe.Visible) then
+  begin
+    if cbNFCe.ItemIndex = 0 then cbNFCe.ItemIndex := 1
+    else if cbNFCe.ItemIndex = 1 then cbNFCe.ItemIndex := 0;
+  end
   else if (Key = VK_TAB) then
   begin
     if edtValorPagamento.Focused then
@@ -1243,18 +1251,30 @@ begin
   end;
 end;
 
-procedure TfCupomFiscalPgto.prc_Grava_Pagto_Selecionado(ID: Integer; Valor:
-  Real);
+procedure TfCupomFiscalPgto.prc_Grava_Pagto_Selecionado(ID: Integer; Valor:  Real);
+var
+  vGerarAux : String;
 begin
   if mPagamentosSelecionados.Locate('ID', ID, [loCaseInsensitive]) then
     mPagamentosSelecionados.Edit
   else
     mPagamentosSelecionados.Insert;
-  mPagamentosSelecionadosId.AsInteger := ID;
+  mPagamentosSelecionadosId.AsInteger  := ID;
   mPagamentosSelecionadosValor.AsFloat := mPagamentosSelecionadosValor.AsFloat + Valor;
   mPagamentosSelecionadosNome.AsString := Trim(SQLLocate('TIPOCOBRANCA', 'ID','NOME', IntToStr(ID)));
   mPagamentosSelecionadosTipo.AsString := Trim(SQLLocate('TIPOCOBRANCA', 'ID','FORMA_PGTO', IntToStr(ID)));
   mPagamentosSelecionados.Post;
+
+  vGerarAux := fnc_Verifica_Cobranca;
+
+  Label10.Visible := (vGerarAux = 'O');
+  cbNFCe.Visible  := (vGerarAux = 'O');
+  if vGerarAux = 'S' then
+    cbNFCe.ItemIndex := 0
+  else
+  if vGerarAux = 'N' then
+    cbNFCe.ItemIndex := 1;
+
   //Desabilita a barra de rolagem da grid
   ShowScrollBar(gridPagamento.Handle, SB_VERT, False);
 end;
@@ -1370,11 +1390,6 @@ begin
   begin
     if EstadoFechVenda = FinalizandoVenda then
     begin
-
-
-
-
-
       btConfirmarClick(Sender);
       Exit;
     end;
@@ -1466,6 +1481,29 @@ begin
   EstadoFechVenda := InformandoFormaPagamento;
   edtPagamento.SetFocus;
   edtValorPagamento.FloatValue := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat - fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat;
+end;
+
+function TfCupomFiscalPgto.fnc_Verifica_Cobranca: String;
+var
+  vTexto : String;
+  vOpcional : Boolean;
+begin
+  Result    := 'O';
+  vOpcional := False;
+  mPagamentosSelecionados.First;
+  while not mPagamentosSelecionados.Eof do
+  begin
+    vTexto := Trim(SQLLocate('TIPOCOBRANCA', 'ID','GERAR_NFCE', IntToStr(mPagamentosSelecionadosId.AsInteger)));
+    if vTexto = 'S' then
+      mPagamentosSelecionados.Last
+    else
+    if vTexto = 'O' then
+      vOpcional := True;
+    mPagamentosSelecionados.Next;
+  end;
+  Result := vTexto;
+  if (vTexto <> 'S') and (vOpcional) then
+    Result := 'O';
 end;
 
 end.

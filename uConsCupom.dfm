@@ -522,14 +522,12 @@ object frmConsCupom: TfrmConsCupom
         Width = 113
         Height = 17
         Caption = 'Somente NFCe'
-        Checked = True
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
-        State = cbChecked
         TabOrder = 8
       end
       object btnImpCarne: TNxButton
