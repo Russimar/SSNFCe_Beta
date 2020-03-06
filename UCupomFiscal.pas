@@ -1490,6 +1490,9 @@ begin
             Edit1.Text := ffrmConsultaRapidaCupom.referenciaRetorno
           else
             Edit1.Text := IntToStr(ffrmConsultaRapidaCupom.codigoProdutoRetorno);
+          //06/03/2020 incluido pra posicionar o produto depois da consulta
+          Edit1Exit(nil);
+          //******************
         end
         else
         begin
