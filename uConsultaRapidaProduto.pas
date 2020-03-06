@@ -37,6 +37,8 @@ type
       Shift: TShiftState);
     procedure comboGrupoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure gridProdutoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     procedure MakeRounded(Control: TWinControl);
@@ -44,7 +46,8 @@ type
     fdmCupomFiscal : TdmCupomFiscal;
     codigoProdutoRetorno : Integer;
     referenciaRetorno : String;
-    procedure prc_Consultar;
+    procedure prc_Consultar(Edt : TEdit ; combo : TRxDBLookupCombo);
+    //procedure prc_Consultar(Campo, Tipo : String);
     { Public declarations }
   end;
 
@@ -83,10 +86,11 @@ begin
   pnlPrincipal.BorderStyle := bsNone;
   MakeRounded(pnlPrincipal);
   if (edtDescricao.Text <> EmptyStr) or (edtCodigoBarra.Text <> EmptyStr) or (edtReferencia.Text <> EmptyStr) then
-    prc_Consultar;
+    prc_Consultar(edtDescricao,nil);
 end;
 
-procedure TfrmConsultaRapidaProduto.prc_Consultar;
+procedure TfrmConsultaRapidaProduto.prc_Consultar(Edt : TEdit ; combo : TRxDBLookupCombo);
+//procedure TfrmConsultaRapidaProduto.prc_Consultar(Campo, Tipo : String);
 var
   filtro : String;
 begin
@@ -104,15 +108,21 @@ begin
     filtro := filtro + ' AND G.CODIGO LIKE' + '''' + fdmCupomFiscal.cdsConsProdutoCODIGO.AsString + '%''';
   fDmCupomFiscal.sdsConsProduto.CommandText := filtro;
   fDmCupomFiscal.cdsConsProduto.Open;
-  gridProduto.SetFocus;
+  if fdmCupomFiscal.cdsConsProduto.RecordCount > 0 then
+    gridProduto.SetFocus
+  else
+  if edt <> nil then
+    Edt.SetFocus
+  else
+    combo.SetFocus;
 end;
 
 procedure TfrmConsultaRapidaProduto.edtDescricaoKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
-    VK_RETURN : edtReferencia.SetFocus;
-    VK_DOWN : prc_Consultar;
+    //VK_RETURN : edtReferencia.SetFocus; // 06/03/2020  Cleomar
+    VK_RETURN, VK_DOWN : prc_Consultar(edtDescricao,nil);
   end;
 end;
 
@@ -139,18 +149,22 @@ begin
   begin
     Close;
     ModalResult := mrCancel;
-  end;
+  end
+  else if key = vk_F3 then edtDescricao.SetFocus
+  else if key = vk_F4 then edtReferencia.SetFocus
+  else if key = vk_F5 then edtCodigoBarra.SetFocus
+  else if key = vk_F6 then comboGrupo.SetFocus;
 
-  if Key = VK_RETURN then
-    gridProdutoDblClick(sender);
+  //if Key = VK_RETURN then  Ver com Russimar
+  //  gridProdutoDblClick(sender);
 end;
 
 procedure TfrmConsultaRapidaProduto.edtReferenciaKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
-    VK_RETURN : edtCodigoBarra.SetFocus;
-    VK_DOWN : prc_Consultar;
+    //VK_RETURN : edtCodigoBarra.SetFocus; //06/03/2020  Cleomar
+    VK_RETURN, VK_DOWN : prc_Consultar(edtReferencia,nil);
   end;
 
 end;
@@ -159,8 +173,8 @@ procedure TfrmConsultaRapidaProduto.edtCodigoBarraKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
-    VK_RETURN : comboGrupo.SetFocus;
-    VK_DOWN : prc_Consultar;
+    //VK_RETURN : comboGrupo.SetFocus;  06/03/2020 Cleomar
+    VK_RETURN, VK_DOWN : prc_Consultar(edtCodigoBarra,nil);
   end;
 end;
 
@@ -168,10 +182,17 @@ procedure TfrmConsultaRapidaProduto.comboGrupoKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
-    VK_RETURN : prc_Consultar;
-    VK_DOWN : prc_Consultar;
+    //VK_RETURN : prc_Consultar;   06/03/2020  Cleomar
+    VK_RETURN, VK_DOWN : prc_Consultar(nil,comboGrupo);
   end;
 
+end;
+
+procedure TfrmConsultaRapidaProduto.gridProdutoKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    gridProdutoDblClick(Sender);
 end;
 
 end.

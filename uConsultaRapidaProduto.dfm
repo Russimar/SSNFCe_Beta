@@ -20,7 +20,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 150
     Top = 0
     Width = 1050
-    Height = 594
+    Height = 593
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -51,7 +51,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       Left = 0
       Top = 45
       Width = 1050
-      Height = 65
+      Height = 71
       Align = alTop
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -78,10 +78,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       FullHeight = 0
       object RxLabel1: TRxLabel
         Left = 56
-        Top = 8
-        Width = 94
-        Height = 23
-        Caption = 'Descri'#231#227'o'
+        Top = 19
+        Width = 143
+        Height = 24
+        Caption = 'Descri'#231#227'o (F3)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -93,10 +93,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object RxLabel2: TRxLabel
         Left = 309
-        Top = 8
-        Width = 101
-        Height = 23
-        Caption = 'Refer'#234'ncia'
+        Top = 19
+        Width = 150
+        Height = 24
+        Caption = 'Refer'#234'ncia (F4)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -108,10 +108,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object RxLabel4: TRxLabel
         Left = 816
-        Top = 8
-        Width = 61
-        Height = 23
-        Caption = 'Grupo'
+        Top = 19
+        Width = 110
+        Height = 24
+        Caption = 'Grupo (F6)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -123,10 +123,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object RxLabel3: TRxLabel
         Left = 563
-        Top = 8
-        Width = 126
-        Height = 23
-        Caption = 'C'#243'digo Barra'
+        Top = 19
+        Width = 175
+        Height = 24
+        Caption = 'C'#243'digo Barra (F5)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -138,9 +138,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object edtDescricao: TEdit
         Left = 56
-        Top = 32
+        Top = 43
         Width = 241
         Height = 27
+        CharCase = ecUpperCase
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -152,9 +153,10 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object edtReferencia: TEdit
         Left = 309
-        Top = 32
+        Top = 43
         Width = 241
         Height = 27
+        CharCase = ecUpperCase
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -166,7 +168,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object edtCodigoBarra: TEdit
         Left = 563
-        Top = 32
+        Top = 43
         Width = 241
         Height = 27
         Font.Charset = DEFAULT_CHARSET
@@ -180,7 +182,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       end
       object comboGrupo: TRxDBLookupCombo
         Left = 816
-        Top = 32
+        Top = 43
         Width = 201
         Height = 27
         DropDownCount = 8
@@ -199,7 +201,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     end
     object pnlPrincipal: TAdvPanel
       Left = 0
-      Top = 127
+      Top = 133
       Width = 1050
       Height = 386
       Align = alTop
@@ -242,6 +244,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         Font.Style = [fsBold]
         Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
         ParentFont = False
+        ReadOnly = True
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -249,6 +252,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         TitleFont.Name = 'Verdana'
         TitleFont.Style = []
         OnDblClick = gridProdutoDblClick
+        OnKeyDown = gridProdutoKeyDown
         Flat = False
         BandsFont.Charset = DEFAULT_CHARSET
         BandsFont.Color = clWindowText
@@ -384,7 +388,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     end
     object pnlDivisao: TAdvPanel
       Left = 0
-      Top = 110
+      Top = 116
       Width = 1050
       Height = 17
       Align = alTop
@@ -419,7 +423,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 0
     Top = 0
     Width = 150
-    Height = 594
+    Height = 593
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -432,7 +436,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 1200
     Top = 0
     Width = 150
-    Height = 594
+    Height = 593
     Align = alRight
     BevelInner = bvNone
     BevelOuter = bvNone

@@ -1468,6 +1468,8 @@ begin
 end;
 
 procedure TfCupomFiscal.prc_EnterCodigo(ConsultaAutomatica : Boolean = False);
+var
+  vPrimeiroAux : String;
 begin
   if (Trim(Edit1.Text) <> '') then
   begin
@@ -1478,8 +1480,14 @@ begin
     begin
       ffrmConsultaRapidaCupom := TfrmConsultaRapidaProduto.Create(nil);
       try
+        vPrimeiroAux := copy(Edit1.Text,1,1);
         if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
-          ffrmConsultaRapidaCupom.edtReferencia.Text := UpperCase(Edit1.Text)
+        begin
+          if not fnc_Verifica_Numero(vPrimeiroAux) then
+            ffrmConsultaRapidaCupom.edtDescricao.Text := UpperCase(Edit1.Text)
+          else
+            ffrmConsultaRapidaCupom.edtReferencia.Text := UpperCase(Edit1.Text)
+        end
         else
           ffrmConsultaRapidaCupom.edtDescricao.Text := UpperCase(Edit1.Text);
         ffrmConsultaRapidaCupom.fdmCupomFiscal := fDmCupomFiscal;
