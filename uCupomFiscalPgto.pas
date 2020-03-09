@@ -482,6 +482,16 @@ begin
     edtValorPagamento.SetFocus;
     Exit;
   end;
+  vGeraNFCe := False;
+  if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') then// and
+//    (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
+    vGeraNFCe := (cbNFCe.ItemIndex = 0);
+  if (vGeraNFCe) and (trim(fDmCupomFiscal.cdsFilialINSCR_EST.AsString) = '') then
+  begin
+    MessageDlg('*** Inscrição Estadual da Filial esta informada incorretamente!', mtInformation, [mbOk], 0);
+    exit;
+  end;
+
   vExigeCliente := False;
   //20/02/2020
   fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger := 0;
@@ -594,11 +604,6 @@ begin
   fDmCupomFiscal.vNome_Consumidor := '';
 
   try
-    vGeraNFCe := False;
-    if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') then// and
-//      (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
-      vGeraNFCe := cbNFCe.ItemIndex = 0;
-
     if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') and ((fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger <= 0) or
         (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'COM') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') or
         (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'PED')) then
