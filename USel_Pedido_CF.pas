@@ -6,7 +6,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, RxLookup, StdCtrls,
   UDMCupomFiscal, Buttons, Grids, DBGrids, SMDBGrid, DB, UCupomFiscal, NxCollection, SqlExpr,
-  Mask, ToolEdit;
+  Mask, ToolEdit, CurrEdit;
 
 type
   TfrmSel_Pedido_CF = class(TForm)    
@@ -24,12 +24,16 @@ type
     Label4: TLabel;
     DateEdit1: TDateEdit;
     Label3: TLabel;
+    Label5: TLabel;
+    CurrencyEdit1: TCurrencyEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure SMDBGrid1GetCellParams(Sender: TObject; Field: TField;
       AFont: TFont; var Background: TColor; Highlight: Boolean);
     procedure btnPesquisarClick(Sender: TObject);
     procedure btnImportarClick(Sender: TObject);
+    procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     procedure prc_Consultar_Pedido(ID: Integer = 0; Item_Pedido: Integer = 0);
@@ -99,6 +103,9 @@ begin
   SMDBGrid1.DisableScroll;
   fDMCupomFiscal.cdsPedido.Close;
   fDMCupomFiscal.sdsPedido.CommandText := fDMCupomFiscal.ctPedido;
+  if CurrencyEdit1.AsInteger > 0 then
+    fDMCupomFiscal.sdsPedido.CommandText := fDMCupomFiscal.sdsPedido.CommandText + ' AND PE.NUM_PEDIDO = ' + IntToStr(CurrencyEdit1.AsInteger)
+  else
   if DateEdit1.Date > 0 then
     fDMCupomFiscal.sdsPedido.CommandText := fDMCupomFiscal.sdsPedido.CommandText + ' AND DTEMISSAO >= ' +
                                             QuotedStr(FormatDateTime('MM/DD/YYYY',DateEdit1.Date));
@@ -180,6 +187,11 @@ var
   vFlag: Boolean;
   vTexto: String;
 begin
+  //11/03/2020
+  if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+    ffCupomFiscal2.prc_Inserir;
+  //*********************
+
   //28/01/2017
   fDMCupomFiscal.qPedido_Cupom.Close;
   fDMCupomFiscal.qPedido_Cupom.ParamByName('ID').AsInteger := fDMCupomFiscal.cdsPedidoID.AsInteger;
@@ -437,7 +449,7 @@ begin
         else
         if StrToFloat(FormatFloat('0.000000',fDMCupomFiscal.cdsPedidoQTD_AFATURAR.AsFloat)) > StrToFloat(FormatFloat('0.000000',0)) then
         begin
-          if not fDMCupomFiscal.cdsCupom_Itens.Locate('Num_Pedido;Item_Pedido',VarArrayOf([fDMCupomFiscal.cdsPedidoNUM_PEDIDO.AsInteger,fDMCupomFiscal.cdsPedidoITEM.AsInteger]),[locaseinsensitive]) then
+          if not(fDMCupomFiscal.cdsCupom_Itens.Active) or not(fDMCupomFiscal.cdsCupom_Itens.Locate('Num_Pedido;Item_Pedido',VarArrayOf([fDMCupomFiscal.cdsPedidoNUM_PEDIDO.AsInteger,fDMCupomFiscal.cdsPedidoITEM.AsInteger]),[locaseinsensitive])) then
             prc_Gravar_NotaItens;
         end
         else
@@ -591,6 +603,13 @@ begin
   finally
     FreeAndNil(sds);
   end;
+end;
+
+procedure TfrmSel_Pedido_CF.CurrencyEdit1KeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if key = vk_Return then
+    btnPesquisarClick(Sender);
 end;
 
 end.

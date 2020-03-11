@@ -153,7 +153,6 @@ type
     procedure prcPesa;
     procedure Le_CupomFiscalParc;
     procedure prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);
-    procedure prc_Inserir;
     procedure Gravar_Estoque(vFinanceiro: Boolean);
     procedure prc_PosicionaFormaPgto(vId: Integer);
     procedure Gravar_CReceber;
@@ -197,6 +196,7 @@ type
     procedure prc_ConsPreco;
     procedure prc_Move_Itens;
     procedure prc_Form_Cartao;
+    procedure prc_Inserir;
 
     function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
     function fnc_Validacao_OK: Boolean;

@@ -21,7 +21,7 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
     Left = 0
     Top = 0
     Width = 1100
-    Height = 40
+    Height = 59
     Align = alTop
     Color = clMoneyGreen
     TabOrder = 0
@@ -48,14 +48,14 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
       ParentFont = False
     end
     object Shape2: TShape
-      Left = 328
+      Left = 344
       Top = 18
       Width = 28
       Height = 15
       Brush.Color = clGreen
     end
     object Label2: TLabel
-      Left = 358
+      Left = 374
       Top = 20
       Width = 118
       Height = 13
@@ -68,14 +68,14 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
       ParentFont = False
     end
     object Shape3: TShape
-      Left = 520
+      Left = 536
       Top = 18
       Width = 28
       Height = 15
       Brush.Color = clSilver
     end
     object Label4: TLabel
-      Left = 550
+      Left = 566
       Top = 20
       Width = 191
       Height = 13
@@ -88,16 +88,24 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
       ParentFont = False
     end
     object Label3: TLabel
-      Left = 35
+      Left = 51
       Top = 16
       Width = 51
       Height = 13
       Alignment = taRightJustify
       Caption = 'A partir de:'
     end
+    object Label5: TLabel
+      Left = 15
+      Top = 38
+      Width = 87
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'N'#186' Pedido Interno:'
+    end
     object btnPesquisar: TNxButton
-      Left = 184
-      Top = 4
+      Left = 198
+      Top = 22
       Width = 120
       Height = 30
       Caption = 'Pesquisar'
@@ -163,26 +171,39 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
         FFFEFFFAFEF9FEFCFBFFFDFEFDFEFE000000}
       GlyphSpacing = 5
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 2
       Transparent = True
       OnClick = btnPesquisarClick
     end
     object DateEdit1: TDateEdit
-      Left = 89
+      Left = 104
       Top = 11
-      Width = 90
+      Width = 92
       Height = 21
       Ctl3D = False
       NumGlyphs = 2
       ParentCtl3D = False
+      TabOrder = 0
+    end
+    object CurrencyEdit1: TCurrencyEdit
+      Left = 104
+      Top = 31
+      Width = 92
+      Height = 21
+      AutoSize = False
+      Ctl3D = False
+      DecimalPlaces = 0
+      DisplayFormat = '0'
+      ParentCtl3D = False
       TabOrder = 1
+      OnKeyDown = CurrencyEdit1KeyDown
     end
   end
   object SMDBGrid1: TSMDBGrid
     Left = 0
-    Top = 40
+    Top = 59
     Width = 1100
-    Height = 371
+    Height = 351
     Align = alClient
     Ctl3D = False
     DataSource = dmCupomFiscal.dsPedido
@@ -442,7 +463,7 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
   end
   object Panel2: TPanel
     Left = 0
-    Top = 473
+    Top = 472
     Width = 1100
     Height = 37
     Align = alBottom
@@ -525,7 +546,7 @@ object frmSel_Pedido_CF: TfrmSel_Pedido_CF
   end
   object SMDBGrid6: TSMDBGrid
     Left = 0
-    Top = 411
+    Top = 410
     Width = 1100
     Height = 62
     Align = alBottom
