@@ -217,6 +217,7 @@ type
     Label86: TLabel;
     edtLarguraBobina: TEdit;
     DBCheckBox1: TDBCheckBox;
+    DBCheckBox2: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

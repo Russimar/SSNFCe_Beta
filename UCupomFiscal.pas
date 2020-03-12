@@ -269,7 +269,7 @@ begin
   fDmCupomFiscal.cdsTipoCobranca.Open;
   fDmCupomFiscal.prc_Abrir_CondPgto;
   fDmCupomFiscal.cdsVendedor.Open;
-
+  
   vSerieCupom := fDmCupomFiscal.lerIni('IMPRESSORA', 'Serie');
   vCpfOK := False;
   vDocumentoClienteVenda := '';

@@ -1826,6 +1826,8 @@ type
     sdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField;
     cdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField;
     frxCupom_Cons: TfrxDBDataset;
+    sdsCupomParametrosMOSTRAR_MATERIAL: TStringField;
+    cdsCupomParametrosMOSTRAR_MATERIAL: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);

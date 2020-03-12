@@ -2887,6 +2887,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosMOSTRAR_MATERIAL: TStringField
+      FieldName = 'MOSTRAR_MATERIAL'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3209,6 +3214,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomParametrosMOSTRAR_TELA_FECHAMENTO: TStringField
       FieldName = 'MOSTRAR_TELA_FECHAMENTO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosMOSTRAR_MATERIAL: TStringField
+      FieldName = 'MOSTRAR_MATERIAL'
       FixedChar = True
       Size = 1
     end

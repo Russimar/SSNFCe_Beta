@@ -96,7 +96,10 @@ var
 begin
   filtro := fDmCupomFiscal.ctConsProduto;
   filtro := filtro + ' WHERE 0 = 0 AND P.INATIVO = ' + QuotedStr('N');
-  filtro := filtro + ' AND P.TIPO_REG = ' + QuotedStr('P');
+  if fdmCupomFiscal.cdsCupomParametrosMOSTRAR_MATERIAL.AsString = 'S' then
+    filtro := filtro + ' AND (P.TIPO_REG = ' + QuotedStr('P') + ' OR P.TIPO_REG = ' + QuotedStr('M') + ')'
+  else
+    filtro := filtro + ' AND P.TIPO_REG = ' + QuotedStr('P');
   fDmCupomFiscal.cdsConsProduto.Close;
   if edtDescricao.Text <> EmptyStr then
     filtro := filtro + ' AND P.NOME LIKE ' + '''' + edtDescricao.Text + '%''';

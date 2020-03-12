@@ -1837,6 +1837,18 @@ object fCupomParametros: TfCupomParametros
             'D'
             'S')
         end
+        object DBCheckBox2: TDBCheckBox
+          Left = 144
+          Top = 189
+          Width = 305
+          Height = 17
+          Caption = 'Mostrar na Cons. dos Produtos os Materiais'
+          DataField = 'MOSTRAR_MATERIAL'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          TabOrder = 8
+          ValueChecked = 'S'
+          ValueUnchecked = 'N'
+        end
       end
       object GroupBox3: TGroupBox
         Left = 16
@@ -2428,6 +2440,7 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
+              Width = 64
               Visible = True
             end>
         end

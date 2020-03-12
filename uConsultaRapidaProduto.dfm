@@ -1,6 +1,6 @@
 object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
-  Left = 0
-  Top = 31
+  Left = 51
+  Top = 71
   Width = 1366
   Height = 632
   Caption = 'Consulta Rapida de Produto'
@@ -79,8 +79,8 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       object RxLabel1: TRxLabel
         Left = 56
         Top = 19
-        Width = 143
-        Height = 24
+        Width = 142
+        Height = 23
         Caption = 'Descri'#231#227'o (F3)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -94,8 +94,8 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       object RxLabel2: TRxLabel
         Left = 309
         Top = 19
-        Width = 150
-        Height = 24
+        Width = 149
+        Height = 23
         Caption = 'Refer'#234'ncia (F4)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -109,8 +109,8 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       object RxLabel4: TRxLabel
         Left = 816
         Top = 19
-        Width = 110
-        Height = 24
+        Width = 109
+        Height = 23
         Caption = 'Grupo (F6)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -124,8 +124,8 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
       object RxLabel3: TRxLabel
         Left = 563
         Top = 19
-        Width = 175
-        Height = 24
+        Width = 174
+        Height = 23
         Caption = 'C'#243'digo Barra (F5)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -381,7 +381,6 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end>
       end

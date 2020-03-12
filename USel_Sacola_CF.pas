@@ -166,6 +166,12 @@ begin
     MessageDlg('*** Sacola não está com os produtos cadastrados!', mtError, [mbOk], 0);
     exit;
   end;
+
+  //12/03/2020
+  if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+    ffCupomFiscal2.prc_Inserir;
+  //*********************
+
   ffCupomFiscal2.vSacolaSelecionada := True;
   vVlrSacola    := CurrencyEdit2.Value;
   vVlrCalculado := fnc_Calcular_Preco;
