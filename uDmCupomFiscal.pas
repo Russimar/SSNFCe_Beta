@@ -1828,6 +1828,10 @@ type
     frxCupom_Cons: TfrxDBDataset;
     sdsCupomParametrosMOSTRAR_MATERIAL: TStringField;
     cdsCupomParametrosMOSTRAR_MATERIAL: TStringField;
+    sdsCupomParametrosIMPRESSORA_COZINHA: TStringField;
+    sdsCupomParametrosIMPRESSORA_COPA: TStringField;
+    cdsCupomParametrosIMPRESSORA_COZINHA: TStringField;
+    cdsCupomParametrosIMPRESSORA_COPA: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);

@@ -218,6 +218,10 @@ type
     edtLarguraBobina: TEdit;
     DBCheckBox1: TDBCheckBox;
     DBCheckBox2: TDBCheckBox;
+    Label87: TLabel;
+    DBEdit14: TDBEdit;
+    Label89: TLabel;
+    DBEdit15: TDBEdit;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

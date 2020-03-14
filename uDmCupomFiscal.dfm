@@ -2892,6 +2892,14 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosIMPRESSORA_COZINHA: TStringField
+      FieldName = 'IMPRESSORA_COZINHA'
+      Size = 150
+    end
+    object sdsCupomParametrosIMPRESSORA_COPA: TStringField
+      FieldName = 'IMPRESSORA_COPA'
+      Size = 150
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3221,6 +3229,14 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'MOSTRAR_MATERIAL'
       FixedChar = True
       Size = 1
+    end
+    object cdsCupomParametrosIMPRESSORA_COZINHA: TStringField
+      FieldName = 'IMPRESSORA_COZINHA'
+      Size = 150
+    end
+    object cdsCupomParametrosIMPRESSORA_COPA: TStringField
+      FieldName = 'IMPRESSORA_COPA'
+      Size = 150
     end
   end
   object sdsSitTribCF: TSQLDataSet

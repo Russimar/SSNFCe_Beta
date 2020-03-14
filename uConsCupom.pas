@@ -63,6 +63,7 @@ type
     ImprimirCarne1: TMenuItem;
     ImprimiraConsulta1: TMenuItem;
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
+    cxGrid1DBTableView1Column4: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

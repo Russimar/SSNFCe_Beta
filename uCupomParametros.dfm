@@ -1,8 +1,8 @@
 object fCupomParametros: TfCupomParametros
-  Left = 103
-  Top = 26
-  Width = 983
-  Height = 671
+  Left = 162
+  Top = 11
+  Width = 1095
+  Height = 724
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'fCupomParametros'
   Color = clBtnFace
@@ -31,7 +31,7 @@ object fCupomParametros: TfCupomParametros
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 967
+    Width = 1079
     Height = 35
     Align = alTop
     Color = 8404992
@@ -87,8 +87,8 @@ object fCupomParametros: TfCupomParametros
   object PageControl1: TPageControl
     Left = 0
     Top = 35
-    Width = 967
-    Height = 597
+    Width = 1079
+    Height = 650
     ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
@@ -97,8 +97,8 @@ object fCupomParametros: TfCupomParametros
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 959
-        Height = 569
+        Width = 1071
+        Height = 622
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -819,14 +819,14 @@ object fCupomParametros: TfCupomParametros
         end
         object GroupBox9: TGroupBox
           Left = 4
-          Top = 436
+          Top = 430
           Width = 317
-          Height = 92
+          Height = 99
           Caption = ' Configura'#231#227'o NFCe '
           TabOrder = 4
           object Label71: TLabel
             Left = 36
-            Top = 24
+            Top = 19
             Width = 80
             Height = 13
             Alignment = taRightJustify
@@ -834,7 +834,7 @@ object fCupomParametros: TfCupomParametros
           end
           object Label72: TLabel
             Left = 10
-            Top = 48
+            Top = 43
             Width = 105
             Height = 13
             Alignment = taRightJustify
@@ -842,7 +842,7 @@ object fCupomParametros: TfCupomParametros
           end
           object RxDBComboBox42: TRxDBComboBox
             Left = 118
-            Top = 16
+            Top = 11
             Width = 187
             Height = 21
             Style = csDropDownList
@@ -861,7 +861,7 @@ object fCupomParametros: TfCupomParametros
           end
           object DBEdit13: TDBEdit
             Left = 118
-            Top = 40
+            Top = 35
             Width = 67
             Height = 21
             DataField = 'SENHA_CANCELAR_CUPOM'
@@ -1854,7 +1854,7 @@ object fCupomParametros: TfCupomParametros
         Left = 16
         Top = 472
         Width = 802
-        Height = 82
+        Height = 123
         Caption = 'Restaurante'
         Enabled = False
         TabOrder = 3
@@ -1905,6 +1905,22 @@ object fCupomParametros: TfCupomParametros
           Height = 13
           Alignment = taRightJustify
           Caption = 'Permite Rachar a Conta:'
+        end
+        object Label87: TLabel
+          Left = 149
+          Top = 84
+          Width = 95
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Impressora Cozinha:'
+        end
+        object Label89: TLabel
+          Left = 162
+          Top = 105
+          Width = 82
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Impressora Copa:'
         end
         object RxDBComboBox7: TRxDBComboBox
           Left = 246
@@ -2015,6 +2031,24 @@ object fCupomParametros: TfCupomParametros
           Values.Strings = (
             'S'
             'N')
+        end
+        object DBEdit14: TDBEdit
+          Left = 246
+          Top = 76
+          Width = 538
+          Height = 21
+          DataField = 'IMPRESSORA_COZINHA'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          TabOrder = 6
+        end
+        object DBEdit15: TDBEdit
+          Left = 246
+          Top = 97
+          Width = 538
+          Height = 21
+          DataField = 'IMPRESSORA_COPA'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          TabOrder = 7
         end
       end
       object GroupBox5: TGroupBox
@@ -2283,8 +2317,8 @@ object fCupomParametros: TfCupomParametros
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 959
-        Height = 569
+        Width = 1071
+        Height = 622
         Align = alClient
         TabOrder = 0
         object Label15: TLabel

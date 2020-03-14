@@ -1027,6 +1027,8 @@ begin
   vFilial := vFilial_Loc;
   if fDmCupomFiscal.cdsCupomFiscal.IsEmpty then
     Exit;
+  if fDmCupomFiscal.cdsCupom_Itens.IsEmpty then
+    Exit;
   if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat)) then
   begin
     MessageDlg('*** Vlr da Troca maior que o valor do cupom!' + #13 + #13
@@ -1322,6 +1324,8 @@ begin
 end;
 
 procedure TfCupomFiscal.btComandaClick(Sender: TObject);
+var
+  vID : Integer;
 begin
   if not(fDmCupomFiscal.cdsCupomFiscal.Active) or ((fDmCupomFiscal.cdsCupom_Itens.IsEmpty) and (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) <= 0)) then
   begin
@@ -1340,6 +1344,20 @@ begin
     ShowMessage('Para gravação da comanda não pode ter valor de troca!');
     Exit;
   end;
+  if fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger <= 0 then
+  begin
+    fDmCupomFiscal.vNumCartao := 0;
+    fCartao := TfCartao.Create(Self);
+    fCartao.fDmCupomFiscal := fDmCupomFiscal;
+    fCartao.ShowModal;
+    vID := fDmCupomFiscal.fnc_Existe_Cartao_Pendente(fDmCupomFiscal.vNumCartao);
+    if vID > 0 then
+    begin
+      ShowMessage('Nº Cartão já esta em uso!');
+      Exit;
+    end;
+  end;
+
   fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'COM';
   FinalizaParcial('COM');
 end;

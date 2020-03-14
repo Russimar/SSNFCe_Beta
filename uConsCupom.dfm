@@ -86,6 +86,9 @@ object frmConsCupom: TfrmConsCupom
           Options.Editing = False
           Width = 54
         end
+        object cxGrid1DBTableView1Column4: TcxGridDBColumn
+          DataBinding.FieldName = 'NUM_CARTAO'
+        end
         object cxGrid1DBTableView1VLR_TOTAL: TcxGridDBColumn
           DataBinding.FieldName = 'VLR_TOTAL'
           HeaderAlignmentHorz = taCenter
