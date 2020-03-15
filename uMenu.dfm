@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 202
-  Top = 19
+  Left = 227
+  Top = 145
   Width = 1000
   Height = 673
   Caption = 'Menu Principal'
@@ -2998,5 +2998,11 @@ object fMenu: TfMenu
     WindowsPosition = poMainFormCenter
     Left = 264
     Top = 8
+  end
+  object JvThreadTimer1: TJvThreadTimer
+    Delay = 20000
+    OnTimer = JvThreadTimer1Timer
+    Left = 512
+    Top = 320
   end
 end

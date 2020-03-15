@@ -8,6 +8,8 @@ uses
 
   function fnc_Inicio_Cupom(fDMCupomFiscal: TDMCupomFiscal ; fDMParametros: TDMParametros) : Boolean;
 
+  procedure prc_Imp_Pedido_Mesa;
+
 implementation
 
 function fnc_Inicio_Cupom(fDMCupomFiscal: TDMCupomFiscal ; fDMParametros: TDMParametros) : Boolean;
@@ -42,6 +44,40 @@ begin
     ShowMessage('Série da NFCe não informada na Filial!');
     Result := False;
   end;}
+end;
+
+procedure prc_Imp_Pedido_Mesa;
+var
+  sds: TSQLDataSet;
+begin
+  sds := TSQLDataSet.Create(nil);
+  try
+    sds.SQLConnection := dmDatabase.scoDados;
+    sds.NoMetadata    := True;
+    sds.GetMetadata   := False;
+    sds.CommandText   := 'SELECT C.ID, C.numcupom, C.num_cartao, C.num_mesa, I.item, I.data_hora_pedido, I.id_produto, '
+                       + 'P.NOME NOME_PRODUTO, P.REFERENCIA, G.id ID_GRUPO, G.local_impressao, i.qtd, i.observacao '
+                       + 'FROM CUPOMFISCAL C '
+                       + 'INNER JOIN CUPOMFISCAL_ITENS I ON C.ID = I.ID '
+                       + 'INNER JOIN PRODUTO P ON I.ID_PRODUTO = P.ID '
+                       + 'LEFT JOIN GRUPO G ON P.id_grupo = G.ID '
+                       + 'WHERE I.status = ' + QuotedStr('A')
+                       + '     AND I.cancelado = ' + QuotedStr('N');
+    sds.Open;
+    while not sds.Eof do
+    begin
+      //Russimar
+      //aqui imprimir no posprinter;
+      //Depois de imprimir gravar STATUS = 'I' de impresso    esse campo esta na tabela CUPOMFISCAL_ITENS.
+      // Se tu olhar ali encima o where é pego pelo status = 'A' que significa Aguardando
+
+      sds.next;
+    end;
+
+  finally
+    FreeAndNil(sds);
+  end;
+
 end;
 
 end.

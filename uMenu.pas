@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, Menus, ImgList, ComCtrls, jpeg,
   ToolWin, StdCtrls, uDmParametros, DB,  ShellAPI, StrUtils, IniFiles, Buttons, UCBase, UCDBXConn, SpeedBar, RLConsts, TypInfo,
-  uDmCadFechamento, uDmEstoque, SqlExpr;
+  uDmCadFechamento, uDmEstoque, SqlExpr, JvComponent, JvThreadTimer;
 
 type
   TfMenu = class(TForm)
@@ -60,6 +60,7 @@ type
     ConfiguraoCertificado1: TMenuItem;
     Consultas1: TMenuItem;
     Consultatrocas1: TMenuItem;
+    JvThreadTimer1: TJvThreadTimer;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedItem5Click(Sender: TObject);
@@ -90,6 +91,7 @@ type
     procedure ConfiguraoCertificado1Click(Sender: TObject);
     procedure btnNFCeClick(Sender: TObject);
     procedure Consultatrocas1Click(Sender: TObject);
+    procedure JvThreadTimer1Timer(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -114,7 +116,7 @@ implementation
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
   DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2,
-  uConsTrocas;
+  uConsTrocas, uUtilCupom;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -723,6 +725,13 @@ end;
 procedure TfMenu.Consultatrocas1Click(Sender: TObject);
 begin
   OpenForm(TfrmConsTrocas,wsMaximized);
+end;
+
+procedure TfMenu.JvThreadTimer1Timer(Sender: TObject);
+begin
+  //Programei o timer em 20 segundo, a cada 20 segundo ele dispara a procedure abaixo para imprimir
+  //Depois monto um parametros pra esse campo segundos.
+  uUtilCupom.prc_Imp_Pedido_Mesa;
 end;
 
 end.
