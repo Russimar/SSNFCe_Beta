@@ -8,7 +8,7 @@ uses
 
   function fnc_Inicio_Cupom(fDMCupomFiscal: TDMCupomFiscal ; fDMParametros: TDMParametros) : Boolean;
 
-  procedure prc_Imp_Pedido_Mesa;
+  procedure prc_Imp_Pedido_Mesa(Local : String);
 
 implementation
 
@@ -46,7 +46,7 @@ begin
   end;}
 end;
 
-procedure prc_Imp_Pedido_Mesa;
+procedure prc_Imp_Pedido_Mesa(Local : String);
 var
   sds: TSQLDataSet;
 begin
@@ -62,7 +62,10 @@ begin
                        + 'INNER JOIN PRODUTO P ON I.ID_PRODUTO = P.ID '
                        + 'LEFT JOIN GRUPO G ON P.id_grupo = G.ID '
                        + 'WHERE I.status = ' + QuotedStr('A')
-                       + '     AND I.cancelado = ' + QuotedStr('N');
+                       + '     AND I.cancelado = ' + QuotedStr('N')
+                       + '     AND G.LOCAL_IMPRESSAO = ' + QuotedStr(Local)
+                       + ' ORDER BY I.data_hora_pedido ';
+
     sds.Open;
     while not sds.Eof do
     begin

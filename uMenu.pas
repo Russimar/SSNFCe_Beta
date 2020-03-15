@@ -197,6 +197,12 @@ begin
 //  fDmParametros.SetDefaultPrinter(vPorta);
   vImpressora_Padrao := DefaultPrinter;
   HabilitaMenu;
+
+  //Russimar, aqui teria que ver se é ou não para imprimir na cozinha ou na copa e buscar do impressora.ini, e ai sim vamos ver se
+  //ativamos o Timer
+  if Imp_Ped_Cozinha_Copa = 'S' then
+    JvThreadTimer1.Active := True;
+
 end;
 
 procedure TfMenu.FormCreate(Sender: TObject);
@@ -729,9 +735,13 @@ end;
 
 procedure TfMenu.JvThreadTimer1Timer(Sender: TObject);
 begin
+Russimar
   //Programei o timer em 20 segundo, a cada 20 segundo ele dispara a procedure abaixo para imprimir
   //Depois monto um parametros pra esse campo segundos.
-  uUtilCupom.prc_Imp_Pedido_Mesa;
+  //Imprime Pedido teria que estar dentro do Config.ini ou impressora.ini, isto é, teriamos que ter em cada máquina pra saber se
+  //vai imprimir ou não o pedido, qual que vai imprimir
+  //Local_Impressao : teriamos que tb colocar no Impressora.ini para saber se esta máquina esta na Cozinha ou na Copa.
+  uUtilCupom.prc_Imp_Pedido_Mesa(Local_Impressao);
 end;
 
 end.
