@@ -17,7 +17,7 @@ uses
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
   dxSkinPumpkin, dxSkinSharp, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
-  Menus;
+  Menus, RzPanel;
 
 type
   TfrmConsCupom = class(TForm)
@@ -64,6 +64,10 @@ type
     ImprimiraConsulta1: TMenuItem;
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
     cxGrid1DBTableView1Column4: TcxGridDBColumn;
+    Label4: TLabel;
+    ComboVendedor: TRxDBLookupCombo;
+    gbxVendedor: TRzGroupBox;
+    SMDBGrid2: TSMDBGrid;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -78,6 +82,7 @@ type
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
     procedure prc_Consultar;
+    procedure prc_Consultar_Total_FormaPagto;
   public
     { Public declarations }
     fDmCupomFiscal: TDmCupomFiscal;
@@ -119,6 +124,7 @@ end;
 procedure TfrmConsCupom.btnConsultarClick(Sender: TObject);
 begin
   prc_Consultar;
+  prc_Consultar_Total_FormaPagto;
 end;
 
 procedure TfrmConsCupom.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -133,6 +139,7 @@ procedure TfrmConsCupom.btnEnviarClick(Sender: TObject);
 var
   NumCupom: string;
   i, Selecionado: integer;
+  IDCupomAux : integer;
 begin
   if vCancelar then
   begin
@@ -141,6 +148,7 @@ begin
       MessageDlg('*** Cupom já cancelado!', mtInformation, [mbOk], 0);
       exit;
     end;
+    IDCupomAux := fDmCupomFiscal.cdsCupom_ConsID.AsInteger; 
     NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
     if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom, mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
@@ -150,6 +158,7 @@ begin
     fDmCupomFiscal.cdsCupomFiscal.Close;
     try
       fNFCE_ACBr.btCancelarClick(Sender);
+      fDmCupomFiscal.prc_Voltar_Comanda(IDCupomAux);
     except
       on E: Exception do
       begin
@@ -274,7 +283,9 @@ begin
   if cbNEnviados.Checked then
     vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
   if edtSerie.Text <> EmptyStr then
-    vComando := vComando + ' AND CF.SERIE = ' + edtSerie.Text;
+    vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
+  if ComboVendedor.Text <> '' then
+    vComando := vComando + ' AND CF.ID_VENDEDOR = ' + IntToStr(ComboVendedor.KeyValue);
   vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
   fDmCupomFiscal.cdsCupom_Cons.Open;
@@ -390,6 +401,34 @@ begin
   end
   else
     ShowMessage('Relatório não localizado! ' + vArq);
+end;
+
+procedure TfrmConsCupom.prc_Consultar_Total_FormaPagto;;
+begin
+  fDmCupomFiscal.cdscdsTotais.Close;
+  fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.ctTotais;
+  if ComboTerminal.Text <> '' then
+    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND TERMINAL = ' + ComboTerminal.Value;
+  if ComboVendedor.Text <> '' then
+    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND ID_VENDEDOR = ' + ComboTerminal.Value;
+
+  if ComboBox1.ItemIndex > 0 then
+  begin
+    case ComboBox1.ItemIndex of
+      1: vTipo := 'CNF';
+      2: vTipo := 'NFC';
+      3: vTipo := 'PED';
+      4: vTipo := 'ORC';
+      5: vTipo := 'COM';
+    end;
+    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND TIPO = ' + QuotedStr(vTipo);
+  end;
+  fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' GROUP BY NOME';
+  fDmCupomFiscal.sdsTotais.ParamByName('D1').AsDate := DateEdit1.Date;
+  fDmCupomFiscal.sdsTotais.ParamByName('D2').AsDate := DateEdit2.Date;
+  fDmCupomFiscal.cdsTotais.Open;
+
+
 end;
 
 end.

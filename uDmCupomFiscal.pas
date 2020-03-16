@@ -1832,6 +1832,12 @@ type
     sdsCupomParametrosIMPRESSORA_COPA: TStringField;
     cdsCupomParametrosIMPRESSORA_COZINHA: TStringField;
     cdsCupomParametrosIMPRESSORA_COPA: TStringField;
+    sdsTotal_FormaPagto: TSQLDataSet;
+    dspTotal_FormaPagto: TDataSetProvider;
+    cdsTotal_FormaPagto: TClientDataSet;
+    dsTotal_FormaPagto: TDataSource;
+    cdsTotal_FormaPagtoNOME: TStringField;
+    cdsTotal_FormaPagtoVALOR: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1962,6 +1968,7 @@ type
     procedure prc_Consultar_Troca(NumCupom, ID_Produto : Integer ; Serie,Referencia,Nome : String ; Data : TDateTime );
     procedure prc_Inserir_Troca;
     procedure prc_Atualiza_Comanda(ID_Cupom : Integer);
+    procedure prc_Voltar_Comanda(ID_Cupom : Integer);
 
     function fnc_Existe_Cartao_Pendente(Num_Cartao : Integer) : Integer;
 
@@ -3800,6 +3807,7 @@ begin
       sds_prc_Exluir_Cupom.Close;
       sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
       sds_prc_Exluir_Cupom.ExecSQL;
+      prc_Voltar_Comanda(ID_Cupom);
     end
     else
     if cdsCupomFiscal.Active then
@@ -4337,6 +4345,23 @@ procedure TdmCupomFiscal.prc_Atualiza_Comanda(ID_Cupom: Integer);
 begin
   spAtualizaComanda.Params[0].Value := ID_Cupom;
   spAtualizaComanda.ExecProc;
+end;
+
+procedure TdmCupomFiscal.prc_Voltar_Comanda(ID_Cupom: Integer);
+var
+  sds: TSQLDataSet;
+begin
+  sds := TSQLDataSet.Create(nil);
+  try
+    sds.SQLConnection := dmDatabase.scoDados;
+    sds.NoMetadata    := True;
+    sds.GetMetadata   := False;
+    sds.CommandText   := 'update cupomfiscal c set c.copiado = ' + QuotedStr('N') + ' , c.id_cupom_copiado = 0 '
+                       + 'where id_cupom_copiado = ' + IntToStr(ID_Cupom);
+    sds.ExecSQL();
+  finally
+      FreeAndNil(sds);
+  end;
 end;
 
 end.

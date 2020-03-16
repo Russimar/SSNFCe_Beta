@@ -27,9 +27,9 @@ object frmConsCupom: TfrmConsCupom
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
-      Top = 90
+      Top = 113
       Width = 1069
-      Height = 394
+      Height = 215
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -150,7 +150,7 @@ object frmConsCupom: TfrmConsCupom
       Left = 1
       Top = 1
       Width = 1069
-      Height = 89
+      Height = 112
       Align = alTop
       BevelOuter = bvNone
       Color = clWhite
@@ -198,7 +198,7 @@ object frmConsCupom: TfrmConsCupom
       FullHeight = 0
       object Label1: TLabel
         Left = 10
-        Top = 50
+        Top = 68
         Width = 44
         Height = 13
         Alignment = taRightJustify
@@ -212,7 +212,7 @@ object frmConsCupom: TfrmConsCupom
       end
       object Label2: TLabel
         Left = 160
-        Top = 50
+        Top = 68
         Width = 26
         Height = 13
         Caption = 'Final:'
@@ -233,7 +233,7 @@ object frmConsCupom: TfrmConsCupom
       end
       object Label3: TLabel
         Left = 27
-        Top = 72
+        Top = 90
         Width = 27
         Height = 13
         Alignment = taRightJustify
@@ -245,29 +245,43 @@ object frmConsCupom: TfrmConsCupom
         Font.Style = []
         ParentFont = False
       end
+      object Label4: TLabel
+        Left = 5
+        Top = 48
+        Width = 49
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Vendedor:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+      end
       object dtInicial: TDateEdit
         Left = 57
-        Top = 42
+        Top = 60
         Width = 90
         Height = 21
         Ctl3D = False
         NumGlyphs = 2
         ParentCtl3D = False
-        TabOrder = 0
+        TabOrder = 2
       end
       object dtFinal: TDateEdit
         Left = 188
-        Top = 42
+        Top = 60
         Width = 90
         Height = 21
         Ctl3D = False
         NumGlyphs = 2
         ParentCtl3D = False
-        TabOrder = 1
+        TabOrder = 3
       end
       object btnConsultar: TNxButton
         Left = 288
-        Top = 43
+        Top = 61
         Width = 145
         Height = 30
         Caption = 'Pesquisar'
@@ -333,7 +347,7 @@ object frmConsCupom: TfrmConsCupom
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000}
         GlyphSpacing = 5
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 5
         Transparent = True
         OnClick = btnConsultarClick
       end
@@ -349,7 +363,7 @@ object frmConsCupom: TfrmConsCupom
         LookupDisplay = 'NOME'
         LookupSource = dmCupomFiscal.dsTerminal
         ParentCtl3D = False
-        TabOrder = 3
+        TabOrder = 0
       end
       object cbNEnviados: TCheckBox
         Left = 288
@@ -365,11 +379,11 @@ object frmConsCupom: TfrmConsCupom
         Font.Style = []
         ParentFont = False
         State = cbChecked
-        TabOrder = 4
+        TabOrder = 6
       end
       object btnEnviar: TNxButton
         Left = 437
-        Top = 43
+        Top = 61
         Width = 149
         Height = 30
         Caption = 'Enviar'
@@ -437,13 +451,13 @@ object frmConsCupom: TfrmConsCupom
           FFFFFFFFFFFFFFFFFFFDFAFEF9ECFDF7E6FEFCF4FFFFFFFFFFFF}
         GlyphSpacing = 5
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 7
         Transparent = True
         OnClick = btnEnviarClick
       end
       object btnReimprimir: TNxButton
         Left = 592
-        Top = 43
+        Top = 61
         Width = 149
         Height = 30
         Caption = 'Imprimir'
@@ -513,15 +527,15 @@ object frmConsCupom: TfrmConsCupom
         ParentFont = False
         PopupMenu = PopupMenu1
         ShowArrow = True
-        TabOrder = 6
+        TabOrder = 8
         Transparent = True
       end
       object edtSerie: TEdit
         Left = 57
-        Top = 64
+        Top = 82
         Width = 89
         Height = 21
-        TabOrder = 7
+        TabOrder = 4
       end
       object chkNFCE: TCheckBox
         Left = 440
@@ -535,11 +549,11 @@ object frmConsCupom: TfrmConsCupom
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 9
       end
       object btnExcluir: TNxButton
         Left = 745
-        Top = 43
+        Top = 61
         Width = 149
         Height = 30
         Caption = 'Excluir'
@@ -607,9 +621,107 @@ object frmConsCupom: TfrmConsCupom
           A29CF5F6EEFFFFFDFFFFFFFEFFFFFDFEFCFCFBFEFFFEFCFBFFFF}
         GlyphSpacing = 5
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 10
         Transparent = True
         OnClick = btnExcluirClick
+      end
+      object ComboVendedor: TRxDBLookupCombo
+        Left = 57
+        Top = 40
+        Width = 221
+        Height = 21
+        DropDownCount = 8
+        Ctl3D = False
+        DisplayEmpty = '[Todos]'
+        LookupField = 'CODIGO'
+        LookupDisplay = 'NOME'
+        LookupSource = dmCupomFiscal.dsVendedor
+        ParentCtl3D = False
+        TabOrder = 1
+      end
+    end
+    object gbxVendedor: TRzGroupBox
+      Left = 1
+      Top = 328
+      Width = 1069
+      Height = 156
+      Align = alBottom
+      BorderColor = clNavy
+      BorderInner = fsButtonUp
+      BorderOuter = fsBump
+      Caption = ' Formas de Pagamentos'
+      Ctl3D = True
+      FlatColor = clNavy
+      FlatColorAdjustment = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -13
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentCtl3D = False
+      ParentFont = False
+      TabOrder = 2
+      VisualStyle = vsGradient
+      object SMDBGrid2: TSMDBGrid
+        Left = 602
+        Top = 21
+        Width = 462
+        Height = 130
+        Align = alRight
+        BorderStyle = bsNone
+        Color = 12633514
+        Ctl3D = False
+        DataSource = dmCupomFiscal.dsTotais
+        FixedColor = 3683329
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Verdana'
+        Font.Style = []
+        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        ParentCtl3D = False
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWhite
+        TitleFont.Height = -13
+        TitleFont.Name = 'Verdana'
+        TitleFont.Style = []
+        Flat = True
+        BandsFont.Charset = DEFAULT_CHARSET
+        BandsFont.Color = clWindowText
+        BandsFont.Height = -11
+        BandsFont.Name = 'MS Sans Serif'
+        BandsFont.Style = []
+        Groupings = <>
+        GridStyle.Style = gsCustom
+        GridStyle.OddColor = clWindow
+        GridStyle.EvenColor = clWindow
+        TitleHeight.PixelCount = 24
+        FooterColor = clBtnFace
+        ExOptions = [eoDisableInsert, eoENTERlikeTAB, eoKeepSelection, eoStandardPopup, eoBLOBEditor, eoTitleWordWrap]
+        RegistryKey = 'Software\Scalabium'
+        RegistrySection = 'SMDBGrid'
+        WidthOfIndicator = 11
+        DefaultRowHeight = 20
+        ScrollBars = ssHorizontal
+        ColCount = 2
+        RowCount = 2
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'NOME'
+            Title.Caption = 'FORMA DE PAGAMENTO'
+            Width = 308
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'TOTAL'
+            Width = 134
+            Visible = True
+          end>
       end
     end
   end

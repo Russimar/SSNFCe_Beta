@@ -8681,4 +8681,44 @@ object dmCupomFiscal: TdmCupomFiscal
     Left = 824
     Top = 568
   end
+  object sdsTotal_FormaPagto: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 
+      'SELECT TC.NOME, SUM(PAGTO.valor) VALOR'#13#10'FROM CUPOMFISCAL CF'#13#10'INN' +
+      'ER JOIN cupomfiscal_formapgto PAGTO ON CF.ID = PAGTO.ID'#13#10'INNER J' +
+      'OIN TIPOCOBRANCA TC ON (PAGTO.ID_TIPOCOBRANCA = TC.ID)'#13#10'WHERE TC' +
+      '.MOSTRARNOCUPOM = '#39'S'#39' AND TC.FATURAMENTO_LIQUIDO = '#39'S'#39' AND CF.CA' +
+      'NCELADO = '#39'N'#39' AND coalesce(CF.nfedenegada,'#39'N'#39') = '#39'N'#39#13#10'GROUP BY T' +
+      'C.NOME'#13#10
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 1040
+    Top = 592
+  end
+  object dspTotal_FormaPagto: TDataSetProvider
+    DataSet = sdsTotal_FormaPagto
+    Left = 1072
+    Top = 592
+  end
+  object cdsTotal_FormaPagto: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspTotal_FormaPagto'
+    Left = 1104
+    Top = 592
+    object cdsTotal_FormaPagtoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 30
+    end
+    object cdsTotal_FormaPagtoVALOR: TFloatField
+      FieldName = 'VALOR'
+    end
+  end
+  object dsTotal_FormaPagto: TDataSource
+    DataSet = cdsTotal_FormaPagto
+    Left = 1136
+    Top = 592
+  end
 end

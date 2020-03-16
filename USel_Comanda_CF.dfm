@@ -1,6 +1,6 @@
 object frmSel_Comanda_CF: TfrmSel_Comanda_CF
-  Left = 361
-  Top = 46
+  Left = 347
+  Top = 74
   Width = 864
   Height = 621
   BorderIcons = [biSystemMenu, biMaximize]
@@ -132,7 +132,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'QTD'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end
       item
@@ -140,7 +139,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'VLR_UNITARIO'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end
       item
@@ -148,7 +146,6 @@ object frmSel_Comanda_CF: TfrmSel_Comanda_CF
         FieldName = 'VLR_TOTAL'
         ReadOnly = True
         Title.Alignment = taCenter
-        Width = 64
         Visible = True
       end>
   end

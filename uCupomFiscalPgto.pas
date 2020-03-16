@@ -1177,7 +1177,7 @@ begin
   end
   else
     fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat := StrToFloat(FormatFloat('0.00', 0));
-  if (fDmCupomFiscal.cdsCupomParametrosAUTENTICA_VENDEDOR.AsString = 'S') and (vSenha = '') then
+  if (fDmCupomFiscal.cdsCupomParametrosAUTENTICA_VENDEDOR.AsString = 'S') and (vSenha = '') and (trim(vSenhaVendedor) <> '') then
   begin
     frmSenha := TfrmSenha.Create(Self);
     frmSenha.Label2.Caption := 'Autenticar Vendedor';
@@ -1186,7 +1186,7 @@ begin
 
     frmSenha.vSenha_Param := vSenhaVendedor;
     frmSenha.ShowModal;
-    if vSenha <> vSenhaVendedor then
+    if trim(vSenha) <> trim(vSenhaVendedor) then
     begin
       ShowMessage('Senha inválida!');
       vCodPessoa_Pos := 0;
