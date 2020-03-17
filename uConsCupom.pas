@@ -70,6 +70,8 @@ type
     Label14: TLabel;
     ComboBox1: TComboBox;
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
+    Label5: TLabel;
+    Label6: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -281,8 +283,9 @@ begin
     cbNEnviados.Enabled := False;
     vComando := vComando + ' AND CF.NFEPROTOCOLO IS NOT NULL AND CF.NFEPROTOCOLO_CANCELADA IS NULL';
   end;
-  if cbNEnviados.Checked then
-    vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
+  if not vCancelar then
+    if cbNEnviados.Checked then
+      vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
   if edtSerie.Text <> EmptyStr then
     vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
   if ComboVendedor.KeyValue > 0 then
@@ -421,6 +424,7 @@ procedure TfrmConsCupom.prc_Consultar_Total_FormaPagto;
 var
   vComando: String;
   vTipo: String;
+  vVlrVendas : Real;
 begin
   fDmCupomFiscal.cdsTotal_FormaPagto.Close;
   vComando := 'SELECT TC.NOME, SUM(PAGTO.valor) VALOR FROM CUPOMFISCAL CF '
@@ -455,6 +459,14 @@ begin
     vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
   fDmCupomFiscal.sdsTotal_FormaPagto.CommandText := vComando + ' GROUP BY NOME';
   fDmCupomFiscal.cdsTotal_FormaPagto.Open;
+  vVlrVendas := 0;
+  fDmCupomFiscal.cdsTotal_FormaPagto.First;
+  while not fDmCupomFiscal.cdsTotal_FormaPagto.Eof do
+  begin
+    vVlrVendas := vVlrVendas + fDmCupomFiscal.cdsTotal_FormaPagtoVALOR.AsFloat;
+    fDmCupomFiscal.cdsTotal_FormaPagto.Next;
+  end;
+  Label6.Caption := FormatFloat('###,###,##0.00',vVlrVendas);
 end;
 
 end.

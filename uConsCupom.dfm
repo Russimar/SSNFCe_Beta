@@ -180,6 +180,7 @@ object frmConsCupom: TfrmConsCupom
       Caption.ShadeLight = 255
       Caption.ShadeType = stRMetal
       Caption.Visible = True
+      CollapsColor = clBtnFace
       CollapsDelay = 0
       ColorTo = 15000804
       HoverColor = clBlack
@@ -686,6 +687,32 @@ object frmConsCupom: TfrmConsCupom
       ParentFont = False
       TabOrder = 2
       VisualStyle = vsGradient
+      object Label5: TLabel
+        Left = 296
+        Top = 80
+        Width = 138
+        Height = 18
+        Caption = 'Total de Vendas:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label6: TLabel
+        Left = 443
+        Top = 80
+        Width = 36
+        Height = 18
+        Caption = '0,00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clNavy
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        Font.Style = []
+        ParentFont = False
+      end
       object SMDBGrid2: TSMDBGrid
         Left = 602
         Top = 21
