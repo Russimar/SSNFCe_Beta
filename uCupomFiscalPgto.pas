@@ -1274,6 +1274,9 @@ begin
 
   Label10.Visible := (vGerarAux = 'O');
   cbNFCe.Visible  := (vGerarAux = 'O');
+  if vGerarAux = 'O' then
+    cbNFCe.ItemIndex := 1
+  else
   if vGerarAux = 'S' then
     cbNFCe.ItemIndex := 0
   else
