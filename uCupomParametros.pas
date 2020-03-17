@@ -185,13 +185,6 @@ type
     RxDBComboBox45: TRxDBComboBox;
     Label77: TLabel;
     edtSerieCupom: TEdit;
-    GroupBox10: TGroupBox;
-    Label78: TLabel;
-    Label79: TLabel;
-    Label80: TLabel;
-    edtBound: TEdit;
-    comboPorta: TRzComboBox;
-    comboImpressora: TRzComboBox;
     Label81: TLabel;
     comboRevenda: TRxDBComboBox;
     Label82: TLabel;
@@ -204,24 +197,50 @@ type
     comboFormaPagtoPadrao: TRxDBLookupCombo;
     Label85: TLabel;
     RxDBComboBox48: TRxDBComboBox;
-    GroupBox11: TGroupBox;
-    lblSuperior: TLabel;
-    edtMSuperior: TEdit;
-    lblEsquerda: TLabel;
-    edtMEsquerda: TEdit;
     Label88: TLabel;
-    lblDireita: TLabel;
-    edtMDireita: TEdit;
-    lblMInferior: TLabel;
-    edtMInferior: TEdit;
-    Label86: TLabel;
-    edtLarguraBobina: TEdit;
     DBCheckBox1: TDBCheckBox;
     DBCheckBox2: TDBCheckBox;
     Label87: TLabel;
     DBEdit14: TDBEdit;
     Label89: TLabel;
     DBEdit15: TDBEdit;
+    TS_Impressao_SSNFCe: TTabSheet;
+    GroupBox10: TGroupBox;
+    Label78: TLabel;
+    Label79: TLabel;
+    Label80: TLabel;
+    edtBound: TEdit;
+    comboPorta: TRzComboBox;
+    comboImpressora: TRzComboBox;
+    GroupBox11: TGroupBox;
+    lblSuperior: TLabel;
+    lblEsquerda: TLabel;
+    lblDireita: TLabel;
+    lblMInferior: TLabel;
+    Label86: TLabel;
+    edtMSuperior: TEdit;
+    edtMEsquerda: TEdit;
+    edtMDireita: TEdit;
+    edtMInferior: TEdit;
+    edtLarguraBobina: TEdit;
+    GroupBox12: TGroupBox;
+    Label90: TLabel;
+    Label91: TLabel;
+    Label92: TLabel;
+    edtBound_Cozinha: TEdit;
+    ComboPorta_Cozinha: TRzComboBox;
+    comboImpressora_Cozinha: TRzComboBox;
+    GroupBox13: TGroupBox;
+    Label93: TLabel;
+    Label94: TLabel;
+    Label95: TLabel;
+    edtBound_Copa: TEdit;
+    ComboPorta_Copa: TRzComboBox;
+    comboImpressora_Copa: TRzComboBox;
+    GroupBox14: TGroupBox;
+    Label97: TLabel;
+    edtTempo_Cozinha: TEdit;
+    Label96: TLabel;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -261,6 +280,8 @@ uses
 {$R *.dfm}
 
 procedure TfCupomParametros.FormShow(Sender: TObject);
+var
+  i : Integer;
 begin
   fDmCupomFiscal := TdmCupomFiscal.Create(Self);
   oDBUtils.SetDataSourceProperties(Self,fDmCupomFiscal);
@@ -321,8 +342,25 @@ begin
   comboPorta.Text             := lerIni('ACBR2','Porta');
   comboImpressora.Text        := lerIni('ACBR2','Modelo');
   edtBound.Text               := lerIni('ACBR2','Boud');
+                                          
+  ComboPorta_Cozinha.Text      := lerIni('ACBR2','PortaCozinha');
+  comboImpressora_Cozinha.Text := lerIni('ACBR2','ModeloCozinha');
+  edtBound_Cozinha.Text        := lerIni('ACBR2','BoudCozinha');
+
+  ComboPorta_Copa.Text         := lerIni('ACBR2','PortaCopa');
+  comboImpressora_Copa.Text    := lerIni('ACBR2','ModeloCopa');
+  edtBound_Copa.Text           := lerIni('ACBR2','BoudCopa');
+
+  edtTempo_Cozinha.Text        := lerIni('ACBR2','TempoCiclo');
 
   prc_Carrega_Impressora;
+  ComboPorta_Cozinha.Items.Clear;
+  ComboPorta_Copa.Items.Clear;
+  for i := 1 to comboPorta.Items.Count do
+  begin
+    ComboPorta_Cozinha.Items.Add(comboPorta.Items[i]);
+    ComboPorta_Copa.Items.Add(comboPorta.Items[i]);
+  end;
 
 end;
 
@@ -466,6 +504,16 @@ begin
   gravarIni('ACBR2','Porta',comboPorta.Text);
   gravarIni('ACBR2','Boud',edtBound.Text);
   gravarIni('ACBR2','Modelo',comboImpressora.Text);
+
+  gravarIni('ACBR2','PortaCozinha',ComboPorta_Cozinha.Text);
+  gravarIni('ACBR2','BoudCozinha',edtBound_Cozinha.Text);
+  gravarIni('ACBR2','ModeloCozinha',comboImpressora_Cozinha.Text);
+
+  gravarIni('ACBR2','PortaCopa',ComboPorta_Copa.Text);
+  gravarIni('ACBR2','BoudCopa',edtBound_Copa.Text);
+  gravarIni('ACBR2','ModeloCopa',comboImpressora_Copa.Text);
+
+  gravarIni('ACBR2','TempoCiclo',edtTempo_Cozinha.Text);
 
   prcHabilita;
 end;

@@ -870,198 +870,6 @@ object fCupomParametros: TfCupomParametros
             TabOrder = 1
           end
         end
-        object GroupBox10: TGroupBox
-          Left = 328
-          Top = 436
-          Width = 241
-          Height = 92
-          Caption = ' Configura'#231#227'o NFCe  Novo'
-          TabOrder = 5
-          object Label78: TLabel
-            Left = 4
-            Top = 24
-            Width = 82
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Porta Impressora:'
-          end
-          object Label79: TLabel
-            Left = 52
-            Top = 45
-            Width = 34
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Bound:'
-          end
-          object Label80: TLabel
-            Left = 32
-            Top = 67
-            Width = 54
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Impressora:'
-          end
-          object edtBound: TEdit
-            Left = 90
-            Top = 37
-            Width = 88
-            Height = 21
-            TabOrder = 0
-          end
-          object comboPorta: TRzComboBox
-            Left = 90
-            Top = 16
-            Width = 145
-            Height = 21
-            ItemHeight = 13
-            TabOrder = 1
-            Items.Strings = (
-              'COM1'
-              'COM2'
-              'COM3'
-              'COM4'
-              'COM5'
-              'COM6'
-              'COM7'
-              'COM8'
-              'COM9'
-              'USB')
-            Values.Strings = (
-              'COM1'
-              'COM2'
-              'COM3'
-              'COM4'
-              'COM5'
-              'COM6'
-              'COM7'
-              'COM8'
-              'COM9'
-              'USB')
-          end
-          object comboImpressora: TRzComboBox
-            Left = 90
-            Top = 59
-            Width = 145
-            Height = 21
-            ItemHeight = 13
-            TabOrder = 2
-            Items.Strings = (
-              'BEMATECH'
-              'DR700'
-              'DR800'
-              'ELGIN'
-              'EPSON')
-            Values.Strings = (
-              'COM1'
-              'COM2'
-              'COM3'
-              'COM4'
-              'COM5'
-              'COM6'
-              'COM7'
-              'COM8'
-              'COM9'
-              'USB')
-          end
-        end
-        object GroupBox11: TGroupBox
-          Left = 576
-          Top = 436
-          Width = 241
-          Height = 92
-          Caption = 'Margens'
-          TabOrder = 6
-          object lblSuperior: TLabel
-            Left = 9
-            Top = 25
-            Width = 42
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Superior:'
-          end
-          object lblEsquerda: TLabel
-            Left = 3
-            Top = 47
-            Width = 48
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Esquerda:'
-          end
-          object lblDireita: TLabel
-            Left = 134
-            Top = 47
-            Width = 33
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Direira:'
-          end
-          object lblMInferior: TLabel
-            Left = 132
-            Top = 25
-            Width = 35
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Inferior:'
-          end
-          object Label86: TLabel
-            Left = 92
-            Top = 69
-            Width = 75
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Largura Bobina:'
-          end
-          object edtMSuperior: TEdit
-            Left = 52
-            Top = 17
-            Width = 64
-            Height = 21
-            Hint = 'Padr'#227'o 0,8'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 0
-          end
-          object edtMEsquerda: TEdit
-            Left = 52
-            Top = 39
-            Width = 64
-            Height = 21
-            Hint = 'Padr'#227'o 0,6'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 1
-          end
-          object edtMDireita: TEdit
-            Left = 169
-            Top = 39
-            Width = 64
-            Height = 21
-            Hint = 'Padr'#227'o 0,51'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 3
-          end
-          object edtMInferior: TEdit
-            Left = 169
-            Top = 17
-            Width = 64
-            Height = 21
-            Hint = 'Padr'#227'o 0,8'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 2
-          end
-          object edtLarguraBobina: TEdit
-            Left = 169
-            Top = 61
-            Width = 64
-            Height = 21
-            Hint = 'Largura padr'#227'o: 290'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 4
-          end
-        end
       end
     end
     object TabSheet4: TTabSheet
@@ -2443,15 +2251,15 @@ object fCupomParametros: TfCupomParametros
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 959
-        Height = 520
+        Width = 1071
+        Height = 622
         Align = alClient
         TabOrder = 0
         object DBGrid1: TDBGrid
           Left = 1
           Top = 1
-          Width = 957
-          Height = 518
+          Width = 1069
+          Height = 620
           Align = alClient
           DataSource = dmParametros.dsSequencial
           TabOrder = 0
@@ -2477,6 +2285,420 @@ object fCupomParametros: TfCupomParametros
               Width = 64
               Visible = True
             end>
+        end
+      end
+    end
+    object TS_Impressao_SSNFCe: TTabSheet
+      Caption = 'Impress'#227'o SSNFCe'
+      ImageIndex = 4
+      object GroupBox10: TGroupBox
+        Left = 8
+        Top = 52
+        Width = 241
+        Height = 92
+        Caption = ' Impress'#227'o Cupom '
+        TabOrder = 0
+        object Label78: TLabel
+          Left = 4
+          Top = 24
+          Width = 82
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Porta Impressora:'
+        end
+        object Label79: TLabel
+          Left = 52
+          Top = 45
+          Width = 34
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Bound:'
+        end
+        object Label80: TLabel
+          Left = 32
+          Top = 67
+          Width = 54
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Impressora:'
+        end
+        object edtBound: TEdit
+          Left = 90
+          Top = 37
+          Width = 88
+          Height = 21
+          TabOrder = 0
+        end
+        object comboPorta: TRzComboBox
+          Left = 90
+          Top = 16
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 1
+          Items.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+        object comboImpressora: TRzComboBox
+          Left = 90
+          Top = 59
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 2
+          Items.Strings = (
+            'BEMATECH'
+            'DR700'
+            'DR800'
+            'ELGIN'
+            'EPSON')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+      end
+      object GroupBox11: TGroupBox
+        Left = 256
+        Top = 52
+        Width = 241
+        Height = 92
+        Caption = 'Margens'
+        TabOrder = 1
+        object lblSuperior: TLabel
+          Left = 9
+          Top = 25
+          Width = 42
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Superior:'
+        end
+        object lblEsquerda: TLabel
+          Left = 3
+          Top = 47
+          Width = 48
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Esquerda:'
+        end
+        object lblDireita: TLabel
+          Left = 134
+          Top = 47
+          Width = 33
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Direira:'
+        end
+        object lblMInferior: TLabel
+          Left = 132
+          Top = 25
+          Width = 35
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Inferior:'
+        end
+        object Label86: TLabel
+          Left = 92
+          Top = 69
+          Width = 75
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Largura Bobina:'
+        end
+        object edtMSuperior: TEdit
+          Left = 52
+          Top = 17
+          Width = 64
+          Height = 21
+          Hint = 'Padr'#227'o 0,8'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+        end
+        object edtMEsquerda: TEdit
+          Left = 52
+          Top = 39
+          Width = 64
+          Height = 21
+          Hint = 'Padr'#227'o 0,6'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
+        end
+        object edtMDireita: TEdit
+          Left = 169
+          Top = 39
+          Width = 64
+          Height = 21
+          Hint = 'Padr'#227'o 0,51'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+        end
+        object edtMInferior: TEdit
+          Left = 169
+          Top = 17
+          Width = 64
+          Height = 21
+          Hint = 'Padr'#227'o 0,8'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+        end
+        object edtLarguraBobina: TEdit
+          Left = 169
+          Top = 61
+          Width = 64
+          Height = 21
+          Hint = 'Largura padr'#227'o: 290'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 4
+        end
+      end
+      object GroupBox12: TGroupBox
+        Left = 8
+        Top = 148
+        Width = 241
+        Height = 92
+        Caption = ' Cozinha '
+        TabOrder = 2
+        object Label90: TLabel
+          Left = 4
+          Top = 24
+          Width = 82
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Porta Impressora:'
+        end
+        object Label91: TLabel
+          Left = 52
+          Top = 45
+          Width = 34
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Bound:'
+        end
+        object Label92: TLabel
+          Left = 32
+          Top = 67
+          Width = 54
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Impressora:'
+        end
+        object edtBound_Cozinha: TEdit
+          Left = 90
+          Top = 37
+          Width = 88
+          Height = 21
+          TabOrder = 0
+        end
+        object ComboPorta_Cozinha: TRzComboBox
+          Left = 90
+          Top = 16
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 1
+          Items.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+        object comboImpressora_Cozinha: TRzComboBox
+          Left = 90
+          Top = 59
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 2
+          Items.Strings = (
+            'BEMATECH'
+            'DR700'
+            'DR800'
+            'ELGIN'
+            'EPSON')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+      end
+      object GroupBox13: TGroupBox
+        Left = 8
+        Top = 246
+        Width = 241
+        Height = 92
+        Caption = ' Copa '
+        TabOrder = 3
+        object Label93: TLabel
+          Left = 4
+          Top = 24
+          Width = 82
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Porta Impressora:'
+        end
+        object Label94: TLabel
+          Left = 52
+          Top = 45
+          Width = 34
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Bound:'
+        end
+        object Label95: TLabel
+          Left = 32
+          Top = 67
+          Width = 54
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Impressora:'
+        end
+        object edtBound_Copa: TEdit
+          Left = 90
+          Top = 37
+          Width = 88
+          Height = 21
+          TabOrder = 0
+        end
+        object ComboPorta_Copa: TRzComboBox
+          Left = 90
+          Top = 16
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 1
+          Items.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+        object comboImpressora_Copa: TRzComboBox
+          Left = 90
+          Top = 59
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 2
+          Items.Strings = (
+            'BEMATECH'
+            'DR700'
+            'DR800'
+            'ELGIN'
+            'EPSON')
+          Values.Strings = (
+            'COM1'
+            'COM2'
+            'COM3'
+            'COM4'
+            'COM5'
+            'COM6'
+            'COM7'
+            'COM8'
+            'COM9'
+            'USB')
+        end
+      end
+      object GroupBox14: TGroupBox
+        Left = 8
+        Top = 342
+        Width = 241
+        Height = 73
+        Caption = ' Tempo Controle Imp Cozinha/Copa '
+        TabOrder = 4
+        object Label97: TLabel
+          Left = 50
+          Top = 29
+          Width = 36
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Tempo:'
+        end
+        object Label96: TLabel
+          Left = 16
+          Top = 48
+          Width = 152
+          Height = 13
+          Caption = 'Ex: 20000 (igual a 20 segundos)'
+        end
+        object edtTempo_Cozinha: TEdit
+          Left = 90
+          Top = 21
+          Width = 88
+          Height = 21
+          TabOrder = 0
         end
       end
     end
