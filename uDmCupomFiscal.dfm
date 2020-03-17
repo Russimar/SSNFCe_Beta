@@ -8714,6 +8714,7 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsTotal_FormaPagtoVALOR: TFloatField
       FieldName = 'VALOR'
+      DisplayFormat = '###,###,##0.00'
     end
   end
   object dsTotal_FormaPagto: TDataSource

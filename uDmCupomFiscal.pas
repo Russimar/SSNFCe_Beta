@@ -1868,6 +1868,7 @@ type
     ctConsCupom : String;
     ctPedido, ctDuplicata: String;
     ctTotais: string;
+    ctTotal_FormaPagto: String;
     ctComandaRel: String;
     vPgtoEditado: Boolean;
     vSacolaSelecionada: Boolean;
@@ -2130,9 +2131,10 @@ begin
   ctConsProduto := sdsConsProduto.CommandText;
   ctDuplicata   := sdsDuplicata.CommandText;
   ctTotais      := sdsTotais.CommandText;
-  ctConsCupom   := sdsCupom_Cons.CommandText;
-  ctTroca       := sdsTroca.CommandText;
-  ctComandaRel  := sdsComandaRel.CommandText;
+  ctTotal_FormaPagto := sdsTotal_FormaPagto.CommandText;
+  ctConsCupom        := sdsCupom_Cons.CommandText;
+  ctTroca            := sdsTroca.CommandText;
+  ctComandaRel       := sdsComandaRel.CommandText;
 
   cdsFilial.Open;
   cdsTipoCobranca.Open;

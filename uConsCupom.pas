@@ -54,7 +54,6 @@ type
     btnReimprimir: TNxButton;
     edtSerie: TEdit;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
-    chkNFCE: TCheckBox;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     btnExcluir: TNxButton;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
@@ -68,6 +67,9 @@ type
     ComboVendedor: TRxDBLookupCombo;
     gbxVendedor: TRzGroupBox;
     SMDBGrid2: TSMDBGrid;
+    Label14: TLabel;
+    ComboBox1: TComboBox;
+    cxGrid1DBTableView1Column5: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -264,14 +266,13 @@ end;
 procedure TfrmConsCupom.prc_Consultar;
 var
   vComando: string;
+  vTipo: String;
 begin
   fDmCupomFiscal.cdsCupom_Cons.Close;
   vComando := fDmCupomFiscal.ctConsCupom;
   vComando := vComando + 'WHERE 0=0';
   vComando := vComando + ' AND CF.DTEMISSAO >= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtInicial.date));
   vComando := vComando + ' AND CF.DTEMISSAO <= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtFinal.date));
-  if chkNFCE.Checked then
-    vComando := vComando + ' AND TIPO = ' + QuotedStr('NFC');
   if ComboTerminal.KeyValue > 0 then
     vComando := vComando + ' AND TERMINAL_ID = ' + ComboTerminal.Value;
   if vCancelar then
@@ -284,8 +285,21 @@ begin
     vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
   if edtSerie.Text <> EmptyStr then
     vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
-  if ComboVendedor.Text <> '' then
-    vComando := vComando + ' AND CF.ID_VENDEDOR = ' + IntToStr(ComboVendedor.KeyValue);
+  if ComboVendedor.KeyValue > 0 then
+    vComando := vComando + ' AND CF.ID_VENDEDOR = ' + ComboVendedor.Value;
+  if ComboBox1.ItemIndex > 0 then
+  begin
+    case ComboBox1.ItemIndex of
+      1: vTipo := 'CNF';
+      2: vTipo := 'NFC';
+      3: vTipo := 'PED';
+      4: vTipo := 'ORC';
+      5: vTipo := 'COM';
+    end;
+    vComando := vComando + ' AND TIPO = ' + QuotedStr(vTipo);
+  end;
+  if ComboBox1.ItemIndex <> 5 then
+    vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
   vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
   fDmCupomFiscal.cdsCupom_Cons.Open;
@@ -403,15 +417,29 @@ begin
     ShowMessage('Relatório não localizado! ' + vArq);
 end;
 
-procedure TfrmConsCupom.prc_Consultar_Total_FormaPagto;;
+procedure TfrmConsCupom.prc_Consultar_Total_FormaPagto;
+var
+  vComando: String;
+  vTipo: String;
 begin
-  fDmCupomFiscal.cdscdsTotais.Close;
-  fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.ctTotais;
-  if ComboTerminal.Text <> '' then
-    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND TERMINAL = ' + ComboTerminal.Value;
-  if ComboVendedor.Text <> '' then
-    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND ID_VENDEDOR = ' + ComboTerminal.Value;
-
+  fDmCupomFiscal.cdsTotal_FormaPagto.Close;
+  vComando := 'SELECT TC.NOME, SUM(PAGTO.valor) VALOR FROM CUPOMFISCAL CF '
+            + 'INNER JOIN cupomfiscal_formapgto PAGTO ON CF.ID = PAGTO.ID '
+            + 'INNER JOIN TIPOCOBRANCA TC ON (PAGTO.ID_TIPOCOBRANCA = TC.ID) '
+            + 'WHERE TC.MOSTRARNOCUPOM = ' + QuotedStr('S')
+            + ' AND TC.FATURAMENTO_LIQUIDO = ' + QuotedStr('S')
+            + ' AND CF.CANCELADO = ' + QuotedStr('N')
+            + ' AND coalesce(CF.nfedenegada,' + QuotedStr('N') + ') = ' + QuotedStr('N');
+  if ComboVendedor.KeyValue > 0 then
+    vComando := vComando + ' AND ID_VENDEDOR = ' + ComboVendedor.Value;
+  vComando := vComando + ' AND CF.DTEMISSAO >= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtInicial.date));
+  vComando := vComando + ' AND CF.DTEMISSAO <= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtFinal.date));
+  if ComboTerminal.KeyValue > 0 then
+    vComando := vComando + ' AND TERMINAL_ID = ' + ComboTerminal.Value;
+  if cbNEnviados.Checked then
+    vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
+  if edtSerie.Text <> EmptyStr then
+    vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
   if ComboBox1.ItemIndex > 0 then
   begin
     case ComboBox1.ItemIndex of
@@ -421,14 +449,12 @@ begin
       4: vTipo := 'ORC';
       5: vTipo := 'COM';
     end;
-    fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' AND TIPO = ' + QuotedStr(vTipo);
+    vComando := vComando + ' AND TIPO = ' + QuotedStr(vTipo);
   end;
-  fDmCupomFiscal.sdsTotais.CommandText := fDmCupomFiscal.sdsTotais.CommandText + ' GROUP BY NOME';
-  fDmCupomFiscal.sdsTotais.ParamByName('D1').AsDate := DateEdit1.Date;
-  fDmCupomFiscal.sdsTotais.ParamByName('D2').AsDate := DateEdit2.Date;
-  fDmCupomFiscal.cdsTotais.Open;
-
-
+  if ComboBox1.ItemIndex <> 5 then
+    vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
+  fDmCupomFiscal.sdsTotal_FormaPagto.CommandText := vComando + ' GROUP BY NOME';
+  fDmCupomFiscal.cdsTotal_FormaPagto.Open;
 end;
 
 end.
