@@ -3006,10 +3006,4 @@ object fMenu: TfMenu
     Left = 264
     Top = 8
   end
-  object JvThreadTimer1: TJvThreadTimer
-    Delay = 20000
-    OnTimer = JvThreadTimer1Timer
-    Left = 512
-    Top = 320
-  end
 end

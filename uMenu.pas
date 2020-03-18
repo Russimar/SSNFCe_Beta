@@ -60,7 +60,6 @@ type
     ConfiguraoCertificado1: TMenuItem;
     Consultas1: TMenuItem;
     Consultatrocas1: TMenuItem;
-    JvThreadTimer1: TJvThreadTimer;
     N7: TMenuItem;
     SenhaComanda1: TMenuItem;
     procedure FormShow(Sender: TObject);
@@ -93,7 +92,6 @@ type
     procedure ConfiguraoCertificado1Click(Sender: TObject);
     procedure btnNFCeClick(Sender: TObject);
     procedure Consultatrocas1Click(Sender: TObject);
-    procedure JvThreadTimer1Timer(Sender: TObject);
     procedure SenhaComanda1Click(Sender: TObject);
   private
     { Private declarations }
@@ -734,17 +732,6 @@ end;
 procedure TfMenu.Consultatrocas1Click(Sender: TObject);
 begin
   OpenForm(TfrmConsTrocas,wsMaximized);
-end;
-
-procedure TfMenu.JvThreadTimer1Timer(Sender: TObject);
-begin
-//Russimar
-  //Programei o timer em 20 segundo, a cada 20 segundo ele dispara a procedure abaixo para imprimir
-  //Depois monto um parametros pra esse campo segundos.
-  //Imprime Pedido teria que estar dentro do Config.ini ou impressora.ini, isto é, teriamos que ter em cada máquina pra saber se
-  //vai imprimir ou não o pedido, qual que vai imprimir
-  //Local_Impressao : teriamos que tb colocar no Impressora.ini para saber se esta máquina esta na Cozinha ou na Copa.
-  //uUtilCupom.prc_Imp_Pedido_Mesa(Local_Impressao);
 end;
 
 procedure TfMenu.SenhaComanda1Click(Sender: TObject);
