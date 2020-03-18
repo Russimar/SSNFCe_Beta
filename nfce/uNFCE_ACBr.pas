@@ -612,6 +612,8 @@ begin
           end;
         end;
         vPag := fDMCupomFiscal.cdsCupomFiscal_FormaPgtoVALOR.AsFloat;
+        if (tpag = fpDinheiro) and (fDMCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat > 0) then
+          vPag := vPag + fDMCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat;
       end;
       fDMCupomFiscal.cdsCupomFiscal_FormaPgto.Next;
     end;
