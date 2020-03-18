@@ -2612,6 +2612,13 @@ object fMenu: TfMenu
       object N1: TMenuItem
         Caption = '-'
       end
+      object SenhaComanda1: TMenuItem
+        Caption = 'Senha Comanda'
+        OnClick = SenhaComanda1Click
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
       object ConsultadeCupons1: TMenuItem
         Caption = 'Consulta de Cupons'
         OnClick = ConsultadeCupons1Click

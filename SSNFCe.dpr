@@ -112,7 +112,9 @@ uses
   UCupom_Troca in 'UCupom_Troca.pas' {frmCupom_Troca},
   UDMConsCupom in 'UDMConsCupom.pas' {DMConsCupom: TDataModule},
   uConsTrocas in 'uConsTrocas.pas' {frmConsTrocas},
-  uConsComanda in 'uConsComanda.pas' {frmConsComanda};
+  uConsComanda in 'uConsComanda.pas' {frmConsComanda},
+  UDMUsuario in 'UDMUsuario.pas' {DMUsuario: TDataModule},
+  USenha_Comanda in 'USenha_Comanda.pas' {frmSenha_Comanda};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 

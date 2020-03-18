@@ -61,6 +61,8 @@ type
     Consultas1: TMenuItem;
     Consultatrocas1: TMenuItem;
     JvThreadTimer1: TJvThreadTimer;
+    N7: TMenuItem;
+    SenhaComanda1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedItem5Click(Sender: TObject);
@@ -92,6 +94,7 @@ type
     procedure btnNFCeClick(Sender: TObject);
     procedure Consultatrocas1Click(Sender: TObject);
     procedure JvThreadTimer1Timer(Sender: TObject);
+    procedure SenhaComanda1Click(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -116,7 +119,7 @@ implementation
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
   DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2,
-  uConsTrocas, uUtilCupom;
+  uConsTrocas, uUtilCupom, USenha_Comanda;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -742,6 +745,11 @@ begin
   //vai imprimir ou não o pedido, qual que vai imprimir
   //Local_Impressao : teriamos que tb colocar no Impressora.ini para saber se esta máquina esta na Cozinha ou na Copa.
   //uUtilCupom.prc_Imp_Pedido_Mesa(Local_Impressao);
+end;
+
+procedure TfMenu.SenhaComanda1Click(Sender: TObject);
+begin
+  OpenForm(TfrmSenha_Comanda,wsMaximized);
 end;
 
 end.
