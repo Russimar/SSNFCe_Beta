@@ -1300,7 +1300,12 @@ begin
              FormatFloat('00', MonthOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime));
   vNomeArquivo := fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe + '\' + vAnoMes + '\' +fdmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString + '-nfe.xml';
   fDMNFCe.ACBrNFE.NotasFiscais.Clear;
-  fDMNFCe.ACBrNFe.NotasFiscais.LoadFromFile(vNomeArquivo);
+  try
+    fDMNFCe.ACBrNFe.NotasFiscais.LoadFromFile(vNomeArquivo);
+  except
+    on E : Exception do
+      MessageDlg('Arquivo xml não encontrado! ' + vNomeArquivo,mtError,[mbOK],0);
+  end;
   x := fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFeSupl.qrCode;
   ShellExecute(Handle, 'open', PAnsiChar(x), nil, nil, SW_SHOW);
 end;

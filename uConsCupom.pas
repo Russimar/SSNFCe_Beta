@@ -474,6 +474,11 @@ end;
 
 procedure TfrmConsCupom.BuscaNFCeWeb1Click(Sender: TObject);
 begin
+  if fDmCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString = EmptyStr then
+  begin
+    MessageDlg('A consulta na web só pode ser efetuada em cupons enviados',mtInformation,[mbOK],0);
+    Exit;
+  end;
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
   fNFCE_ACBr.btnConsultarNFCeWebClick(Sender);
