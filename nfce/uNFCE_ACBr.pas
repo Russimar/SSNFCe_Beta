@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros, SHDocVw,
   uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter,
-  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils, ACBrDevice, rsDBUtils;
+  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils, ACBrDevice, rsDBUtils, ShellApi;
 
 type
   tEnumAmbiente = (tpProducao = 1, tpHomologacao = 2);
@@ -41,6 +41,7 @@ type
     btImpresaoPreVenda: TButton;
     mmPreVenda: TMemo;
     btnInutilizar: TButton;
+    btnConsultarNFCeWeb: TButton;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -52,6 +53,7 @@ type
     procedure btImpresaoPreVendaClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
+    procedure btnConsultarNFCeWebClick(Sender: TObject);
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -69,7 +71,7 @@ type
     procedure prc_Reimprimir(ID : integer);
     procedure prc_Impressao_PreVenda(ID : Integer);
     procedure prc_Inutilizar_Cupom(ID : Integer);
-
+    procedure prc_MontaURL_Consulta(ID : Integer);
     { Public declarations }
   end;
 
@@ -170,6 +172,7 @@ begin
       Dest.CNPJCPF := vDocumento;
 
     Dest.CNPJCPF := vDocumentoClienteVenda;
+    Dest.xNome := fdmCupomFiscal.cdsCupomFiscalNOME_CLIENTE_1.AsString;
 
 //    if vTipo_Ambiente_NFe = 2 then
 //      Dest.xNome := 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
@@ -1130,6 +1133,8 @@ begin
   mmPreVenda.Lines.Add('</ce><e><s>' + vTexto +  '</e></s>');
 
   mmPreVenda.Lines.Add(' ');
+  vTexto := '</fn>Cliente: ' + fdmCupomFiscal.cdsCupomFiscalNOME_CLIENTE_1.AsString;
+  mmPreVenda.Lines.Add(' ');
   mmPreVenda.Lines.Add('<c>CÓD DESCRIÇÃO                      QTD   VL.ITEM   TOTAL');
   mmPreVenda.Lines.Add('--------------------------------------------------------');
 
@@ -1281,6 +1286,28 @@ begin
 //  MemoDados.Lines.Add('dhRecbto: ' + DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.dhRecbto));
 //  MemoDados.Lines.Add('Protocolo: ' + ACBrNFe1.WebServices.Inutilizacao.Protocolo);
 
+end;
+
+procedure TfNFCE_ACBR.prc_MontaURL_Consulta(ID: Integer);
+var
+  vAnoMes : String;
+  x : String;
+  i : integer;
+begin
+  fdmCupomFiscal.prcLocalizar(ID);
+  Inicia_NFe;
+  vAnoMes := FormatFloat('0000', YearOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime)) +
+             FormatFloat('00', MonthOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime));
+  vNomeArquivo := fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe + '\' + vAnoMes + '\' +fdmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString + '-nfe.xml';
+  fDMNFCe.ACBrNFE.NotasFiscais.Clear;
+  fDMNFCe.ACBrNFe.NotasFiscais.LoadFromFile(vNomeArquivo);
+  x := fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFeSupl.qrCode;
+  ShellExecute(Handle, 'open', PAnsiChar(x), nil, nil, SW_SHOW);
+end;
+
+procedure TfNFCE_ACBR.btnConsultarNFCeWebClick(Sender: TObject);
+begin
+  prc_MontaURL_Consulta(vID_Cupom_Novo);
 end;
 
 end.

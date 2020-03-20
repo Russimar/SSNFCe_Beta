@@ -72,6 +72,8 @@ type
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
     Label5: TLabel;
     Label6: TLabel;
+    PopupMenu2: TPopupMenu;
+    BuscaNFCeWeb1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -82,6 +84,7 @@ type
     procedure ImprimirCupom1Click(Sender: TObject);
     procedure ImprimirCarne1Click(Sender: TObject);
     procedure ImprimiraConsulta1Click(Sender: TObject);
+    procedure BuscaNFCeWeb1Click(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
@@ -467,6 +470,13 @@ begin
     fDmCupomFiscal.cdsTotal_FormaPagto.Next;
   end;
   Label6.Caption := FormatFloat('###,###,##0.00',vVlrVendas);
+end;
+
+procedure TfrmConsCupom.BuscaNFCeWeb1Click(Sender: TObject);
+begin
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fNFCE_ACBr.btnConsultarNFCeWebClick(Sender);
 end;
 
 end.
