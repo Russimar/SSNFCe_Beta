@@ -9,7 +9,10 @@ uses
     uDmMovimento, uDmParametros, ACBrBase, DBGrids,
   Grids, SMDBGrid, RzTabs, NxCollection, dbXPress, SqlExpr, ToolEdit, CurrEdit,
     StrUtils, Math, uCupomFiscalPgtoDet, uTipoDescontoItem,
-  JvLabel, JvGroupBox, AdvPanel, DBClient, AdvEdit, uTipoFormaPagto;
+  JvLabel, JvGroupBox, AdvPanel, DBClient, AdvEdit, uTipoFormaPagto,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
+  dxSkinOffice2007Blue, dxSkinSeven, cxControls, cxContainer, cxEdit,
+  cxGroupBox, cxRadioGroup;
 
 const
   InformandoVendedor = 'InformandoVendedor';
@@ -72,8 +75,7 @@ type
     pnlTroco: TAdvPanel;
     Label5: TLabel;
     edtTroco: TDBEdit;
-    Label10: TLabel;
-    cbNFCe: TComboBox;
+    rdgEnviaNFce: TcxRadioGroup;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure comboCondicaoPgtoChange(Sender: TObject);
@@ -429,10 +431,10 @@ begin
     prc_InformaVendedor
   else if (Key = Vk_F8) then
     btGavetaClick(Sender)
-  else if (Key = Vk_F9) and (cbNFCe.Visible) then
+  else if (Key = Vk_F9) and (rdgEnviaNFce.Visible) then
   begin
-    if cbNFCe.ItemIndex = 0 then cbNFCe.ItemIndex := 1
-    else if cbNFCe.ItemIndex = 1 then cbNFCe.ItemIndex := 0;
+    if rdgEnviaNFce.ItemIndex = 0 then rdgEnviaNFce.ItemIndex := 1
+    else if rdgEnviaNFce.ItemIndex = 1 then rdgEnviaNFce.ItemIndex := 0;
   end
   else if (Key = VK_TAB) then
   begin
@@ -485,7 +487,7 @@ begin
   vGeraNFCe := False;
   if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') then// and
 //    (fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive])) then
-    vGeraNFCe := (cbNFCe.ItemIndex = 0);
+    vGeraNFCe := (rdgEnviaNFce.ItemIndex = 0);
   if (vGeraNFCe) and (trim(fDmCupomFiscal.cdsFilialINSCR_EST.AsString) = '') then
   begin
     MessageDlg('*** Inscrição Estadual da Filial esta informada incorretamente!', mtInformation, [mbOk], 0);
@@ -1272,16 +1274,18 @@ begin
 
   vGerarAux := fnc_Verifica_Cobranca;
 
-  Label10.Visible := (vGerarAux = 'O');
-  cbNFCe.Visible  := (vGerarAux = 'O');
+//  Label10.Visible := (vGerarAux = 'O');
+//  cbNFCe.Visible  := (vGerarAux = 'O');
+
+  rdgEnviaNFce.Visible  := (vGerarAux = 'O');
   if vGerarAux = 'O' then
-    cbNFCe.ItemIndex := 1
+    rdgEnviaNFce.ItemIndex := 1
   else
   if vGerarAux = 'S' then
-    cbNFCe.ItemIndex := 0
+    rdgEnviaNFce.ItemIndex := 0
   else
   if vGerarAux = 'N' then
-    cbNFCe.ItemIndex := 1;
+    rdgEnviaNFce.ItemIndex := 1;
 
   //Desabilita a barra de rolagem da grid
   ShowScrollBar(gridPagamento.Handle, SB_VERT, False);

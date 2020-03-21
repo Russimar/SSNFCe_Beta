@@ -1,6 +1,6 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 210
-  Top = 69
+  Left = 318
+  Top = 35
   Width = 1131
   Height = 557
   BorderIcons = [biSystemMenu]
@@ -24,7 +24,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 1115
-    Height = 468
+    Height = 469
     Align = alClient
     BevelOuter = bvNone
     Color = 16645114
@@ -118,26 +118,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentColor = False
       ParentFont = False
     end
-    object Label10: TLabel
-      Left = 20
-      Top = 240
-      Width = 113
-      Height = 23
-      Alignment = taRightJustify
-      Caption = 'NFCe  (F9):'
-      Color = clGradientActiveCaption
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -19
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-      Visible = False
-    end
     object grCliente: TJvGroupBox
       Left = 13
-      Top = 288
+      Top = 299
       Width = 609
       Height = 47
       Caption = 'Cliente'
@@ -496,7 +479,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     end
     object grVendedor: TJvGroupBox
       Left = 13
-      Top = 340
+      Top = 351
       Width = 609
       Height = 48
       Caption = 'Vendedor'
@@ -1005,34 +988,36 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         end
       end
     end
-    object cbNFCe: TComboBox
-      Left = 138
-      Top = 231
-      Width = 87
-      Height = 32
-      Style = csDropDownList
-      Color = clSilver
-      DropDownCount = 2
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 3683329
-      Font.Height = -19
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ItemHeight = 24
-      ItemIndex = 0
+    object rdgEnviaNFce: TcxRadioGroup
+      Left = 16
+      Top = 232
+      TabStop = False
+      Caption = 'Envia NFCe (F9)'
       ParentFont = False
+      Properties.Columns = 2
+      Properties.Items = <
+        item
+          Caption = 'Sim'
+        end
+        item
+          Caption = 'N'#227'o'
+        end>
+      ItemIndex = 1
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = 7485192
+      Style.Font.Height = -12
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = [fsBold, fsItalic]
+      Style.IsFontAssigned = True
       TabOrder = 6
-      Text = 'SIM'
       Visible = False
-      OnKeyDown = cbNFCeKeyDown
-      Items.Strings = (
-        'SIM'
-        'N'#195'O')
+      Height = 51
+      Width = 285
     end
   end
   object pnlBotton: TAdvPanel
     Left = 0
-    Top = 468
+    Top = 469
     Width = 1115
     Height = 50
     Align = alBottom
