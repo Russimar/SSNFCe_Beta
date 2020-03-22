@@ -966,8 +966,8 @@ object fCupomFiscal: TfCupomFiscal
     object PnlParcial: TPanel
       Left = 0
       Top = 329
-      Width = 401
-      Height = 70
+      Width = 400
+      Height = 39
       Align = alTop
       Color = 5585152
       Constraints.MaxHeight = 70
@@ -982,10 +982,10 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 3
       object btComanda: TNxButton
-        Left = 270
+        Left = 269
         Top = 1
         Width = 130
-        Height = 68
+        Height = 37
         Align = alRight
         Caption = 'F12 Comanda'
         EnableDblClick = False
@@ -1004,8 +1004,8 @@ object fCupomFiscal: TfCupomFiscal
       object btPedido: TNxButton
         Left = 131
         Top = 1
-        Width = 139
-        Height = 68
+        Width = 138
+        Height = 37
         Align = alClient
         Caption = 'F9 Pedido'
         EnableDblClick = False
@@ -1025,7 +1025,7 @@ object fCupomFiscal: TfCupomFiscal
         Left = 1
         Top = 1
         Width = 130
-        Height = 68
+        Height = 37
         Align = alLeft
         Caption = 'F8 Or'#231'amento'
         EnableDblClick = False
@@ -1044,9 +1044,9 @@ object fCupomFiscal: TfCupomFiscal
     end
     object AdvPanel3: TAdvPanel
       Left = 0
-      Top = 399
+      Top = 368
       Width = 401
-      Height = 205
+      Height = 236
       Align = alClient
       BevelInner = bvRaised
       BorderStyle = bsSingle
@@ -1093,7 +1093,7 @@ object fCupomFiscal: TfCupomFiscal
         Left = 2
         Top = 2
         Width = 393
-        Height = 197
+        Height = 228
         Align = alClient
         Center = True
         Picture.Data = {
