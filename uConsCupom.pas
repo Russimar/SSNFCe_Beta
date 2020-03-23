@@ -69,6 +69,7 @@ type
     Label6: TLabel;
     PopupMenu2: TPopupMenu;
     BuscaNFCeWeb1: TMenuItem;
+    lblPedido: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -80,6 +81,8 @@ type
     procedure ImprimirCarne1Click(Sender: TObject);
     procedure ImprimiraConsulta1Click(Sender: TObject);
     procedure BuscaNFCeWeb1Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
@@ -477,6 +480,16 @@ begin
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
   fNFCE_ACBr.btnConsultarNFCeWebClick(Sender);
+end;
+
+procedure TfrmConsCupom.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Vk_F9) and not(fDmCupomFiscal.cdsCupom_Cons.IsEmpty) and (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString = 'PED') then
+  begin
+    uUtilPadrao.vID_Cupom_Pos := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+    Close;
+  end;
 end;
 
 end.

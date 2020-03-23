@@ -966,7 +966,7 @@ object fCupomFiscal: TfCupomFiscal
     object PnlParcial: TPanel
       Left = 0
       Top = 329
-      Width = 400
+      Width = 401
       Height = 39
       Align = alTop
       Color = 5585152
@@ -982,7 +982,7 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 3
       object btComanda: TNxButton
-        Left = 269
+        Left = 270
         Top = 1
         Width = 130
         Height = 37
@@ -1004,7 +1004,7 @@ object fCupomFiscal: TfCupomFiscal
       object btPedido: TNxButton
         Left = 131
         Top = 1
-        Width = 138
+        Width = 139
         Height = 37
         Align = alClient
         Caption = 'F9 Pedido'

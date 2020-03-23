@@ -15,6 +15,7 @@ object frmConsCupom: TfrmConsCupom
   Position = poDesktopCenter
   WindowState = wsMaximized
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -22,14 +23,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 1071
-    Height = 486
+    Height = 485
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 103
       Width = 1069
-      Height = 226
+      Height = 225
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -276,6 +277,15 @@ object frmConsCupom: TfrmConsCupom
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
+      end
+      object lblPedido: TLabel
+        Left = 294
+        Top = 45
+        Width = 121
+        Height = 13
+        Caption = 'F9-Ajusta/Finaliza Pedido'
+        Transparent = False
+        Visible = False
       end
       object dtInicial: TDateEdit
         Left = 57
@@ -668,7 +678,7 @@ object frmConsCupom: TfrmConsCupom
     end
     object gbxVendedor: TRzGroupBox
       Left = 1
-      Top = 329
+      Top = 328
       Width = 1069
       Height = 156
       Align = alBottom
@@ -691,7 +701,7 @@ object frmConsCupom: TfrmConsCupom
       object Label5: TLabel
         Left = 296
         Top = 80
-        Width = 141
+        Width = 138
         Height = 18
         Caption = 'Total de Vendas:'
         Font.Charset = DEFAULT_CHARSET

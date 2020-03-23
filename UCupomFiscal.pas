@@ -197,6 +197,7 @@ type
     procedure prc_Move_Itens;
     procedure prc_Form_Cartao;
     procedure prc_Inserir;
+    procedure prc_Verificar_Pedido(ID : Integer);
 
     function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
     function fnc_Validacao_OK: Boolean;
@@ -605,15 +606,19 @@ begin
   begin
     if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     begin
+      vID_Cupom_Pos := 0;
       ffrmConsCupom := TfrmConsCupom.Create(nil);
-      ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+      ffrmConsCupom.lblPedido.Visible     := (fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S');
+      ffrmConsCupom.fDmCupomFiscal        := fDmCupomFiscal;
       ffrmConsCupom.btnReimprimir.Visible := True;
-      ffrmConsCupom.edtSerie.Text := vSerieCupom;
+      ffrmConsCupom.edtSerie.Text         := vSerieCupom;
       try
         ffrmConsCupom.ShowModal;
       finally
         FreeAndNil(ffrmConsCupom);
       end;
+      if vID_Cupom_Pos > 0 then
+        prc_Verificar_Pedido(vID_Cupom_Pos);
     end;
   end;
 
@@ -2538,6 +2543,19 @@ begin
   ffrmSel_Sacola_CF.ffCupomFiscal2 := fCupomFiscal;
   ffrmSel_Sacola_CF.ShowModal;
   FreeAndNil(ffrmSel_Sacola_CF);
+end;
+
+procedure TfCupomFiscal.prc_Verificar_Pedido(ID: Integer);
+begin
+  fDmCupomFiscal.prcLocalizar(ID);
+  if (fDmCupomFiscal.cdsCupomFiscal.IsEmpty) or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString <> 'PED' ) then
+  begin
+    MessageDlg('*** Pedido não encontrado!', mtInformation, [mbOk], 0);
+    exit;
+  end;
+  fDmCupomFiscal.cdsCupomFiscal.Edit;
+  Edit1.SetFocus;
+  pnlCaixaLivre.Visible := False;
 end;
 
 end.
