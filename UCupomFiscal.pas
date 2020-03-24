@@ -627,7 +627,7 @@ begin
     if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     begin
       fDmCupomFiscal.vAceita_Converter := True;
-      fDmCupomFiscal.vID_Cupom_Pos     := 0;
+      //fDmCupomFiscal.vID_Cupom_Pos     := 0;
       vID_Cupom_Pos                    := 0;
       ffrmConsCupom := TfrmConsCupom.Create(nil);
       ffrmConsCupom.lblPedido.Visible     := (fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S');
@@ -640,11 +640,14 @@ begin
         begin
           fDmCupomFiscal.prcLocalizar(vID_Cupom_Pos);
           btFinalizarClick(Sender);
+          vID_Cupom_Pos := 0;
         end;
       finally
         FreeAndNil(ffrmConsCupom);
         fDmCupomFiscal.vAceita_Converter := False;
       end;
+      if (vID_Cupom_Pos > 0) and not(fDmCupomFiscal.vConverter_NFCe) then
+        prc_Verificar_Pedido(vID_Cupom_Pos);
     end;
   end;
 
@@ -1151,7 +1154,8 @@ begin
 
   if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
   begin
-    fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    //fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
     fDmCupomFiscal.cdsCupomFiscal.Post;
     fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
   end;
@@ -1486,7 +1490,8 @@ begin
 
   if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
   begin
-    fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    //fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
     fDmCupomFiscal.cdsCupomFiscal.Post;
     fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
     fDmCupomFiscal.vEncerrado := True;
@@ -1495,7 +1500,8 @@ begin
   if (vTipo = 'COM') then
   begin
     if (fDmCupomFiscal.cdsCupomParametrosUSA_COMANDA.AsString = 'S') then
-      prc_ImprimeComanda(fDmCupomFiscal.vID_Cupom_Pos);
+      //prc_ImprimeComanda(fDmCupomFiscal.vID_Cupom_Pos);
+      prc_ImprimeComanda(vID_Cupom_Pos);
   end
   else if MessageDLg('Deseja imprimir?', mtConfirmation, [mbyes, mbNo], 0) = mrYes then
     case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of

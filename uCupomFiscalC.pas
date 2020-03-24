@@ -555,8 +555,10 @@ begin
   if ckMsg.Checked then
     ShowMessage('Parte 6 - Posiciona  Monta_sqlCupom_Cons ');
 
-  if fDmCupomFiscal.vID_Cupom_Pos > 0 then
-    Monta_sqlCupom_Cons(0,fDmCupomFiscal.vID_Cupom_Pos);
+  //if fDmCupomFiscal.vID_Cupom_Pos > 0 then
+  if vID_Cupom_Pos > 0 then
+    //Monta_sqlCupom_Cons(0,fDmCupomFiscal.vID_Cupom_Pos);
+    Monta_sqlCupom_Cons(0,vID_Cupom_Pos);
   if ckMsg.Checked then
     ShowMessage('Parte 7 - Depois do Posiciona  Monta_sqlCupom_Cons ');
 

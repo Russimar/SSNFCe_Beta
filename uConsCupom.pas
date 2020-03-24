@@ -541,7 +541,7 @@ procedure TfrmConsCupom.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = Vk_F9) and not(fDmCupomFiscal.cdsCupom_Cons.IsEmpty) and (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString = 'PED') then
   begin
-    uUtilPadrao.vID_Cupom_Pos := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+    vID_Cupom_Pos := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
     Close;
   end;
 end;

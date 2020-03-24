@@ -22,7 +22,7 @@ object fCupomFiscalC: TfCupomFiscalC
     Left = 0
     Top = 167
     Width = 1358
-    Height = 329
+    Height = 328
     Align = alClient
     Ctl3D = False
     DataSource = dmCupomFiscal.dsCupom_Cons
@@ -876,7 +876,7 @@ object fCupomFiscalC: TfCupomFiscalC
   end
   object Panel1: TPanel
     Left = 0
-    Top = 496
+    Top = 495
     Width = 1358
     Height = 26
     Align = alBottom
@@ -1248,7 +1248,7 @@ object fCupomFiscalC: TfCupomFiscalC
   end
   object pnlCliente: TPanel
     Left = 0
-    Top = 522
+    Top = 521
     Width = 1358
     Height = 56
     Align = alBottom
@@ -1377,7 +1377,7 @@ object fCupomFiscalC: TfCupomFiscalC
   end
   object PanelTotais1: TPanel
     Left = 0
-    Top = 578
+    Top = 577
     Width = 1358
     Height = 120
     Align = alBottom
@@ -1386,7 +1386,7 @@ object fCupomFiscalC: TfCupomFiscalC
     object Label11: TLabel
       Left = 28
       Top = 90
-      Width = 72
+      Width = 71
       Height = 13
       Caption = 'Valor M'#233'dio:'
       Font.Charset = DEFAULT_CHARSET
@@ -1412,7 +1412,7 @@ object fCupomFiscalC: TfCupomFiscalC
     object Label23: TLabel
       Left = 6
       Top = 26
-      Width = 97
+      Width = 95
       Height = 13
       Caption = 'Total de Vendas:'
       Font.Charset = DEFAULT_CHARSET

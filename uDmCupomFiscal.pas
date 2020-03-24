@@ -1880,7 +1880,7 @@ type
     vID_Fechamento: Integer;
 
     vClienteID: Integer;
-    vID_Cupom_Pos, vLinha, vPosicao: Integer;
+    vID_Cupom_Pos_DM, vLinha, vPosicao: Integer;
     vID_Troca, vItem_Troca : Integer;
     vTipoCupom: String;
     vNumCartao: Integer;//para comanda restaurante
