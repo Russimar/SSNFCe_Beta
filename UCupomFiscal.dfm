@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 61
-  Top = 72
+  Left = 39
+  Top = 33
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsNone
   Caption = 'Emiss'#227'o Cupom Fiscal'
@@ -164,7 +164,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 59
+        Width = 60
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -859,7 +859,7 @@ object fCupomFiscal: TfCupomFiscal
         Top = 1
         Width = 134
         Height = 27
-        Align = alRight
+        Align = alLeft
         Caption = 'Copiar Comanda'
         EnableDblClick = False
         Font.Charset = DEFAULT_CHARSET
@@ -879,7 +879,7 @@ object fCupomFiscal: TfCupomFiscal
         Top = 1
         Width = 135
         Height = 27
-        Align = alClient
+        Align = alLeft
         Caption = 'Copiar Pedido'
         EnableDblClick = False
         Font.Charset = DEFAULT_CHARSET

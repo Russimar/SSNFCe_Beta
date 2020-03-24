@@ -248,6 +248,7 @@ end;
 procedure TfCupomFiscal.FormShow(Sender: TObject);
 var
   i: Integer;
+  vWidth : Integer;
 begin
   fDmCupomFiscal := TDmCupomFiscal.Create(Self);
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
@@ -352,9 +353,28 @@ begin
   pnlCopiar.Visible := ((fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S'));
   if pnlCopiar.Visible then
   begin
+    vWidth := 0;
     btnCopiarSacola.Visible := (fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S');
     btnCopiarPedido.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S');
     btnCopiarComanda.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S');
+    if btnCopiarComanda.Visible then
+     Inc(vWidth);
+    if btnCopiarPedido.Visible then
+     Inc(vWidth);
+    if btnCopiarSacola.Visible then
+     Inc(vWidth);
+    if btnCopiarSacola.Visible then
+      btnCopiarSacola.Width  := pnlCopiar.Width div vWidth
+    else
+      btnCopiarSacola.Width  := 0;
+    if btnCopiarPedido.Visible then
+      btnCopiarPedido.Width  := pnlCopiar.Width div vWidth
+    else
+      btnCopiarPedido.Width  := 0;
+    if btnCopiarComanda.Visible then
+      btnCopiarComanda.Width := pnlCopiar.Width div vWidth
+    else
+      btnCopiarComanda.Width := 0;
   end;
 
 //////////////////////////////////
