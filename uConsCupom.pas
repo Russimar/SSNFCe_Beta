@@ -86,7 +86,7 @@ type
   private
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
-    procedure prc_Consultar;
+    procedure prc_Consultar(ID :Integer);
     procedure prc_Consultar_Total_FormaPagto;
   public
     { Public declarations }
@@ -94,12 +94,15 @@ type
     ffrmConsCupomItens: TfrmConsCupomItens;
     vCancelar: Boolean;
     vExcluir: Boolean;
+    vAceita_Converter : Boolean;
   end;
 
 var
   frmConsCupom: TfrmConsCupom;
 
 implementation
+
+uses DmdDatabase;
 
 
 {$R *.dfm}
@@ -109,8 +112,8 @@ begin
   fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
   if not Assigned(fDmCupomFiscal) then
     fDmCupomFiscal := TDmCupomFiscal.Create(Self);
-
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+  fDmCupomFiscal.vConverter_NFCe := False;
 
   fDmCupomFiscal.cdsTerminal.Open;
   dtInicial.Date := Date;
@@ -128,12 +131,13 @@ end;
 
 procedure TfrmConsCupom.btnConsultarClick(Sender: TObject);
 begin
-  prc_Consultar;
+  prc_Consultar(0);
   prc_Consultar_Total_FormaPagto;
 end;
 
 procedure TfrmConsCupom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  fDmCupomFiscal.vAceita_Converter := False;
   if fDmCupomFiscal.Owner.ClassName  = Self.ClassName then
     FreeAndNil(fDmCupomFiscal);
   Action := Cafree;
@@ -145,7 +149,9 @@ var
   NumCupom: string;
   i, Selecionado: integer;
   IDCupomAux : integer;
+  vAux: Integer;
 begin
+  fDmCupomFiscal.vConverter_NFCe := False;
   if vCancelar then
   begin
     if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
@@ -211,9 +217,49 @@ begin
         MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
         exit;
       end;
+      if (fDMCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'NFC') and (fDMCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'CNF') then
+      begin
+        MessageDlg('*** Tipo não é permitido enviar!', mtInformation, [mbOk], 0);
+        exit;
+      end;
+      if (fDMCupomFiscal.cdsCupom_ConsTIPO.AsString = 'CNF') and not(fDmCupomFiscal.vAceita_Converter) then
+      begin
+        MessageDlg('*** Não é permitido converter pela consulta, precisa entrar com F11 na tela do Cupom Fiscal!', mtInformation, [mbOk], 0);
+        exit;
+      end;
+
+      //23/03/2020
+      if fDmCupomFiscal.cdsCupom_ConsTIPO.AsString = 'CNF' then
+        if MessageDlg('Tem certeza que deseja converter? ', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+          Exit
+        else
+        begin
+          fDmCupomFiscal.vConverter_NFCe := True;
+          vID_Cupom_Pos   := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+          Close;
+          exit;
+        end;
+      {if fDmCupomFiscal.vConverter_NFCe then
+      begin
+        fDmCupomFiscal.cdsFilial.Locate('ID', fDmCupomFiscal.cdsCupom_ConsFILIAL.AsInteger, [loCaseInsensitive]);
+        fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+        if (fDmCupomFiscal.cdsCupomFiscal.IsEmpty) or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') then
+          exit;
+        vAux := dmDatabase.ProximaSequencia('NUM_NFC', fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger, IntToStr(fDmCupomFiscal.cdsCupomFiscalSERIE.AsInteger));
+        fDmCupomFiscal.cdsCupomFiscal.Edit;
+        fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := vAux;
+        fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'NFC';
+        fDmCupomFiscal.cdsCupomFiscal.Post;
+        fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
+        fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+        prc_Consultar(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+      end;}
+      //*******************
+
       NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
-      if MessageDlg('Tem certeza que deseja reenviar o Cupom Selecionado? ', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-        Exit;
+      if not fDmCupomFiscal.vConverter_NFCe then
+        if MessageDlg('Tem certeza que deseja reenviar o Cupom Selecionado? ', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+          Exit;
       fDmCupomFiscal.cdsCupom_Cons.DisableControls;
       fDmCupomFiscal.cdsCupom_Cons.First;
       //não trocar o indice 0 na grid
@@ -259,52 +305,60 @@ begin
 //        end;
 //        fDmCupomFiscal.cdsCupom_Cons.Next;
 //      end;
-      btnConsultarClick(Sender);
+      if not fDmCupomFiscal.vConverter_NFCe then
+        btnConsultarClick(Sender);
     finally
       fDmCupomFiscal.cdsCupom_Cons.EnableControls;
     end;
   end;
+  if fDmCupomFiscal.vConverter_NFCe then
+    Close;
 end;
 
-procedure TfrmConsCupom.prc_Consultar;
+procedure TfrmConsCupom.prc_Consultar(ID :Integer);
 var
   vComando: string;
   vTipo: String;
 begin
   fDmCupomFiscal.cdsCupom_Cons.Close;
   vComando := fDmCupomFiscal.ctConsCupom;
-  vComando := vComando + 'WHERE 0=0';
-  vComando := vComando + ' AND CF.DTEMISSAO >= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtInicial.date));
-  vComando := vComando + ' AND CF.DTEMISSAO <= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtFinal.date));
-  if ComboTerminal.KeyValue > 0 then
-    vComando := vComando + ' AND TERMINAL_ID = ' + ComboTerminal.Value;
-  if vCancelar then
+  if ID > 0 then
+    vComando := vComando + 'WHERE CF.ID = ' + IntToStr(ID)
+  else
   begin
-    cbNEnviados.Checked := False;
-    cbNEnviados.Enabled := False;
-    vComando := vComando + ' AND CF.NFEPROTOCOLO IS NOT NULL AND CF.NFEPROTOCOLO_CANCELADA IS NULL';
-  end;
-  if not vCancelar then
-    if cbNEnviados.Checked then
-      vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
-  if edtSerie.Text <> EmptyStr then
-    vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
-  if ComboVendedor.KeyValue > 0 then
-    vComando := vComando + ' AND CF.ID_VENDEDOR = ' + ComboVendedor.Value;
-  if ComboBox1.ItemIndex > 0 then
-  begin
-    case ComboBox1.ItemIndex of
-      1: vTipo := 'CNF';
-      2: vTipo := 'NFC';
-      3: vTipo := 'PED';
-      4: vTipo := 'ORC';
-      5: vTipo := 'COM';
+    vComando := vComando + 'WHERE 0=0';
+    vComando := vComando + ' AND CF.DTEMISSAO >= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtInicial.date));
+    vComando := vComando + ' AND CF.DTEMISSAO <= ' + QuotedStr(FormatDateTime('MM/DD/YYYY', dtFinal.date));
+    if ComboTerminal.KeyValue > 0 then
+      vComando := vComando + ' AND TERMINAL_ID = ' + ComboTerminal.Value;
+    if vCancelar then
+    begin
+      cbNEnviados.Checked := False;
+      cbNEnviados.Enabled := False;
+      vComando := vComando + ' AND CF.NFEPROTOCOLO IS NOT NULL AND CF.NFEPROTOCOLO_CANCELADA IS NULL';
     end;
-    vComando := vComando + ' AND TIPO = ' + QuotedStr(vTipo);
+    if not vCancelar then
+      if cbNEnviados.Checked then
+        vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
+    if edtSerie.Text <> EmptyStr then
+      vComando := vComando + ' AND CF.SERIE = ' + QuotedStr(edtSerie.Text);
+    if ComboVendedor.KeyValue > 0 then
+      vComando := vComando + ' AND CF.ID_VENDEDOR = ' + ComboVendedor.Value;
+    if ComboBox1.ItemIndex > 0 then
+    begin
+      case ComboBox1.ItemIndex of
+        1: vTipo := 'CNF';
+        2: vTipo := 'NFC';
+        3: vTipo := 'PED';
+        4: vTipo := 'ORC';
+        5: vTipo := 'COM';
+      end;
+      vComando := vComando + ' AND TIPO = ' + QuotedStr(vTipo);
+    end;
+    if ComboBox1.ItemIndex <> 5 then
+      vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
+    vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   end;
-  if ComboBox1.ItemIndex <> 5 then
-    vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
-  vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
   fDmCupomFiscal.cdsCupom_Cons.Open;
 end;

@@ -1910,6 +1910,8 @@ type
     vTamanho, vCombinacao: String;
     vDataEntrada: TDateTime;
     vCondicaoPgto : Integer;
+    vConverter_NFCe : Boolean;
+    vAceita_Converter : Boolean;
     //***
 
     procedure Gerar_Parcelas(vVlrParcelado, vTxJuros: Real;vQtdParc: Word);
@@ -2135,6 +2137,7 @@ begin
   ctConsCupom        := sdsCupom_Cons.CommandText;
   ctTroca            := sdsTroca.CommandText;
   ctComandaRel       := sdsComandaRel.CommandText;
+  vAceita_Converter  := False;
 
   cdsFilial.Open;
   cdsTipoCobranca.Open;

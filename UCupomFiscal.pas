@@ -606,7 +606,9 @@ begin
   begin
     if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     begin
-      vID_Cupom_Pos := 0;
+      fDmCupomFiscal.vAceita_Converter := True;
+      fDmCupomFiscal.vID_Cupom_Pos     := 0;
+      vID_Cupom_Pos                    := 0;
       ffrmConsCupom := TfrmConsCupom.Create(nil);
       ffrmConsCupom.lblPedido.Visible     := (fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S');
       ffrmConsCupom.fDmCupomFiscal        := fDmCupomFiscal;
@@ -614,11 +616,15 @@ begin
       ffrmConsCupom.edtSerie.Text         := vSerieCupom;
       try
         ffrmConsCupom.ShowModal;
+        if fDmCupomFiscal.vConverter_NFCe then
+        begin
+          fDmCupomFiscal.prcLocalizar(vID_Cupom_Pos);
+          btFinalizarClick(Sender);
+        end;
       finally
         FreeAndNil(ffrmConsCupom);
+        fDmCupomFiscal.vAceita_Converter := False;
       end;
-      if vID_Cupom_Pos > 0 then
-        prc_Verificar_Pedido(vID_Cupom_Pos);
     end;
   end;
 
@@ -1028,29 +1034,49 @@ var
   vVias: Byte;
   ffCupomFiscalPgto: TfCupomFiscalPgto;
   vArq : String;
+  vAux : Integer;
 begin
   vFilial := vFilial_Loc;
   if fDmCupomFiscal.cdsCupomFiscal.IsEmpty then
     Exit;
   if fDmCupomFiscal.cdsCupom_Itens.IsEmpty then
     Exit;
-  if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat)) then
+  if not fDmCupomFiscal.vConverter_NFCe then
   begin
-    MessageDlg('*** Vlr da Troca maior que o valor do cupom!' + #13 + #13
-               + ' Vlr. Troca: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat) + #13
-               + ' Vlr. Total: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat), mtInformation, [mbOk], 0);
-    Exit;
-  end; 
+    if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat)) > StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat)) then
+    begin
+      MessageDlg('*** Vlr da Troca maior que o valor do cupom!' + #13 + #13
+                 + ' Vlr. Troca: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TROCA.AsFloat) + #13
+                 + ' Vlr. Total: ' + FormatFloat('###,###,##0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat), mtInformation, [mbOk], 0);
+      Exit;
+    end;
+  end;
 
   if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     fDmCupomFiscal.cdsCupomFiscal.Edit;
 
-  fDmCupomFiscal.vEncerrado := False;
-  ffCupomFiscalPgto := TfCupomFiscalPgto.Create(Self);
-  ffCupomFiscalPgto.fDmCupomFiscal := fDmCupomFiscal;
-  ffCupomFiscalPgto.fDmParametros := fDmParametros;
-  ffCupomFiscalPgto.ShowModal;
-  FreeAndNil(ffCupomFiscalPgto);
+  if fDmCupomFiscal.vConverter_NFCe then
+  begin
+    fDmCupomFiscal.vEncerrado := True;
+    fDmCupomFiscal.prcLocalizar(vID_Cupom_Pos);
+    if (fDmCupomFiscal.cdsCupomFiscal.IsEmpty) or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') then
+      exit;
+    fDmCupomFiscal.cdsFilial.Locate('ID', fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger, [loCaseInsensitive]);
+    vAux := dmDatabase.ProximaSequencia('NUM_NFC', fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger, IntToStr(fDmCupomFiscal.cdsCupomFiscalSERIE.AsInteger));
+    fDmCupomFiscal.cdsCupomFiscal.Edit;
+    fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := vAux;
+    fDmCupomFiscal.cdsCupomFiscalTIPO.AsString      := 'NFC';
+    //fDmCupomFiscal.cdsCupomFiscal.Post;
+  end
+  else
+  begin
+    fDmCupomFiscal.vEncerrado := False;
+    ffCupomFiscalPgto := TfCupomFiscalPgto.Create(Self);
+    ffCupomFiscalPgto.fDmCupomFiscal := fDmCupomFiscal;
+    ffCupomFiscalPgto.fDmParametros := fDmParametros;
+    ffCupomFiscalPgto.ShowModal;
+    FreeAndNil(ffCupomFiscalPgto);
+  end;
 
   vTextoFechamento := '';
   if vDocumentoClienteVenda <> EmptyStr then
@@ -1131,7 +1157,8 @@ begin
     end;
 
     //02/03/2020  Foi incluido essa linha para alterar a baixa da comanda, onde vai fazer na procedure.
-    fDmCupomFiscal.prc_Atualiza_Comanda(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+    if not fDmCupomFiscal.vConverter_NFCe then
+      fDmCupomFiscal.prc_Atualiza_Comanda(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
     // dá baixa na comanda     //02/03/2020 foi alterada para a linha acima
     {fDmCupomFiscal.mCupom.Active := True;
     if not fDmCupomFiscal.mCupom.IsEmpty then
@@ -2494,6 +2521,8 @@ begin
   Edit1.SelectAll;
   Edit1.Clear;
   Edit1.SetFocus;
+  fDmCupomFiscal.vConverter_NFCe   := False;
+  fDmCupomFiscal.vAceita_Converter := False;
 end;
 
 procedure TfCupomFiscal.prc_Form_Cartao;
