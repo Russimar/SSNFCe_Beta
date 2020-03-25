@@ -114,7 +114,21 @@ uses
   uConsTrocas in 'uConsTrocas.pas' {frmConsTrocas},
   uConsComanda in 'uConsComanda.pas' {frmConsComanda},
   UDMUsuario in 'UDMUsuario.pas' {DMUsuario: TDataModule},
-  USenha_Comanda in 'USenha_Comanda.pas' {frmSenha_Comanda};
+  USenha_Comanda in 'USenha_Comanda.pas' {frmSenha_Comanda},
+  UDMCadProduto in '..\ssfacil\UDMCadProduto.pas' {dmCadProduto: TDataModule},
+  UCadProduto in 'UCadProduto.pas' {frmCadProduto},
+  UCadProduto_Consumo in 'UCadProduto_Consumo.pas' {frmCadProduto_Consumo},
+  uLkJSON in '..\ssfacil\lkJSON-1.07\uLkJSON.pas',
+  UDMCopiarProduto in '..\ssfacil\UDMCopiarProduto.pas' {DMCopiarProduto: TDataModule},
+  UConsEstoque_Mov in '..\ssfacil\UConsEstoque_Mov.pas' {frmConsEstoque_Mov},
+  URelProduto in '..\ssfacil\URelProduto.pas' {fRelProduto},
+  URelProduto_Grupo in '..\ssfacil\URelProduto_GruPo.pas' {fRelProduto_Grupo},
+  USel_Grupo in '..\ssfacil\USel_Grupo.pas' {frmSel_Grupo},
+  USel_CBenef in '..\ssfacil\USel_CBenef.pas' {frmSel_CBenef},
+  USel_EnqIPI in '..\ssfacil\USel_EnqIPI.pas' {frmSel_EnqIPI},
+  uAltProd in '..\ssfacil\UAltProd.pas',
+  uConsProduto_Compras in '..\ssfacil\uConsProduto_Compras.pas' {frmConsProduto_Compras},
+  UCadProduto_ST in '..\ssfacil\UCadProduto_ST.pas' {frmCadProduto_ST};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 

@@ -62,6 +62,8 @@ type
     Consultatrocas1: TMenuItem;
     N7: TMenuItem;
     SenhaComanda1: TMenuItem;
+    N8: TMenuItem;
+    CadastrodeProdutos1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedItem5Click(Sender: TObject);
@@ -93,6 +95,7 @@ type
     procedure btnNFCeClick(Sender: TObject);
     procedure Consultatrocas1Click(Sender: TObject);
     procedure SenhaComanda1Click(Sender: TObject);
+    procedure CadastrodeProdutos1Click(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -117,7 +120,7 @@ implementation
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
   DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2,
-  uConsTrocas, uUtilCupom, USenha_Comanda;
+  uConsTrocas, uUtilCupom, USenha_Comanda, UCadProduto;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -738,5 +741,13 @@ procedure TfMenu.SenhaComanda1Click(Sender: TObject);
 begin
   OpenForm(TfrmSenha_Comanda,wsMaximized);
 end;
+
+procedure TfMenu.CadastrodeProdutos1Click(Sender: TObject);
+begin
+  OpenForm(TfrmCadProduto,wsMaximized);
+end;
+
+//initialization
+//  RLConsts.SetVersion(3,72,'B');
 
 end.

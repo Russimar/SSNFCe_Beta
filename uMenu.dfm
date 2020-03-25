@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 227
-  Top = 145
+  Left = 325
+  Top = 126
   Width = 1000
   Height = 673
   Caption = 'Menu Principal'
@@ -2516,6 +2516,13 @@ object fMenu: TfMenu
         Caption = 'Par'#226'metros'
         OnClick = Parmetros1Click
       end
+      object N8: TMenuItem
+        Caption = '-'
+      end
+      object CadastrodeProdutos1: TMenuItem
+        Caption = 'Cadastro de Produtos'
+        OnClick = CadastrodeProdutos1Click
+      end
       object N2: TMenuItem
         Caption = '-'
       end
@@ -2733,6 +2740,30 @@ object fMenu: TfMenu
         CompName = 'PanelTotais'
         Caption = 'Mostrar Totais'
         GroupName = 'Cupom'
+      end
+      item
+        FormName = 'frmCadProduto'
+        CompName = 'lblPrecoCusto'
+        Caption = 'Mostrar Pre'#231'o Custo'
+        GroupName = 'Produtos'
+      end
+      item
+        FormName = 'frmCadProduto'
+        CompName = 'btnInserir'
+        Caption = 'Inserir'
+        GroupName = 'Produtos'
+      end
+      item
+        FormName = 'frmCadProduto'
+        CompName = 'btnExcluir'
+        Caption = 'Excluir'
+        GroupName = 'Produtos'
+      end
+      item
+        FormName = 'frmCadProduto'
+        CompName = 'btnAlterar'
+        Caption = 'Alterar'
+        GroupName = 'Produtos'
       end>
     LoginMode = lmActive
     UsersProfile.Active = True

@@ -95,7 +95,7 @@ UnitOutputDir=C:\Delphi7\SSFacil\DCU
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=indy;dclOfficeXP;PacoteCJV;RxCtl7;RxDB7;RxBDE7;RLibWinD7vcl;RLBoletoD7;JVCL200_R70;ZMstr191D7;ACBrDiversos;ACBrComum;ACBr_Boleto;synapse;ACBrSerial;ACBr_Sintegra;ACBr_SPED;ACBr_PAF;ACBrOpenSSL;ACBr_Convenio115;ACBr_SEF2;PCN2;ACBr_LFD;ACBrNFeDanfeRLpkg;ACBrCapicom;ACBr_NFe2;ACBrCTeDacteRLpkg;ACBr_CTe;ACBrNFSeDanfseRLpkg;ACBr_NFSe;ACBr_BoletoFC_Fortes;ACBrMDFeDAMDFeRLpkg;ACBr_MDFe;ACBrNFeDanfeFRpkg;ACBrCTeDacteFRpkg;ACBrNFSeDanfseFRpkg;ACBrMDFeDAMDFEFRpkg;NxCommonRun_d7;NxCollectionRun_d7;NxCollectionDsgn_d7;NxCommonDsgn_d7;NxGridRun_d7;NxDBGridRun_d7;NxGridDsgn_d7;NxInspectorRun_d7;NxInspectorDsgn_d7;dbrtl;UCDBXD7;UserControlD7_RT;vcl;rtl;vclactnband;vclx;vcldb;VclSmp;tee;TMSD7PERS;TMSD7;bdertl;SMCmpntD7;RaizeComponentsVcl;RaizeComponentsVclDb;DJCL70
+Packages=vcl;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;vcldb;soaprtl;VclSmp;dbexpress;dbxcds;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;dclOfficeXP;frce;RxCtl7;RxBDE7;RxDB7;DJCL70;JVCL200_R70;SMCmpntD7;NxCommonRun_d7;NxCommonDsgn_d7;NxGridRun_d7;NxGridDsgn_d7;NxDBGridRun_d7;NxInspectorRun_d7;NxInspectorDsgn_d7;NxCollectionRun_d7;NxCollectionDsgn_d7;NxSheetRun_d7;NxThirdpartyRun_d7;NxAddonsRun_d7;RaizeComponentsVcl;RaizeComponentsVclDb;UserControlD7_RT;frx7;fs7;frxe7;frxTee7;fsTee7;frxDB7;fsDB7;frxADO7;fsADO7;frxDBX7;frxIBX7;fsIBX7;ZMstr191D7;ACBr_Comum;ACBr_synapse;ACBr_OpenSSL;ACBr_Diversos;ACBr_Serial;ACBr_SPED;ACBr_TXTComum;ACBr_SPEDImportar;ACBr_TCP;ACBr_Boleto;ACBr_Integrador;ACBr_PCNComum;ACBr_NFe;ACBr_DFeComum;ACBr_NFCeECFVirtual;ACBr_NFeDanfeESCPOS;ACBr_NFSe;ACBr_MDFe;ACBr_GNRE;ACBr_TEFD;ACBr_NFeDanfeRL;ACBrDFeReportRL;ACBr_NFSeDanfseRL;ACBr_BoletoRL;ACBr_MDFeDamdfeRL;inetdb;ACBr_SAT;ACBr_SATECFVirtual;ACBr_SATExtratoESCPOS;ACBr_SATExtratoRL;dxCoreD7;dxGDIPlusD7;cxLibraryVCLD7;cxEditorsVCLD7;dxThemeD7;cxDataD7;cxExtEditorsVCLD7;dxEdtrD7;dxELibD7;dxDockingD7;dxComnD7;dxsbD7;dxBarD7;dxBarDBNavD7;cxBarEditItemD7;dxBarExtDBItemsD7;dxBarExtItemsD7;dxRibbonD7;dxNavBarD7;dxLayoutControlD7;dxLayoutControlcxEditAdaptersD7;dxLayoutControldxEditAdaptersD7;cxSpreadSheetVCLD7;EQTLD7;ECQDBCD7;EQDBTLD7;cxTreeListD7;cxTreeListdxBarPopupMenuD7;EQGridD7;dxGrEdD7;dxExELD7;cxPageControlVCLD7;cxGridD7;cxVerticalGridVCLD7;dxFlowChartD7;cxSchedulerD7;cxSchedulerGridD7;dxorgcD7;dxdborD7;dxMasterViewD7;cxWebD7;cxWebPascalScriptD7;cxWebSnapD7;cxWebTeeChartD7;dxmdsD7;dxdbtrD7;dxtrmdD7;dxPSCoreD7;dxPSLnksD7;dxPScxCommonD7;dxPScxExtCommonD7;dxPScxPCProdD7;dxPScxSSLnkD7;dxPScxTL5LnkD7;dxPScxVGridLnkD7;dxPSTeeChartD7;dxPSDBTeeChartD7;dxPSdxDBTVLnkD7;dxPSdxFCLnkD7;dxPSdxLCLnkD7;dxPSdxMVLnkD7;dxPSdxOCLnkD7;dxPSdxDBOCLnkD7;dxPsPrVwAdvD7;dxPSTLLnkD7;dxPSdxDBTLLnkD7;dxPSdxDBCtrlLnkD7;dxPSdxInsLnkD7;dxInsD7;dxPSdxOILnkD7;dxObjInsD7;dxPSdxDBGrLnkD7;dxPScxGrid6LnkD7;cxPivotGridD7;cxPivotGridChartD7;cxPivotGridOLAPD7;dxDBEdD7;dxExRwD7;dcldxSkinsCoreD7;dxSkinsCoreD7;dxSkinscxPCPainterD7;dxSkinsdxLCPainterD7;dxSkinscxScheduler3PainterD7;dxSkinsdxNavBar2PainterD7;dxSkinsdxDLPainterD7;dxSkinsdxRibbonPainterD7;dxSkinsdxBarPainterD7;dxSkinBlackD7;dxSkinBlueD7;dxSkinSilverD7;dxSkinStardustD7;dxSkinValentineD7;dxSkinXmas2008BlueD7;dxSkinCaramelD7;dxSkinDarkSideD7;dxSkinPumpkinD7;dxSkinCoffeeD7;dxSkinGlassOceansD7;dxSkiniMaginaryD7;dxSkinMcSkinD7;dxSkinLilianD7;dxSkinLiquidSkyD7;dxSkinLondonLiquidSkyD7;dxSkinMoneyTwinsD7;dxSkinOffice2007BlackD7;dxSkinOffice2007BlueD7;dxSkinOffice2007GreenD7;dxSkinOffice2007PinkD7;dxSkinOffice2007SilverD7;dxSkinSummer2008D7;dxSkinSpringTimeD7;dxSkinSevenD7;dxSkinFoggyD7;dxSkinDarkRoomD7;dxSkinSharpD7;dxSpellCheckerD7
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
@@ -115,7 +115,7 @@ AutoIncBuild=0
 MajorVer=1
 MinorVer=0
 Release=0
-Build=21
+Build=22
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.0.21
+FileVersion=1.0.0.22
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -135,15 +135,13 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
-C:\Acbr\Lib\Delphi\LibD7\Win32\ACBr_MDFeDamdfeRL.bpl=ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)
 C:\Program Files (x86)\Developer Express Inc\Library\Delphi7\dcldxPScxScheduler3LnkD7.bpl=ExpressPrinting System ReportLink for ExpressScheduler 3 by Developer Express Inc.
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlUnitOutputDirectory]
-Count=2
+Count=1
 Item0=C:\Delphi7\SSFacil\DCU
-Item1=C:\Delphi7\SSFacil\EXE
 [HistoryLists\hlOutputDirectorry]
 Count=1
 Item0=C:\Delphi7\SSFacil\EXE

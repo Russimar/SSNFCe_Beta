@@ -705,7 +705,6 @@ end;
 
 procedure prc_Monta_Detalhe(fDMCupomFiscal: TDMCupomFiscal; fDMNFCe: TDMNFCe);
 var
-  vItemAdicao: Integer;
   vCodSitTrib, vOrigem: String;
   vPerc_Interno: Real;
   vCodCSTIPI: String;
@@ -1129,9 +1128,9 @@ begin
 end;
 
 function fnc_Monta_QRCode(fDMCupomFiscal: TDMCupomFiscal; fDMNFCe: TDMNFCe; aXML: TStrings): WideString;
-var
-  vTexto: String;
-  vIDToken: String;
+//var
+//  vTexto: String;
+//  vIDToken: String;
 begin
   {vTexto := Monta_Texto(fDMNFCe.qFilialCNPJ_CPF.AsString,14);
 
@@ -1151,7 +1150,7 @@ end;
 
 procedure prc_Monta_Transportadora(fDMCupomFiscal: TDMCupomFiscal; fDMNFCe: TDMNFCe);
 var
-  texto2, vInscTransp: string;
+  texto2 : string;
   vCNPJTransp: String;
 begin
   TranspXML := NfeXML.InfNFe.Transp;
