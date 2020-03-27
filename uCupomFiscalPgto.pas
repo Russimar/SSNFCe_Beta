@@ -1171,7 +1171,7 @@ begin
 
   if vCodPessoa_Pos > 0 then
   begin
-    vPerc_Venda := StrToFloatDef(SQLLocate('PESSOA', 'CODIGO', 'PERC_COMISSAO_VEND', IntToStr(vCodCombinacao_Pos)), 0);
+    vPerc_Venda := StrToFloatDef(SQLLocate('PESSOA', 'CODIGO', 'PERC_COMISSAO_VEND', IntToStr(vCodPessoa_Pos)), 0);
     fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat := vPerc_Venda;
     fDmCupomFiscal.cdsCupomFiscalNOME_VENDEDOR.AsString := SQLLocate('PESSOA', 'CODIGO', 'NOME', IntToStr(vCodPessoa_Pos));
     edtNomeVendedor.Text := fDmCupomFiscal.cdsCupomFiscalNOME_VENDEDOR.AsString;
