@@ -7,18 +7,10 @@ uses
   UCadUnidade, UCadNCM, StdCtrls, DBCtrls, RxDBComb, RxLookup, RXDBCtrl, ToolEdit, CurrEdit, ExtCtrls, RzTabs, dbXPress, ExtDlgs,
   UCadProduto_Consumo, RzPanel, NxCollection, DBVGrids, DBGrids, UDMCopiarProduto, SqlExpr, DBAdvGrid, USenha,
   AdvDBLookupComboBox, ComCtrls, RzChkLst, RzLstBox, Menus, Mask, Variants, UConsEstoque_Mov, NxEdit, ComObj,
-  cxStyles, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel,
-  dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy,
-  dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
-  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
-  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSeven,
-  dxSkinSharp, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
-  dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData, cxGraphics,
+  cxStyles, cxCustomData, cxGraphics,
   cxFilter, cxData, cxDataStorage, cxEdit, cxDBData, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
-  cxControls, cxGridCustomView, cxGrid;
+  cxControls, cxGridCustomView, cxGrid, dxSkinsCore, dxSkinscxPCPainter;
 
 type
   TfrmCadProduto = class(TForm)
