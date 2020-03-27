@@ -66,6 +66,7 @@ type
     fdmCupomFiscal: TdmCupomFiscal;
     vID_Cupom_Novo: Integer;
     Reenviar : Boolean;
+    NroVias : Integer;    
     function fnc_Gerar_NFCe(ID: Integer): string;
     function fnc_Buscar_Finalidade: Integer;
     procedure prc_Reimprimir(ID : integer);
@@ -1206,7 +1207,19 @@ begin
   fDMNFCe.ACBrPosPrinter.LinhasEntreCupons := 3;
   fDMNFCe.ACBrPosPrinter.Imprimir(mmPreVenda.Lines.Text);
   if vModeloImpressora = 'DR800' then sleep(100);
-  fDMNFCe.ACBrPosPrinter.Desativar;
+    fDMNFCe.ACBrPosPrinter.Desativar;
+
+  if NroVias > 1 then
+    begin
+      if Application.MessageBox(PChar('Imprimir Segunda Via?'), PChar(Application.Title), MB_SYSTEMMODAL + MB_YesNo + MB_IconQuestion + MB_DEFBUTTON2) = IdYes then
+        begin
+          fDMNFCe.ACBrPosPrinter.Ativar;
+          fDMNFCe.ACBrPosPrinter.Imprimir(mmPreVenda.Lines.Text);
+          if vModeloImpressora = 'DR800' then sleep(100);
+            fDMNFCe.ACBrPosPrinter.Desativar;
+        end;
+    end;
+
 end;
 
 procedure TfNFCE_ACBR.btImpresaoPreVendaClick(Sender: TObject);

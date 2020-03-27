@@ -550,13 +550,14 @@ end;
 
 procedure TfrmConsCupom.ImprimirCNFPedido1Click(Sender: TObject);
 begin
-  if (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'PED') or (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'CNF') then
+  if (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'PED') and (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'CNF') then
   begin
     MessageDlg('Impressão somente de Pedido e Cupom não Fiscal!',mtInformation,[mbOK],0);
     Exit;
   end;
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fNFCE_ACBr.NroVias := StrToIntDef(SQLLocate('CUPOMFISCAL_PARAMETROS','ID','VIAS_CUPOM','1'),1);
   fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
 end;
 

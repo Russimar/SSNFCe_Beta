@@ -1136,12 +1136,13 @@ begin
             fDmCupomFiscal.cdsTipoCobranca.Locate('ID', fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger, [loCaseInsensitive]);
             if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
               vVias := vVias - 1;
-            if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') and (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) <> mrYes) then
+            if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') and (MessageDLg('Deseja imprimir o cupom/pedido?', mtConfirmation, [mbyes, mbNo], 0) <> mrYes) then
               vVias := 0;
-            for i := 1 to vVias do
+            if vVias > 0 then
             begin
               fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
               fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+              fNFCE_ACBr.NroVias := vVias;
               fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
             end;
           end;
@@ -1510,6 +1511,7 @@ begin
       begin
         fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
         fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+        fNFCE_ACBr.NroVias := StrToIntDef(SQLLocate('CUPOMFISCAL_PARAMETROS','ID','VIAS_CUPOM','1'),1);
         fNFCE_ACBr.btImpresaoPreVenda.Click;
       end;
     end;
