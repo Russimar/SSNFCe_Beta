@@ -14,8 +14,7 @@ uses
   cxDataStorage, cxEdit, cxDBData, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, ACBrValidador, JvScrollBox, 
-  uConsComanda, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
-  dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
+  uConsComanda, dxSkinsCore, dxSkinscxPCPainter, cxLookAndFeels,
   dxGDIPlusClasses, GradientLabel, ACBrDeviceSerial;
 
 type
@@ -1508,7 +1507,11 @@ begin
       5:
         fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modWrite');
       6:
-        fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
+      begin
+        fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+        fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+        fNFCE_ACBr.btImpresaoPreVenda.Click;
+      end;
     end;
 
   //20/02/2020

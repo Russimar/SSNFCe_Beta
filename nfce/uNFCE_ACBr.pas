@@ -1122,6 +1122,10 @@ begin
     vTexto2 := ' ' + vTexto2;
   mmPreVenda.Lines.Add('</ae><c>Data: ' + vTexto + vTexto2);
   mmPreVenda.Lines.Add(' ');
+  if fdmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString <> EmptyStr then
+    mmPreVenda.Lines.Add('</fn>Nome: ' + fdmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString);
+  if fdmCupomFiscal.cdsCupomFiscalCLIENTE_FONE.AsString <> EmptyStr then
+    mmPreVenda.Lines.Add('</fn>Fone: ' + fdmCupomFiscal.cdsCupomFiscalCLIENTE_FONE.AsString);
   mmPreVenda.Lines.Add(' ');
   if fdmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC' then
    vTexto := 'ORÇAMENTO'
@@ -1170,6 +1174,7 @@ begin
   mmPreVenda.Lines.Add('</fn><c>--------------------------------------------------------');
   mmPreVenda.Lines.Add('</ad><c> Total: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat));
   mmPreVenda.Lines.Add('</ad><c> Vlr Pago: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat));
+  mmPreVenda.Lines.Add('</ad><c> Desconto: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat));
   mmPreVenda.Lines.Add('</ad><c> Troco: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat));
 
   mmPreVenda.Lines.Add('</fn><c>--------------------------------------------------------');
