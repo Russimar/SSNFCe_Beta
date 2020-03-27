@@ -875,6 +875,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsCupomFiscalsdsCupom_Itens
     IndexFieldNames = 'ID;ITEM'
     Params = <>
+    OnCalcFields = cdsCupom_ItensCalcFields
     Left = 96
     Top = 104
     object cdsCupom_ItensID: TIntegerField
@@ -1134,6 +1135,12 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupom_ItensITEM_COMANDA: TIntegerField
       FieldName = 'ITEM_COMANDA'
+    end
+    object cdsCupom_ItensclValorTotalDesconto: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'clValorTotalDesconto'
+      DisplayFormat = '#0.00'
+      Calculated = True
     end
   end
   object dsCupom_Itens: TDataSource

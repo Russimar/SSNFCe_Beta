@@ -1838,6 +1838,7 @@ type
     dsTotal_FormaPagto: TDataSource;
     cdsTotal_FormaPagtoNOME: TStringField;
     cdsTotal_FormaPagtoVALOR: TFloatField;
+    cdsCupom_ItensclValorTotalDesconto: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1848,6 +1849,7 @@ type
       E: EReconcileError; UpdateKind: TUpdateKind;
       var Action: TReconcileAction);
     procedure cdsCupom_TrocaCalcFields(DataSet: TDataSet);
+    procedure cdsCupom_ItensCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     ctCupomFiscal: String;
@@ -4367,6 +4369,11 @@ begin
   finally
       FreeAndNil(sds);
   end;
+end;
+
+procedure TdmCupomFiscal.cdsCupom_ItensCalcFields(DataSet: TDataSet);
+begin
+  cdsCupom_ItensclValorTotalDesconto.AsFloat := cdsCupom_ItensVLR_DESCONTO.AsFloat + cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat;
 end;
 
 end.
