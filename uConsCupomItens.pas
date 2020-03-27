@@ -64,7 +64,5 @@ begin
     fDMCupomFiscal.sdsCupom_Troca.ParamByName('ID_CUPOM').AsInteger := fDMCupomFiscal.cdsCupomFiscalID.AsInteger;
     fDMCupomFiscal.cdsCupom_Troca.Open;
   end;
-
 end;
-
 end.

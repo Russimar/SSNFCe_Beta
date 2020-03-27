@@ -1,11 +1,11 @@
 object frmConsCupomItens: TfrmConsCupomItens
-  Left = 184
-  Top = 90
+  Left = 153
+  Top = 60
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consulta Itens Cupons'
   ClientHeight = 533
-  ClientWidth = 1066
+  ClientWidth = 1091
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object frmConsCupomItens: TfrmConsCupomItens
   object pnlTop: TPanel
     Left = 0
     Top = 0
-    Width = 1066
+    Width = 1091
     Height = 60
     Align = alTop
     TabOrder = 0
@@ -209,14 +209,14 @@ object frmConsCupomItens: TfrmConsCupomItens
   object pnlPrincipal: TPanel
     Left = 0
     Top = 60
-    Width = 1066
+    Width = 1091
     Height = 473
     Align = alClient
     TabOrder = 1
     object gridConsulta: TSMDBGrid
       Left = 1
       Top = 1
-      Width = 1064
+      Width = 1089
       Height = 347
       Align = alClient
       DataSource = dmCupomFiscal.dsCupom_Itens
@@ -326,11 +326,12 @@ object frmConsCupomItens: TfrmConsCupomItens
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = []
+          Width = 85
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'VLR_DESCONTO'
+          FieldName = 'clValorTotalDesconto'
           Title.Alignment = taCenter
           Title.Caption = 'Vlr Desconto'
           Title.Color = 16776176
@@ -339,7 +340,7 @@ object frmConsCupomItens: TfrmConsCupomItens
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = []
-          Width = 78
+          Width = 97
           Visible = True
         end
         item
@@ -353,6 +354,7 @@ object frmConsCupomItens: TfrmConsCupomItens
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = []
+          Width = 87
           Visible = True
         end
         item
@@ -385,14 +387,14 @@ object frmConsCupomItens: TfrmConsCupomItens
     object pnlTroca: TPanel
       Left = 1
       Top = 348
-      Width = 1064
+      Width = 1089
       Height = 124
       Align = alBottom
       TabOrder = 1
       object GroupBox1: TGroupBox
         Left = 1
         Top = 1
-        Width = 1062
+        Width = 1087
         Height = 122
         Align = alClient
         Caption = ' Itens de Troca '
@@ -400,7 +402,7 @@ object frmConsCupomItens: TfrmConsCupomItens
         object SMDBGrid1: TSMDBGrid
           Left = 2
           Top = 15
-          Width = 1058
+          Width = 1083
           Height = 105
           Align = alClient
           Ctl3D = False
