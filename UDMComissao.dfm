@@ -1,10 +1,9 @@
-object DMConsCupom: TDMConsCupom
+object DMComissao: TDMComissao
   OldCreateOrder = False
-  OnCreate = DataModuleCreate
-  Left = 397
-  Top = 268
-  Height = 344
-  Width = 516
+  Left = 461
+  Top = 241
+  Height = 311
+  Width = 385
   object sdsConsTroca: TSQLDataSet
     NoMetadata = True
     GetMetadata = False

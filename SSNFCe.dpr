@@ -128,7 +128,8 @@ uses
   USel_EnqIPI in '..\ssfacil\USel_EnqIPI.pas' {frmSel_EnqIPI},
   uAltProd in '..\ssfacil\UAltProd.pas',
   uConsProduto_Compras in '..\ssfacil\uConsProduto_Compras.pas' {frmConsProduto_Compras},
-  UCadProduto_ST in '..\ssfacil\UCadProduto_ST.pas' {frmCadProduto_ST};
+  UCadProduto_ST in '..\ssfacil\UCadProduto_ST.pas' {frmCadProduto_ST},
+  UDMComissao in 'UDMComissao.pas' {DMComissao: TDataModule};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 
@@ -153,6 +154,7 @@ begin
   Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
+  Application.CreateForm(TDMComissao, DMComissao);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
   
