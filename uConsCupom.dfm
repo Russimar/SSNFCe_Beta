@@ -23,14 +23,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 1071
-    Height = 485
+    Height = 486
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 103
       Width = 1069
-      Height = 225
+      Height = 226
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -678,7 +678,7 @@ object frmConsCupom: TfrmConsCupom
     end
     object gbxVendedor: TRzGroupBox
       Left = 1
-      Top = 328
+      Top = 329
       Width = 1069
       Height = 156
       Align = alBottom
@@ -701,7 +701,7 @@ object frmConsCupom: TfrmConsCupom
       object Label5: TLabel
         Left = 296
         Top = 80
-        Width = 138
+        Width = 141
         Height = 18
         Caption = 'Total de Vendas:'
         Font.Charset = DEFAULT_CHARSET
@@ -825,6 +825,10 @@ object frmConsCupom: TfrmConsCupom
     object ImprimiraConsulta1: TMenuItem
       Caption = 'Imprimir a Consulta'
       OnClick = ImprimiraConsulta1Click
+    end
+    object ImprimirCNFPedido1: TMenuItem
+      Caption = 'Imprimir CNF / Pedido'
+      OnClick = ImprimirCNFPedido1Click
     end
   end
   object PopupMenu2: TPopupMenu

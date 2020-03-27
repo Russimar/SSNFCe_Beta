@@ -70,6 +70,7 @@ type
     PopupMenu2: TPopupMenu;
     BuscaNFCeWeb1: TMenuItem;
     lblPedido: TLabel;
+    ImprimirCNFPedido1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -83,6 +84,7 @@ type
     procedure BuscaNFCeWeb1Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure ImprimirCNFPedido1Click(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr: TfNFCE_ACBR;
@@ -544,6 +546,18 @@ begin
     vID_Cupom_Pos := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
     Close;
   end;
+end;
+
+procedure TfrmConsCupom.ImprimirCNFPedido1Click(Sender: TObject);
+begin
+  if (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'PED') or (fDmCupomFiscal.cdsCupom_ConsTIPO.AsString <> 'CNF') then
+  begin
+    MessageDlg('Impressão somente de Pedido e Cupom não Fiscal!',mtInformation,[mbOK],0);
+    Exit;
+  end;
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
 end;
 
 end.
