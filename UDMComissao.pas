@@ -7,7 +7,7 @@ uses
 
 type
   TDMComissao = class(TDataModule)
-    sdsConsTroca: TSQLDataSet;
+    sdsComissao: TSQLDataSet;
     dspConsTroca: TDataSetProvider;
     cdsConsTroca: TClientDataSet;
     cdsConsTrocaID: TIntegerField;

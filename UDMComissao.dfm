@@ -4,7 +4,7 @@ object DMComissao: TDMComissao
   Top = 241
   Height = 311
   Width = 385
-  object sdsConsTroca: TSQLDataSet
+  object sdsComissao: TSQLDataSet
     NoMetadata = True
     GetMetadata = False
     CommandText = 
@@ -21,7 +21,7 @@ object DMComissao: TDMComissao
     Top = 8
   end
   object dspConsTroca: TDataSetProvider
-    DataSet = sdsConsTroca
+    DataSet = sdsComissao
     Left = 104
     Top = 8
   end
