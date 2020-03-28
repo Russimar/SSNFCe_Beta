@@ -129,7 +129,8 @@ uses
   uAltProd in '..\ssfacil\UAltProd.pas',
   uConsProduto_Compras in '..\ssfacil\uConsProduto_Compras.pas' {frmConsProduto_Compras},
   UCadProduto_ST in '..\ssfacil\UCadProduto_ST.pas' {frmCadProduto_ST},
-  UDMComissao in 'UDMComissao.pas' {DMComissao: TDataModule};
+  UDMComissao in 'UDMComissao.pas' {DMComissao: TDataModule},
+  uConsComissao_Metas in 'uConsComissao_Metas.pas' {frmConsComissao_Metas};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 
@@ -154,7 +155,6 @@ begin
   Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
-  Application.CreateForm(TDMComissao, DMComissao);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
   

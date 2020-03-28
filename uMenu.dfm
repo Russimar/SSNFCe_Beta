@@ -2579,6 +2579,13 @@ object fMenu: TfMenu
       object ConsultaHistrico1: TMenuItem
         Caption = 'Consulta Hist'#243'rico'
       end
+      object N9: TMenuItem
+        Caption = '-'
+      end
+      object Comisso1: TMenuItem
+        Caption = 'Comiss'#227'o'
+        OnClick = Comisso1Click
+      end
       object N4: TMenuItem
         Caption = '-'
       end

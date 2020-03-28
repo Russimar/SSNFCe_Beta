@@ -3,7 +3,8 @@ unit UDMConsCupom;
 interface
 
 uses
-  SysUtils, Classes, FMTBcd, DB, SqlExpr, Provider, DBClient;
+  SysUtils, Classes, FMTBcd, DB, SqlExpr, Provider, DBClient, frxClass,
+  frxDBSet;
 
 type
   TDMConsCupom = class(TDataModule)
@@ -27,6 +28,8 @@ type
     cdsConsTrocaREFERENCIA: TStringField;
     cdsConsTrocaSERIE_TROCA: TStringField;
     cdsConsTrocaSERIE: TStringField;
+    frxReport1: TfrxReport;
+    frxCupom_Cons: TfrxDBDataset;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
