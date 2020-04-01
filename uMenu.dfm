@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 325
-  Top = 126
+  Left = 181
+  Top = 59
   Width = 1000
   Height = 673
   Caption = 'Menu Principal'
@@ -2530,17 +2530,6 @@ object fMenu: TfMenu
         Caption = 'Cupom Fiscal'
         OnClick = CupomFiscal1Click
       end
-      object ImpressoraFiscal1: TMenuItem
-        Caption = 'Impressora Fiscal'
-        object LeituraX1: TMenuItem
-          Caption = 'Leitura X'
-          OnClick = LeituraX1Click
-        end
-        object ReduoZ1: TMenuItem
-          Caption = 'Redu'#231#227'o Z'
-          OnClick = ReduoZ1Click
-        end
-      end
       object N3: TMenuItem
         Caption = '-'
       end
@@ -2576,12 +2565,6 @@ object fMenu: TfMenu
     end
     object Financeiro1: TMenuItem
       Caption = 'Financeiro'
-      object ConsultaHistrico1: TMenuItem
-        Caption = 'Consulta Hist'#243'rico'
-      end
-      object N9: TMenuItem
-        Caption = '-'
-      end
       object Comisso1: TMenuItem
         Caption = 'Comiss'#227'o'
         OnClick = Comisso1Click

@@ -1,6 +1,6 @@
 object fCupomParametros: TfCupomParametros
   Left = 162
-  Top = 11
+  Top = 52
   Width = 1095
   Height = 724
   BorderIcons = [biSystemMenu, biMaximize]
@@ -319,14 +319,6 @@ object fCupomParametros: TfCupomParametros
             Alignment = taRightJustify
             Caption = 'Impressora ACBR:'
           end
-          object Label2: TLabel
-            Left = 40
-            Top = 130
-            Width = 132
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'C'#243'digo da Al'#237'quta de ICMS:'
-          end
           object Label76: TLabel
             Left = 118
             Top = 19
@@ -388,19 +380,6 @@ object fCupomParametros: TfCupomParametros
               'ecfFiscNet'
               'ecfBematech'
               'ecfNaoFiscal')
-          end
-          object RxDBLookupCombo1: TRxDBLookupCombo
-            Left = 174
-            Top = 121
-            Width = 69
-            Height = 21
-            DropDownCount = 8
-            DataField = 'SIT_TRIB_ID'
-            DataSource = dmCupomFiscal.dsCupomParametros
-            LookupField = 'ID'
-            LookupDisplay = 'CODIGO'
-            LookupSource = dmCupomFiscal.dsSitTribCF
-            TabOrder = 5
           end
           object RxDBComboBox5: TRxDBComboBox
             Left = 174
@@ -471,7 +450,7 @@ object fCupomParametros: TfCupomParametros
             Items.Strings = (
               'SIM'
               'N'#195'O')
-            TabOrder = 6
+            TabOrder = 5
             Values.Strings = (
               'S'
               'N')
@@ -1442,30 +1421,6 @@ object fCupomParametros: TfCupomParametros
         Caption = 'Usabilidade'
         Enabled = False
         TabOrder = 1
-        object Label11: TLabel
-          Left = 117
-          Top = 17
-          Width = 127
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Primeiro Campo do Cupom:'
-        end
-        object Label38: TLabel
-          Left = 149
-          Top = 39
-          Width = 95
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Ordem dos Campos:'
-        end
-        object Label22: TLabel
-          Left = 146
-          Top = 61
-          Width = 98
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Abrir o Cupom direto:'
-        end
         object Label23: TLabel
           Left = 87
           Top = 105
@@ -1473,14 +1428,6 @@ object fCupomParametros: TfCupomParametros
           Height = 13
           Alignment = taRightJustify
           Caption = 'Informar na digita'#231#227'o do Produto:'
-        end
-        object Label24: TLabel
-          Left = 20
-          Top = 127
-          Width = 224
-          Height = 13
-          Alignment = taRightJustify
-          Caption = 'Mostrar o nome do produto na inclus'#227'o do item:'
         end
         object Label58: TLabel
           Left = 130
@@ -1506,62 +1453,6 @@ object fCupomParametros: TfCupomParametros
           Alignment = taRightJustify
           Caption = 'Aniversariantes do Per'#237'odo:'
         end
-        object RxDBComboBox6: TRxDBComboBox
-          Left = 246
-          Top = 9
-          Width = 187
-          Height = 21
-          Style = csDropDownList
-          DataField = 'PRIMEIRO_CAMPO'
-          DataSource = dmCupomFiscal.dsCupomParametros
-          EnableValues = True
-          ItemHeight = 13
-          Items.Strings = (
-            'QUANTIDADE'
-            'C'#211'DIGO DE BARRAS'
-            'NOME DO PRODUTO')
-          TabOrder = 0
-          Values.Strings = (
-            '1'
-            '2'
-            '3')
-        end
-        object RxDBComboBox21: TRxDBComboBox
-          Left = 246
-          Top = 31
-          Width = 187
-          Height = 21
-          Style = csDropDownList
-          DataField = 'ORDEM_CAMPOS'
-          DataSource = dmCupomFiscal.dsCupomParametros
-          EnableValues = True
-          ItemHeight = 13
-          Items.Strings = (
-            'Quantidade / C'#243'digo'
-            'C'#243'digo / Quantidade')
-          TabOrder = 1
-          Values.Strings = (
-            '1'
-            '2')
-        end
-        object RxDBComboBox10: TRxDBComboBox
-          Left = 246
-          Top = 53
-          Width = 187
-          Height = 21
-          Style = csDropDownList
-          DataField = 'ABRIR_CUPOM'
-          DataSource = dmCupomFiscal.dsCupomParametros
-          EnableValues = True
-          ItemHeight = 13
-          Items.Strings = (
-            'NA VENDA'
-            'NA CONSULTA')
-          TabOrder = 2
-          Values.Strings = (
-            'I'
-            'C')
-        end
         object RxDBComboBox11: TRxDBComboBox
           Left = 246
           Top = 97
@@ -1575,28 +1466,10 @@ object fCupomParametros: TfCupomParametros
           Items.Strings = (
             'C'#243'digo (ID)'
             'Refer'#234'ncia')
-          TabOrder = 4
+          TabOrder = 1
           Values.Strings = (
             'C'
             'R')
-        end
-        object RxDBComboBox12: TRxDBComboBox
-          Left = 246
-          Top = 119
-          Width = 187
-          Height = 21
-          Style = csDropDownList
-          DataField = 'MOSTRA_NOME_PRODUTO'
-          DataSource = dmCupomFiscal.dsCupomParametros
-          EnableValues = True
-          ItemHeight = 13
-          Items.Strings = (
-            'SIM'
-            'N'#195'O')
-          TabOrder = 5
-          Values.Strings = (
-            'S'
-            'N')
         end
         object RxDBComboBox34: TRxDBComboBox
           Left = 246
@@ -1611,7 +1484,7 @@ object fCupomParametros: TfCupomParametros
           Items.Strings = (
             'SIM (PASSA DIRETO)'
             'N'#195'O (PARA NO CAMPO)')
-          TabOrder = 3
+          TabOrder = 0
           Values.Strings = (
             'S'
             'N')
@@ -1623,7 +1496,7 @@ object fCupomParametros: TfCupomParametros
           Height = 21
           DataField = 'ID_CLIENTE_CONSUMIDOR'
           DataSource = dmCupomFiscal.dsParametros
-          TabOrder = 6
+          TabOrder = 2
         end
         object RxDBComboBox43: TRxDBComboBox
           Left = 246
@@ -1639,7 +1512,7 @@ object fCupomParametros: TfCupomParametros
             'N'#195'O'
             'DO DIA'
             'DA SEMANA')
-          TabOrder = 7
+          TabOrder = 3
           Values.Strings = (
             'N'
             'D'
@@ -1653,7 +1526,7 @@ object fCupomParametros: TfCupomParametros
           Caption = 'Mostrar na Cons. dos Produtos os Materiais'
           DataField = 'MOSTRAR_MATERIAL'
           DataSource = dmCupomFiscal.dsCupomParametros
-          TabOrder = 8
+          TabOrder = 4
           ValueChecked = 'S'
           ValueUnchecked = 'N'
         end

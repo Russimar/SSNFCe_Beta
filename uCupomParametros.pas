@@ -33,12 +33,6 @@ type
     Label37: TLabel;
     RxDBLookupCombo6: TRxDBLookupCombo;
     GroupBox2: TGroupBox;
-    Label11: TLabel;
-    RxDBComboBox6: TRxDBComboBox;
-    Label38: TLabel;
-    RxDBComboBox21: TRxDBComboBox;
-    Label22: TLabel;
-    RxDBComboBox10: TRxDBComboBox;
     Label23: TLabel;
     RxDBComboBox11: TRxDBComboBox;
     Label6: TLabel;
@@ -63,8 +57,6 @@ type
     RxDBComboBox17: TRxDBComboBox;
     Label25: TLabel;
     RxDBComboBox13: TRxDBComboBox;
-    Label24: TLabel;
-    RxDBComboBox12: TRxDBComboBox;
     Label13: TLabel;
     DBEdit3: TDBEdit;
     Label10: TLabel;
@@ -87,8 +79,6 @@ type
     GroupBox6: TGroupBox;
     Label5: TLabel;
     RxDBComboBox3: TRxDBComboBox;
-    Label2: TLabel;
-    RxDBLookupCombo1: TRxDBLookupCombo;
     Label47: TLabel;
     RxDBComboBox28: TRxDBComboBox;
     Label48: TLabel;

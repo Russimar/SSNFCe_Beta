@@ -50,7 +50,7 @@ var
 
 implementation
 
-uses uCupomFiscalC, uUtilPadrao, UConsPessoa_Fin, DmdDatabase;
+uses uUtilPadrao, UConsPessoa_Fin, DmdDatabase;
 
 {$R *.dfm}
 

@@ -158,7 +158,7 @@ implementation
 
 //---------------TROCAR IMPRESSORA
 uses
-  UCupomFiscalCli, UCupomFiscalC, ACBrECF, DmdDatabase, uUtilPadrao, uCupomFiscalParcela, uUtilCliente, USel_Pessoa,
+  UCupomFiscalCli, ACBrECF, DmdDatabase, uUtilPadrao, uCupomFiscalParcela, uUtilCliente, USel_Pessoa,
   uCalculo_CupomFiscal, UConsPessoa_Fin, uCupomCliente, uCupomDadosCli, UCupomFiscal, USenha, uGrava_Erro;
 
 {$R *.dfm}

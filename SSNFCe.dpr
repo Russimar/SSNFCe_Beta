@@ -5,7 +5,6 @@ program SSNFCe;
 uses
   Forms,
   Windows,
-  uCupomFiscalC in 'uCupomFiscalC.pas' {fCupomFiscalC},
   uDmCupomFiscal in 'uDmCupomFiscal.pas' {dmCupomFiscal: TDataModule},
   UCupomFiscal in 'UCupomFiscal.pas' {fCupomFiscal},
   UCupomFiscalCanc in 'uCupomFiscalCanc.pas' {fCupomFiscalCanc},

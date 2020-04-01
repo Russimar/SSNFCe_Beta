@@ -290,54 +290,17 @@ begin
   end;
 
   CurrencyEdit1.Value := fDmCupomFiscal.cdsCupomParametrosQTD_PADRAO.AsCurrency;
-  if Panel2.Enabled then
-    case fDmCupomFiscal.cdsCupomParametrosPRIMEIRO_CAMPO.AsInteger of
-      1:
-        begin
-          CurrencyEdit1.SetFocus;
-          CurrencyEdit1.SelectAll;
-        end;
-      2:
-        Edit1.SetFocus;
-    end;
+  Edit1.SetFocus;
 
   btComanda.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S';
   btOrcamento.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_ORCAMENTO.AsString = 'S';
   btPedido.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S';
-
-  case fDmCupomFiscal.cdsCupomParametrosORDEM_CAMPOS.AsInteger of
-    1:
-      begin //Qtd primeiro
-        Label3.Top := 28;
-        CurrencyEdit1.Top := 28;
-
-        Label1.Top := 53;
-        Edit1.Top := 28;
-
-        CurrencyEdit1.TabOrder := 0;
-        Edit1.TabOrder := 1;
-      end;
-    2:
-      begin //Cod primeiro
-        Label3.Top := 40;
-        CurrencyEdit1.Top := 35;
-
-        Label1.Top := 20;
-        Edit1.Top := 35;
-
-        CurrencyEdit1.TabOrder := 1;
-        Edit1.TabOrder := 0;
-      end;
-  end;
 
   if FileExists(fDmCupomFiscal.cdsFilialENDLOGO.AsString) then
     Image1.Picture.LoadFromFile(fDmCupomFiscal.cdsFilialENDLOGO.AsString);
 
   if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
     btCancelar.Caption := 'E&xcluir Produto';
-
-//  Label2.Visible := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
-//  Edit3.Enabled := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
 
   for i := 0 to cxGrid1DBTableView1.ColumnCount - 2 do
   begin
@@ -2080,14 +2043,6 @@ begin
       fDmCupomFiscal.cdsCupom_ItensID_MOVIMENTO.AsInteger  := vID_Mov;
       fDmCupomFiscal.cdsCupom_Itens.Post;
     end;
-
-    {if fdmCupomFiscal.cdsCupomParametrosBAIXAR_CONSUMO.AsString = 'S' then
-    begin
-      fDMCadCupomFiscal_MP.fDMCupomFiscal := fDMCupomFiscal;
-      fDMCadCupomFiscal_MP.prc_Abrir_CupomFiscal_MP(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
-      fDMCadCupomFiscal_MP.fDMEstoque     := fDMEstoque;
-      fDMCadCupomFiscal_MP.prc_Le_Produto_Consumo;
-    end;}
     fDmCupomFiscal.cdsCupom_Itens.Next;
   end;
   fDmCupomFiscal.cdsCupom_Itens.EnableControls;
