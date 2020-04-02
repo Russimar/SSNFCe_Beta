@@ -358,7 +358,9 @@ begin
       vComando := vComando + ' AND TIPO = ' + QuotedStr(vTipo);
     end;
     if ComboBox1.ItemIndex <> 5 then
-      vComando := vComando + ' AND TIPO <> ' + QuotedStr('COM');
+      vComando := vComando + ' AND ((TIPO <> ' + QuotedStr('COM') + ') or (TIPO = ' + QuotedStr('COM') +
+                             ' AND  CF.ID_TIPOCOBRANCA IS NULL  and Coalesce(COPIADO,' + QuotedStr('N') +') <> ' + QuotedStr('S') + '))';
+
     vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   end;
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
