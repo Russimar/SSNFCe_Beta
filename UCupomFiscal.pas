@@ -1103,11 +1103,19 @@ begin
               vVias := 0;
             if vVias > 0 then
             begin
-              fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-              fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-              fNFCE_ACBr.NroVias := vVias;
-              fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
-            end;
+              try
+                fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+                fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+                fNFCE_ACBr.NroVias := vVias;
+                fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
+              except
+                on e: Exception do
+                begin
+                  MessageDlg('*** Erro ao imprimir: ' + #13+ e.Message, mtInformation, [mbOk], 0);
+                  //prc_Limpa_Variaveis_Encerramento;
+                end
+              end;
+            end
           end;
         end
         else
