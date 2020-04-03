@@ -159,7 +159,7 @@ end;
 procedure TfCupomFiscalCanc.prc_Calcular_Exclusao;
 begin
   fDmCupomFiscal.cdsCupomFiscal.Edit;
-  fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency          := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency - fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsCurrency));
+  fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency          := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency - (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsCurrency + fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat)));
   fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency             := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency - fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsCurrency));
   fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsCurrency           := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsCurrency - fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsCurrency));
   fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsCurrency             := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat - fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat));
@@ -179,7 +179,7 @@ begin
   fDmCupomFiscal.vSomaOriginal := StrToFloat(FormatFloat('0.00',fDmCupomFiscal.vSomaOriginal -
                                                                 fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsCurrency *
                                                                 fDmCupomFiscal.cdsCupom_ItensQTD.AsInteger));
-  //fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency          := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat - fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat));
+  fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency          := StrToCurr(FormatCurr('0.00',fDmCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsFloat - fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat));
 end;
 
 end.
