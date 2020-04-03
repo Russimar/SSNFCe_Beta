@@ -23,9 +23,9 @@ object fCupomTerminal: TfCupomTerminal
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 578
-    Height = 322
-    ActivePage = TS_Consulta
+    Width = 570
+    Height = 314
+    ActivePage = TS_Cadastro
     ActivePageDefault = TS_Consulta
     Align = alClient
     BackgroundColor = 16752448
@@ -33,7 +33,7 @@ object fCupomTerminal: TfCupomTerminal
     FlatColor = clGray
     ParentBackgroundColor = False
     TabColors.Shadow = clSilver
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     FixedDimension = 19
     object TS_Consulta: TRzTabSheet
@@ -41,10 +41,10 @@ object fCupomTerminal: TfCupomTerminal
       object SMDBGrid1: TSMDBGrid
         Left = 0
         Top = 65
-        Width = 574
-        Height = 217
+        Width = 566
+        Height = 209
         Align = alClient
-        Ctl3D = True
+        Ctl3D = False
         DataSource = dmCupomTerminal.dsCupomTerminal
         Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
         ParentCtl3D = False
@@ -56,7 +56,7 @@ object fCupomTerminal: TfCupomTerminal
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
         OnDblClick = SMDBGrid1DblClick
-        Flat = False
+        Flat = True
         BandsFont.Charset = DEFAULT_CHARSET
         BandsFont.Color = clWindowText
         BandsFont.Height = -11
@@ -74,7 +74,7 @@ object fCupomTerminal: TfCupomTerminal
         WidthOfIndicator = 11
         DefaultRowHeight = 17
         ScrollBars = ssHorizontal
-        ColCount = 3
+        ColCount = 6
         RowCount = 2
         Columns = <
           item
@@ -85,14 +85,38 @@ object fCupomTerminal: TfCupomTerminal
           item
             Expanded = False
             FieldName = 'NOME'
+            Title.Alignment = taCenter
+            Title.Caption = 'Nome'
             Width = 367
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'SERIE'
+            Title.Alignment = taCenter
+            Title.Caption = 'S'#233'rie'
+            Width = 42
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'FILIAL'
+            Title.Alignment = taCenter
+            Title.Caption = 'Filial'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'INATIVO'
+            Title.Alignment = taCenter
+            Title.Caption = 'Inativo'
             Visible = True
           end>
       end
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 574
+        Width = 566
         Height = 30
         Align = alTop
         Color = clSilver
@@ -323,8 +347,8 @@ object fCupomTerminal: TfCupomTerminal
       end
       object StaticText1: TStaticText
         Left = 0
-        Top = 282
-        Width = 574
+        Top = 274
+        Width = 566
         Height = 17
         Align = alBottom
         BorderStyle = sbsSunken
@@ -340,9 +364,10 @@ object fCupomTerminal: TfCupomTerminal
       object pnlPesquisa: TPanel
         Left = 0
         Top = 30
-        Width = 574
+        Width = 566
         Height = 35
         Align = alTop
+        Color = clSilver
         TabOrder = 3
         Visible = False
         object Label6: TLabel
@@ -440,7 +465,7 @@ object fCupomTerminal: TfCupomTerminal
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 574
+        Width = 566
         Height = 30
         Align = alTop
         Color = 8404992
@@ -669,8 +694,8 @@ object fCupomTerminal: TfCupomTerminal
       object pnlCadastro: TPanel
         Left = 0
         Top = 30
-        Width = 574
-        Height = 269
+        Width = 566
+        Height = 261
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -689,6 +714,22 @@ object fCupomTerminal: TfCupomTerminal
           Height = 13
           Alignment = taRightJustify
           Caption = 'ID:'
+        end
+        object Label2: TLabel
+          Left = 64
+          Top = 56
+          Width = 27
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'S'#233'rie:'
+        end
+        object Label3: TLabel
+          Left = 68
+          Top = 76
+          Width = 23
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Filial:'
         end
         object DBEdit1: TDBEdit
           Left = 96
@@ -713,6 +754,30 @@ object fCupomTerminal: TfCupomTerminal
           ReadOnly = True
           TabOrder = 1
         end
+        object DBEdit2: TDBEdit
+          Left = 96
+          Top = 48
+          Width = 57
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'SERIE'
+          DataSource = dmCupomTerminal.dsCupomTerminal
+          TabOrder = 2
+        end
+        object RxDBLookupCombo1: TRxDBLookupCombo
+          Left = 96
+          Top = 69
+          Width = 281
+          Height = 21
+          DropDownCount = 8
+          DropDownWidth = 700
+          DataField = 'FILIAL'
+          DataSource = dmCupomTerminal.dsCupomTerminal
+          LookupField = 'NOME_INTERNO;CNPJ_CPF'
+          LookupDisplay = 'ID'
+          LookupSource = dmCupomTerminal.dsFilial
+          TabOrder = 3
+        end
       end
     end
   end
@@ -720,7 +785,7 @@ object fCupomTerminal: TfCupomTerminal
     GroupName = 'Terminal'
     UserControl = fMenu.UserControl1
     NotAllowed = naDisabled
-    Left = 321
-    Top = 140
+    Left = 401
+    Top = 188
   end
 end

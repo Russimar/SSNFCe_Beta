@@ -720,6 +720,13 @@ object fCupomParametros: TfCupomParametros
             Alignment = taRightJustify
             Caption = 'S'#233'rie (PDV):'
           end
+          object Label2: TLabel
+            Left = 272
+            Top = 40
+            Width = 113
+            Height = 13
+            Caption = 'F2- Seleciona o terminal'
+          end
           object RxDBComboBox9: TRxDBComboBox
             Left = 214
             Top = 58
@@ -738,19 +745,6 @@ object fCupomParametros: TfCupomParametros
             Values.Strings = (
               'S'
               'N')
-          end
-          object RxDBLookupCombo2: TRxDBLookupCombo
-            Left = 214
-            Top = 36
-            Width = 187
-            Height = 21
-            DropDownCount = 8
-            DataField = 'TERMINAL_ID'
-            DataSource = dmCupomFiscal.dsCupomParametros
-            LookupField = 'ID'
-            LookupDisplay = 'NOME'
-            LookupSource = dmCupomFiscal.dsCupomTerminal
-            TabOrder = 1
           end
           object DirectoryEdit2: TDirectoryEdit
             Left = 214
@@ -794,6 +788,21 @@ object fCupomParametros: TfCupomParametros
             Height = 21
             TabOrder = 5
             Text = 'S'#233'rie'
+          end
+          object ceTerminal: TCurrencyEdit
+            Left = 214
+            Top = 37
+            Width = 59
+            Height = 21
+            AutoSize = False
+            Color = clSilver
+            Ctl3D = True
+            DecimalPlaces = 0
+            DisplayFormat = '0'
+            ParentCtl3D = False
+            ReadOnly = True
+            TabOrder = 1
+            OnKeyDown = ceTerminalKeyDown
           end
         end
         object GroupBox9: TGroupBox

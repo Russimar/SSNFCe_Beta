@@ -3,7 +3,7 @@ unit uDmCupomTerminal;
 interface
 
 uses
-  SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr;
+  SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, LogTypes;
 
 type
   TdmCupomTerminal = class(TDataModule)
@@ -15,9 +15,26 @@ type
     sdsCupomTerminalNOME: TStringField;
     cdsCupomTerminalID: TSmallintField;
     cdsCupomTerminalNOME: TStringField;
+    sdsCupomTerminalSERIE: TStringField;
+    cdsCupomTerminalSERIE: TStringField;
+    sdsCupomTerminalINATIVO: TStringField;
+    sdsCupomTerminalFILIAL: TIntegerField;
+    cdsCupomTerminalINATIVO: TStringField;
+    cdsCupomTerminalFILIAL: TIntegerField;
+    sdsFilial: TSQLDataSet;
+    dspFilial: TDataSetProvider;
+    cdsFilial: TClientDataSet;
+    dsFilial: TDataSource;
+    cdsFilialID: TIntegerField;
+    cdsFilialNOME: TStringField;
+    cdsFilialNOME_INTERNO: TStringField;
+    cdsFilialCNPJ_CPF: TStringField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure cdsCupomTerminalNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
+    procedure DoLogAdditionalValues(ATableName: string; var AValues: TArrayLogData; var UserName: string);
+
   public
     { Public declarations }
     vMsgCupomTerminal: String;
@@ -34,7 +51,7 @@ var
 
 implementation
 
-uses DmdDatabase;
+uses DmdDatabase, uUtilPadrao, LogProvider;
 
 {$R *.dfm}
 
@@ -49,10 +66,31 @@ begin
 end;
 
 procedure TdmCupomTerminal.prc_Gravar;
+var
+  sds: TSQLDataSet;
 begin
   vMsgCupomTerminal := '';
+  if (trim(cdsCupomTerminalSERIE.AsString) <> '') and (cdsCupomTerminalFILIAL.AsInteger > 0) then
+  begin
+    sds := TSQLDataSet.Create(nil);
+    try
+      sds.SQLConnection := dmDatabase.scoDados;
+      sds.NoMetadata    := True;
+      sds.GetMetadata   := False;
+      sds.CommandText   := 'SELECT C.ID FROM CUPOMFISCAL_TERMINAL C WHERE C.SERIE = :SERIE AND FILIAL = :FILIAL ';
+      sds.ParamByName('SERIE').AsString   := cdsCupomTerminalSERIE.AsString;
+      sds.ParamByName('FILIAL').AsInteger := cdsCupomTerminalFILIAL.AsInteger;
+      sds.Open;
+      if sds.FieldByName('ID').AsInteger <> cdsCupomTerminalID.AsInteger then
+        vMsgCupomTerminal := vMsgCupomTerminal + #13 + '*** Série já usada na Filial!';
+    finally
+      FreeAndNil(sds);
+    end;
+  end;
+
   if trim(cdsCupomTerminalNOME.AsString) = '' then
-    vMsgCupomTerminal := 'Nome não informado!';
+    vMsgCupomTerminal := vMsgCupomTerminal + #13 + '*** Nome não informado!';
+
   if vMsgCupomTerminal <> '' then
     exit;
 
@@ -82,8 +120,52 @@ begin
 end;
 
 procedure TdmCupomTerminal.DataModuleCreate(Sender: TObject);
+var
+  i, x: Integer;
+  //SR: TSearchRec;
+  vIndices: string;
+  aIndices: array of string;
 begin
   ctTerminal := sdsCupomTerminal.CommandText;
+  cdsFilial.Open;
+  //*** Logs Implantado na versão .353
+  LogProviderList.OnAdditionalValues := DoLogAdditionalValues;
+  for i := 0 to (Self.ComponentCount - 1) do
+  begin
+    if (Self.Components[i] is TClientDataSet) then
+    begin
+      SetLength(aIndices, 0);
+      vIndices := TClientDataSet(Components[i]).IndexFieldNames;
+      while (vIndices <> EmptyStr) do
+      begin
+        SetLength(aIndices, Length(aIndices) + 1);
+        x := Pos(';', vIndices);
+        if (x = 0) then
+        begin
+          aIndices[Length(aIndices) - 1] := vIndices;
+          vIndices := EmptyStr;
+        end
+        else
+        begin
+          aIndices[Length(aIndices) - 1] := Copy(vIndices, 1, x - 1);
+          vIndices := Copy(vIndices, x + 1, MaxInt);
+        end;
+      end;
+      LogProviderList.AddProvider(TClientDataSet(Self.Components[i]), TClientDataSet(Self.Components[i]).Name, aIndices);
+    end;
+  end;
+  //***********************
+end;
+
+procedure TdmCupomTerminal.cdsCupomTerminalNewRecord(DataSet: TDataSet);
+begin
+  cdsCupomTerminalINATIVO.AsString := 'N';
+end;
+
+procedure TdmCupomTerminal.DoLogAdditionalValues(ATableName: string;
+  var AValues: TArrayLogData; var UserName: string);
+begin
+  UserName := vUsuario;
 end;
 
 end.

@@ -64,7 +64,6 @@ type
     Comisso1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure SpeedItem5Click(Sender: TObject);
     procedure Logoff1Click(Sender: TObject);
     procedure UserControl1AfterLogin(Sender: TObject);
     procedure Caixa1Click(Sender: TObject);
@@ -114,11 +113,11 @@ var
 
 implementation
 
-uses DmdDatabase, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
-     uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento2, UCadFechamento_Contagem2,
+uses DmdDatabase, uCupomParametros, LogProvider, AcbrEcf, uCupomTerminal, uUtilPadrao,
+     uRelCartao, UCadFechamento_Sangria, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado, uConsCupom, UCadFechamento_Contagem2,
   uConsTrocas, uUtilCupom, USenha_Comanda, UCadProduto,
-  uConsComissao_Metas;
+  uConsComissao_Metas, UCadFechamento2;
 
 {$R *.dfm}
 
@@ -241,11 +240,6 @@ begin
   end;
 end;
 
-procedure TfMenu.SpeedItem5Click(Sender: TObject);
-begin
-  OpenForm(TfCupomTerminal,wsMaximized);
-end;
-
 function TfMenu.lerIni(Tabela, Campo: String): String;
 var
   ServerIni: TIniFile;
@@ -327,7 +321,6 @@ end;
 procedure TfMenu.btnSuprimentoClick(Sender: TObject);
 var
   vExiste: String;
-  ffrmCadFechamento: TfrmCadFechamento;
   ffrmCadFechamento_Sangria: TfrmCadFechamento_Sangria;
 begin
   vID_Fechamento_Pos := 0;
@@ -342,12 +335,6 @@ begin
       FreeAndNil(fDmCadFechamento);
       exit;
     end;
-  end;
-  if vExiste = 'N' then
-  begin
-    ffrmCadFechamento := TfrmCadFechamento.Create(Self);
-    ffrmCadFechamento.btnInserirClick(Sender);
-    FreeAndNil(ffrmCadFechamento);
   end;
   if vID_Fechamento_Pos <= 0 then
   begin

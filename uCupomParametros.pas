@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, RxDBComb, Mask, DBCtrls,
   db, Buttons, ExtCtrls, uDmCupomFiscal, rsDBUtils, RxLookup, ComCtrls, IniFiles, uUtilPadrao, ToolEdit,uDmParametros,
-  Grids, DBGrids, StrUtils, RzCmboBx;
+  Grids, DBGrids, StrUtils, RzCmboBx, CurrEdit;
 
 type
   TfCupomParametros = class(TForm)
@@ -139,7 +139,6 @@ type
     Label20: TLabel;
     RxDBComboBox9: TRxDBComboBox;
     Label8: TLabel;
-    RxDBLookupCombo2: TRxDBLookupCombo;
     Label55: TLabel;
     DBEdit8: TDBEdit;
     Label18: TLabel;
@@ -231,6 +230,8 @@ type
     Label97: TLabel;
     edtTempo_Cozinha: TEdit;
     Label96: TLabel;
+    Label2: TLabel;
+    ceTerminal: TCurrencyEdit;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -245,6 +246,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure BitBtn1Click(Sender: TObject);
+    procedure ceTerminalKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     fDmCupomFiscal: TDmCupomFiscal;
@@ -265,7 +268,7 @@ var
 implementation
 
 uses
-  Printers;
+  Printers, uSel_Terminal;
 
 {$R *.dfm}
 
@@ -297,7 +300,8 @@ begin
   edtMDireita.Text       := lerIni('MARGEM', 'Direita');
   edtLarguraBobina.Text  := lerIni('MARGEM', 'LarguraBobina');
 
-  RxDBLookupCombo2.Value := lerIni('IMPRESSORA','Terminal');
+  //RxDBLookupCombo2.Value := lerIni('IMPRESSORA','Terminal');
+  ceTerminal.Text := lerIni('IMPRESSORA','Terminal');
   if lerIni('IMPRESSORA','IdEstoque') <> '' then
     RxDBLookupCombo7.KeyValue := StrToInt(lerIni('IMPRESSORA','IdEstoque'));
   if lerIni('IMPRESSORA','Gaveta') = 'N' then
@@ -321,8 +325,8 @@ begin
        end;
     end;
   end;
-  if RxDBLookupCombo2.KeyValue < 1 then
-    RxDBLookupCombo2.KeyValue := 1;
+  if ceTerminal.AsInteger <= 0 then
+    ceTerminal.AsInteger := 1;
 
   DirectoryEdit2.Text := fDmCupomFiscal.cdsParametrosENDXMLNFCE.Value;
   DirectoryEdit3.Text := fDmCupomFiscal.cdsParametrosENDPDFNFCE.Value;
@@ -397,7 +401,8 @@ begin
     vMsg := vMsg + 'Porta deve ser definida!' + #13;
   if edtSerieCupom.Text = '' then
     vMsg := vMsg + 'Série deve ser definida!' + #13;
-  if RxDBLookupCombo2.Text = '' then
+  //if RxDBLookupCombo2.Text = '' then
+  if ceTerminal.AsInteger <= 0 then
     vMsg := vMsg + ('Terminal deve ser definido!') + #13;
   if RxDBLookupCombo7.Text = '' then
     vMsg := vMsg + ('Local do estoque deve ser definido!') + #13;
@@ -452,7 +457,9 @@ begin
   gravarIni('IMPRESSORA','Porta',Edit1.Text);
   gravarIni('IMPRESSORA','Serie',edtSerieCupom.Text);
   gravarIni('IMPRESSORA','Boud',Edit2.Text);
-  gravarIni('IMPRESSORA','Terminal',RxDBLookupCombo2.Value);
+  //gravarIni('IMPRESSORA','Terminal',RxDBLookupCombo2.Value);
+  gravarIni('IMPRESSORA','Terminal',ceTerminal.Text);
+
   gravarIni('IMPRESSORA','IdEstoque',RxDBLookupCombo7.Value);
   case ComboBox4.ItemIndex of
    -1: begin
@@ -473,7 +480,8 @@ begin
   else
     vFilial := 0;
 
-  vTerminal := RxDBLookupCombo2.KeyValue;
+  //vTerminal := RxDBLookupCombo2.KeyValue;
+  vTerminal := ceTerminal.AsInteger;
 
   gravarIni('MARGEM','Superior',edtMSuperior.Text);
   gravarIni('MARGEM','Inferior',edtMInferior.Text);
@@ -624,6 +632,25 @@ begin
    comboPorta.Items.Add('/dev/ttyUSB1') ;
    comboPorta.Items.Add('/tmp/ecf.txt') ;
   {$EndIf}
+end;
+
+procedure TfCupomParametros.ceTerminalKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if (Key = Vk_F2) then
+  begin
+    vSerie_Sel := edtSerieCupom.Text;
+    vTerminal  := ceTerminal.AsInteger;
+    frmSel_Terminal := TfrmSel_Terminal.Create(Self);
+    frmSel_Terminal.ShowModal;
+    FreeAndNil(frmSel_Terminal);
+    if vTerminal > 0 then
+    begin
+      ceTerminal.AsInteger := vTerminal;
+      if trim(vSerie_Sel) <> '' then
+        edtSerieCupom.Text := vSerie_Sel;
+    end;
+  end;
 end;
 
 end.

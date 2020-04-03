@@ -31,7 +31,6 @@ uses
   uDmCupomTerminal in 'uDmCupomTerminal.pas' {dmCupomTerminal: TDataModule},
   uCupomTerminal in 'uCupomTerminal.pas' {fCupomTerminal},
   uDmParametros in 'uDmParametros.pas' {dmParametros: TDataModule},
-  UCadFechamento in 'UCadFechamento.pas' {frmCadFechamento},
   UCadFechamento_Itens in 'UCadFechamento_Itens.pas' {frmCadFechamento_Itens},
   UCadFechamento_Sangria in 'UCadFechamento_Sangria.pas' {frmCadFechamento_Sangria},
   UDMCadFechamento in 'UDMCadFechamento.pas' {DMCadFechamento: TDataModule},
@@ -49,7 +48,6 @@ uses
   USenha in '..\ssfacil\USenha.pas' {frmSenha},
   uUtilCliente in '..\ssfacil\uUtilCliente.pas',
   uUtilCupom in 'uUtilCupom.pas',
-  UCadFechamento_Contagem in 'UCadFechamento_Contagem.pas' {frmCadFechamento_Contagem},
   UConsPreco in 'UConsPreco.pas' {frmConsPreco},
   USel_Sacola_CF in 'USel_Sacola_CF.pas' {frmSel_Sacola_CF},
   USel_Pedido_CF in 'USel_Pedido_CF.pas' {frmSel_Pedido_CF},
@@ -129,7 +127,8 @@ uses
   uConsProduto_Compras in '..\ssfacil\uConsProduto_Compras.pas' {frmConsProduto_Compras},
   UCadProduto_ST in '..\ssfacil\UCadProduto_ST.pas' {frmCadProduto_ST},
   UDMComissao in 'UDMComissao.pas' {DMComissao: TDataModule},
-  uConsComissao_Metas in 'uConsComissao_Metas.pas' {frmConsComissao_Metas};
+  uConsComissao_Metas in 'uConsComissao_Metas.pas' {frmConsComissao_Metas},
+  uSel_Terminal in 'uSel_Terminal.pas' {frmSel_Terminal};
 
 //  UCupom_Troca in 'UCupom_Troca.pas' {Form1};
 

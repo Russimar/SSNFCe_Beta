@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, Buttons, Grids, SMDBGrid, uDmCupomTerminal,
-  Mask, UCBase, StdCtrls, DB, NxCollection, DBCtrls, ExtCtrls, DBGrids, RzTabs;
+  Mask, UCBase, StdCtrls, DB, NxCollection, DBCtrls, ExtCtrls, DBGrids, RzTabs,
+  RxLookup;
 
 type
   TfCupomTerminal = class(TForm)
@@ -31,6 +32,10 @@ type
     btnAlterar: TNxButton;
     btnConfirmar: TNxButton;
     btnCancelar: TNxButton;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    Label3: TLabel;
+    RxDBLookupCombo1: TRxDBLookupCombo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -92,7 +97,7 @@ end;
 
 procedure TfCupomTerminal.prc_Gravar_Registro;
 begin
-  fDmCupomTerminal.prc_Gravar;
+  fDmCupomTerminal.prc_gravar;
   if fDmCupomTerminal.cdsCupomTerminal.State in [dsEdit,dsInsert] then
   begin
     MessageDlg(fDmCupomTerminal.vMsgCupomTerminal, mtError, [mbOk], 0);

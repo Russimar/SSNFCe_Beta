@@ -143,8 +143,8 @@ var
 
 implementation
 
-uses DmdDatabase, rsDBUtils, UMenu, uUtilPadrao, URelFechamento, UCadFechamento_Contagem, UCadFechamento_Det,
-  UCadFechamento;
+uses DmdDatabase, rsDBUtils, UMenu, uUtilPadrao, URelFechamento, UCadFechamento_Det;
+
 
 {$R *.dfm}
 
